@@ -28,7 +28,7 @@
 
                 <td class="text-center"><span class="badge badge-dark"><?=$item->service_invoice;?></span></td>
 
-                <td><?=$item->license_plate;?></td>
+                <td><?=$item->ves_name;?></td>
 
                 <td><?=$item->cus_name;?></td>
 

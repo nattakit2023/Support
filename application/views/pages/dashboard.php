@@ -28,7 +28,7 @@
 
             <div class="row">
 
-                <div class="col-lg-3 col-6">
+                <div class="col-lg-4 col-6">
 
                     <div class="small-box bg-success rounded-0">
 
@@ -56,7 +56,7 @@
 
                 </div>
 
-                <div class="col-lg-3 col-6">
+                <div class="col-lg-4 col-6">
 
                     <div class="small-box bg-danger rounded-0">
 
@@ -84,7 +84,7 @@
 
                 </div>
 
-                <div class="col-lg-3 col-6">
+                <div class="col-lg-4 col-6">
 
                     <div class="small-box bg-warning rounded-0">
 
@@ -112,35 +112,6 @@
 
                 </div>
 
-
-
-                <div class="col-lg-3 col-6">
-
-                    <div class="small-box bg-light rounded-0">
-
-                        <div class="inner">
-
-                            <h3><strong id="amountCustomer">..</strong> <sup style="font-size: 20px">Vessel</sup></h3>
-
-                            <p>Vessel Information</p>
-
-                        </div>
-
-                        <div class="icon">
-
-                            <i class="fas fa-users"></i>
-
-                        </div>
-
-                        <a href="<?=base_url();?>/pages/customer" class="small-box-footer rounded-0">
-
-                            More <i class="fas fa-arrow-circle-right"></i>
-
-                        </a>
-
-                    </div>
-
-                </div>
 
             </div>
 

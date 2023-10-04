@@ -58,9 +58,9 @@ class Report extends CI_Controller
 
             $where_arr = array(
 
-                'create_date >=' => $datestart,
+                'due_date >=' => $datestart,
 
-                'create_date <=' => $dateend,
+                'due_date <=' => $dateend,
 
                 'service_status' => 'done'
 

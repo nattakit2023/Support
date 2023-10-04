@@ -48,11 +48,11 @@
 
                         </div>
 
-                        <input type="text" onkeyup="searchLicensePlate()" id="license_plate" value="<?=$this->input->get('license_plate');?>" class="form-control" placeholder="">
+                        <input type="text" onkeyup="searchVesselName()" id="cus_name" value="<?=$this->input->get('cus_name');?>" class="form-control" placeholder="">
 
                         <span class="input-group-append">
 
-                            <button type="button" onclick="searchLicensePlate()" onkeyup="searchLicensePlate()" id="btnSearchLicense" class="btn btn-warning btn-flat"><i class="fas fa-search"></i> Search</button>
+                            <button type="button" onclick="searchVesselName()" onkeyup="searchVesselName()" id="btnSearchLicense" class="btn btn-warning btn-flat"><i class="fas fa-search"></i> Search</button>
 
                         </span>
 
@@ -100,7 +100,7 @@
 
     function tblCustomer() {
 
-        let license_plate = '<?=$this->input->get('license_plate');?>';
+        let name = '<?=$this->input->get('cus_name');?>';
 
         $.ajax({
 
@@ -110,7 +110,7 @@
 
             data : {
 
-                license_plate : license_plate
+                name : name
 
             },
 
@@ -124,7 +124,7 @@
 
     }
 
-    function searchLicensePlate(){
+    function searchVesselName(){
 
         let license_plate = $('#license_plate').val();
 

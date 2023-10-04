@@ -31,13 +31,8 @@
                 </td>
 
                 <td class="text-center"><?=$item->amount;?></td>
+                
 
-      
-<!--
-                <td><?=number_format($item->price,2);?></td>
-
-                <td><strong><?=number_format($item->total,2);?></strong></td>
-        -->
                 <td class="text-center">
 
                     <button id="delServiceDetail" onclick="delServiceDetail('<?=$item->id;?>');" class="btn btn-danger btn-sm rounded-0"><i class="fas fa-trash-alt"></i></button>
@@ -46,9 +41,11 @@
 
             </tr>
 
-        <?php $sum = $sum+$item->total; endforeach;?>
+        <?php endforeach;?>
 
     </tbody>
+
+    
 <!--
     <tfoot>
 
@@ -69,6 +66,8 @@
     </tfoot>
         -->
 </table>
+
+
 
 <script>
 

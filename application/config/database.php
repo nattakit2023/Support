@@ -75,7 +75,7 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost:3306',
+	'hostname' => '127.0.0.1:3306',
 	'username' => 'root',
 	'password' => '',
 	'database' => 'support',
@@ -94,6 +94,28 @@ $db['default'] = array(
 	'failover' => array(),
 	'save_queries' => TRUE
 );
+
+/*$db['default'] = array(
+	'dsn'	=> '',
+	'hostname' => '103.253.73.230:3306',
+	'username' => 'supporter',
+	'password' => 'E4*i0ma32',
+	'database' => 'admin_support',
+	'dbdriver' => 'mysqli',
+	'dbprefix' => '',
+	'pconnect' => FALSE,
+	'db_debug' => (ENVIRONMENT !== 'production'),
+	'cache_on' => FALSE,
+	'cachedir' => '',
+	'char_set' => 'utf8',
+	'dbcollat' => 'utf8_general_ci',
+	'swap_pre' => '',
+	'encrypt' => FALSE,
+	'compress' => FALSE,
+	'stricton' => FALSE,
+	'failover' => array(),
+	'save_queries' => TRUE
+);*/
 
 //store
 $db['store'] = array(
@@ -125,6 +147,29 @@ $db['borrow'] = array(
 	'username' => 'borrowdata',
 	'password' => 'Y3g#68cq8',
 	'database' => 'borrow',
+	'dbdriver' => 'mysqli',
+	'dbprefix' => '',
+	'pconnect' => FALSE,
+	'db_debug' => (ENVIRONMENT !== 'production'),
+	'cache_on' => FALSE,
+	'cachedir' => '',
+	'char_set' => 'utf8',
+	'dbcollat' => 'utf8_general_ci',
+	'swap_pre' => '',
+	'encrypt' => FALSE,
+	'compress' => FALSE,
+	'stricton' => FALSE,
+	'failover' => array(),
+	'save_queries' => TRUE
+);
+
+//helpdesk
+$db['helpdesk'] = array(
+	'dsn'	=> '',
+	'hostname' => '103.253.73.230:3306',
+	'username' => 'support',
+	'password' => 'Cf49~2xa4',
+	'database' => 'helpdesk',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

@@ -28,7 +28,7 @@
 
                 <td>
 
-                    <?=date_format(date_create($item->create_date),'d/m/Y');?>
+                    <?=date_format(date_create($item->due_date),'d/m/Y');?>
 
                 </td>
 

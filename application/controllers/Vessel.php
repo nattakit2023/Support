@@ -98,19 +98,19 @@ class Vessel extends CI_Controller
             exit();
         }
 
-        $vessel = $this->Function_model->fetchDataResult('tbl_fleet', '', 'id', 'DESC');
+        $vessel = $this->Function_model4->fetchDataResult('departments', '', 'id', 'ASC');
 
 
         $vessel_fleet = "";
         echo '<option value="" disabled selected>Vessel Fleet</option>';
 
         foreach ($vessel as $item) {
-            $check = $item->ves_fleet;
+            $check = $item->name;
 
             if (strtoupper($check) == strtoupper($vessel_fleet)) {
             } else {
                 $vessel_fleet = $check;
-                echo '<option value="' . $item->ves_fleet . '">' .  $item->ves_fleet . '</option>';
+                echo '<option value="' . $item->name . '">' .  $item->name . '</option>';
             }
         }
     }

@@ -1,5 +1,7 @@
 <?php
 
+//Admin Store
+//Database
 class Function_model2 extends CI_Model
 {
 

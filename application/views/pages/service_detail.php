@@ -26,7 +26,7 @@
 
                         <?php if ($service->end_date != null) : ?>
 
-                        Completed Date : <?= date_format(date_create($service->end_date), 'd/m/Y'); ?>
+                            Completed Date : <?= date_format(date_create($service->end_date), 'd/m/Y'); ?>
 
                         <?php endif; ?>
 
@@ -60,8 +60,7 @@
 
                 <div class="col-md-12 mb-2">
 
-                    <button class="rounded-0 btn btn-default" onclick="window.history.back();"><i
-                            class="fas fa-angle-left"></i> Back</button>
+                    <button class="rounded-0 btn btn-default" onclick="window.history.back();"><i class="fas fa-angle-left"></i> Back</button>
 
                 </div>
 
@@ -102,7 +101,7 @@
                                 <div class="col-md-4">
 
                                     <p style="padding:0px; margin :0px;" class="text-muted"><strong>E-mail :
-                                        </strong><em><?= ($service->cus_tax != null ? $service->cus_tax : '-'); ?></em>
+                                        </strong><em><?= ($service->cus_email != null ? $service->cus_email : '-'); ?></em>
                                     </p>
 
                                 </div>
@@ -117,7 +116,7 @@
                                 <div class="col-md-4">
 
                                     <p style="padding:0px; margin :0px;" class="text-muted"><strong>Zipcode :
-                                        </strong><em> ... </em></p>
+                                        </strong><em> <?= $service->cus_zipcode ?> </em></p>
 
                                 </div>
 
@@ -130,42 +129,42 @@
                                 <div class="col-md-2">
 
                                     <p style="padding:0px; margin :0px;" class="text-muted"><strong>Fleet :
-                                        </strong><em><?= $service->license_plate; ?></em></p>
+                                        </strong><em><?= $service->ves_fleet; ?></em></p>
 
                                 </div>
 
                                 <div class="col-md-2">
 
                                     <p style="padding:0px; margin :0px;" class="text-muted"><strong>Vessel :
-                                        </strong><em><?= $service->car_brand; ?></em></p>
+                                        </strong><em><?= $service->ves_name; ?></em></p>
 
                                 </div>
 
                                 <div class="col-md-2">
 
                                     <p style="padding:0px; margin :0px;" class="text-muted"><strong>Type :
-                                        </strong><em><?= $service->car_model; ?></em></p>
+                                        </strong><em><?= $service->ves_type; ?></em></p>
 
                                 </div>
 
                                 <div class="col-md-2">
 
                                     <p style="padding:0px; margin :0px;" class="text-muted"><strong>MMSI : </strong><em>
-                                            <?= $service->car_mile_number; ?></em></p>
+                                            <?= $service->ves_mmsi; ?></em></p>
 
                                 </div>
 
                                 <div class="col-md-2">
 
                                     <p style="padding:0px; margin :0px;" class="text-muted"><strong>IMO Number :
-                                        </strong><em> <?= $service->car_mile_number; ?></em></p>
+                                        </strong><em> <?= $service->ves_imo; ?></em></p>
 
                                 </div>
 
                                 <div class="col-md-2">
 
                                     <p style="padding:0px; margin :0px;" class="text-muted"><strong>Call Sign :
-                                        </strong><em> ... </em></p>
+                                        </strong><em> <?= $service->ves_callsign ?> </em></p>
 
                                 </div>
 
@@ -178,42 +177,72 @@
                                 <div class="col-md-2">
 
                                     <p style="padding:0px; margin :0px;" class="text-muted"><strong>Year Built :
-                                        </strong><em> ... </em></p>
+                                        </strong><em> <?= $service->ves_year ?> </em></p>
 
                                 </div>
 
                                 <div class="col-md-2">
 
                                     <p style="padding:0px; margin :0px;" class="text-muted"><strong>Survey :
-                                        </strong><em> ... </em></p>
+                                        </strong><em> <?= $service->ves_survey ?> </em></p>
 
                                 </div>
 
                                 <div class="col-md-2">
 
                                     <p style="padding:0px; margin :0px;" class="text-muted"><strong>Installation :
-                                        </strong><em> ... </em></p>
+                                        </strong><em> <?= $service->ves_installation ?> </em></p>
 
                                 </div>
 
                                 <div class="col-md-2">
 
                                     <p style="padding:0px; margin :0px;" class="text-muted"><strong>Maintenance :
-                                        </strong><em> ... </em></p>
+                                        </strong><em> <?= $service->ves_maintenance ?> </em></p>
 
                                 </div>
 
                                 <div class="col-md-2">
 
                                     <p style="padding:0px; margin :0px;" class="text-muted"><strong>Start Date :
-                                        </strong><em> ... </em></p>
+                                        </strong><em> <?= $service->ETA ?> </em></p>
 
                                 </div>
 
                                 <div class="col-md-2">
 
                                     <p style="padding:0px; margin :0px;" class="text-muted"><strong>End Date :
-                                        </strong><em> ... </em></p>
+                                        </strong><em> <?= $service->ETD ?> </em></p>
+
+                                </div>
+
+                            </div>
+
+                            <p style="margin:0px;" class="text-info mt-2"><i class="fas fa-circle"></i> Contract Onboard</p>
+
+                            <div class="row">
+                                <div class="col-md-2 mb-2">
+
+                                    <p style="padding:0px; margin :0px;" class="text-muted"><strong>Name :
+                                        </strong><em> <?= $service->con_name; ?></em></p>
+
+                                </div>
+                                <div class="col-md-2 mb-2">
+
+                                    <p style="padding:0px; margin :0px;" class="text-muted"><strong>Tel :
+                                        </strong><em> <?= $service->con_tel; ?></em></p>
+
+                                </div>
+                                <div class="col-md-2 mb-2">
+
+                                    <p style="padding:0px; margin :0px;" class="text-muted"><strong>Email :
+                                        </strong><em> <?= $service->con_email; ?></em></p>
+
+                                </div>
+                                <div class="col-md-2 mb-2">
+
+                                    <p style="padding:0px; margin :0px;" class="text-muted"><strong>Port :
+                                        </strong><em> <?= $service->con_port; ?></em></p>
 
                                 </div>
 
@@ -225,8 +254,8 @@
 
                                 <div class="col-md-4">
 
-                                    <p style="padding:0px; margin :0px;" class="text-muted"><strong>Person :
-                                        </strong><em> <?= $service->admin_name; ?></em></p>
+                                    <p style="padding:0px; margin :0px;" class="text-muted"><strong>Engineer :
+                                        </strong><em> <?= $service->engineer; ?></em></p>
 
                                 </div>
 
@@ -236,12 +265,14 @@
 
                                 <div class="col-md-4">
 
-                                    <p style="padding:0px; margin :0px;" class="text-muted"><strong>Engineer :
-                                        </strong><em> <?= $service->admin_name; ?></em></p>
+                                    <p style="padding:0px; margin :0px;" class="text-muted"><strong>Support :
+                                        </strong><em> <?= $service->support_1; ?></em></p>
 
                                 </div>
 
                             </div>
+
+
 
                         </div>
 
@@ -253,71 +284,73 @@
 
             <?php if ($service->service_status == 'created' || $service->service_status == 'wait') : ?>
 
-            <div class="row">
+                <div class="row">
 
-                <div class="col-md-12">
+                    <div class="col-md-12">
 
-                    <div class="card rounded-0">
+                        <div class="card rounded-0">
 
-                        <div class="card-header rounded-0 bg-dark">
+                            <div class="card-header rounded-0 bg-dark">
 
-                            <i class="fas fa-cart-plus"></i> Add Service & Order
+                                <i class="fas fa-cart-plus"></i> Add Service & Order
 
-                        </div>
+                            </div>
 
-                        <div class="card-body">
+                            <div class="card-body">
 
-                            <div class="row">
+                                <div class="row">
 
-                                <div class="col-md-10">
+                                    <div class="col-md-10">
 
-                                    <div class="row">
+                                        <div class="row">
 
-                                        <div class="col-md-7 mb-2">
+                                            <div class="col-md-7 mb-2">
 
-                                            <select class="form-control select2 rounded-0" id="service_name">
+                                                <select class="form-control select2 rounded-0" id="service_name" onchange="optionQuantity(value)">
 
-                                                <option value="">Loading...</option>
+                                                    <option value="">Loading...</option>
 
-                                            </select>
+                                                </select>
 
-                                        </div>
+                                            </div>
 
-                                        <div class="col-md-2 mb-2">
+                                            <div class="col-md-2 mb-2">
 
-                                            <input type="number" id="amount" class="form-control rounded-0" min="1"
-                                                placeholder="Quantity"
-                                                oninput="this.value=this.value.replace(/[^0-9\\]/g,'');">
+                                                <select class="form-control select2 rounded-0" id="amount">
 
-                                        </div>
+                                                    <option value="">กรุณาเลือกสินค้า</option>
+
+                                                </select>
+
+                                            </div>
 
 
 
-                                        <!--<div class="col-md-3 mb-2">
+                                            <!--<div class="col-md-3 mb-2">
 
                                                 <input type="number" id="price" class="form-control rounded-0" min="0" placeholder="ราคาต่อหน่วย">
 
                                             </div>
                                             -->
-                                    </div>
+                                        </div>
 
-                                    <div class="row">
+                                        <div class="row">
 
-                                        <div class="col-md-9 mb-2">
+                                            <div class="col-md-9 mb-2">
 
-                                            <input type="text" id="detail" class="form-control rounded-0"
-                                                placeholder="More Detail (ถ้ามี)">
+                                                <input type="text" id="detail" class="form-control rounded-0" placeholder="More Detail (ถ้ามี)">
+
+                                            </div>
 
                                         </div>
 
                                     </div>
 
-                                </div>
+                                    <div class="col-md-2 mb-2">
 
-                                <div class="col-md-2 mb-2">
+                                        <button id="addServiceDetail" class="btn btn-block btn-primary rounded-0"><i class="fas fa-plus"></i> Add</button>
 
-                                    <button id="addServiceDetail" class="btn btn-block btn-primary rounded-0"><i
-                                            class="fas fa-plus"></i> Add</button>
+                                    </div>
 
                                 </div>
 
@@ -325,13 +358,44 @@
 
                         </div>
 
+
+
                     </div>
-
-
-
                 </div>
 
-            </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card rounded-0">
+
+                            <div class="card-header bg-dark rounded-0">
+
+                                Remark
+
+                            </div>
+
+                            <div class="card-body">
+
+                                <div class="row">
+
+                                    <div class="col-md-8 mb-2 ">
+
+                                        <textarea id="remark" class="form-control rounded-0" placeholder="Remark" required></textarea>
+
+                                    </div>
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-2 mb-2">
+
+                                        <button id="updateRemark" class="btn btn-block btn-primary rounded-0"><i class="fas fa-plus"></i> Add</button>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
 
             <?php endif; ?>
 
@@ -469,27 +533,25 @@
 
                         <?php if ($service->service_status == 'created') : ?>
 
-                        <div class="row">
+                            <div class="row">
 
-                            <div class="col-md-12 mt-2">
+                                <div class="col-md-12 mt-2">
 
-                                <button id="btnConfirm" class="btn btn-primary btn-block rounded-0"><i
-                                        class="fas fa-save"></i> Save</button>
+                                    <button id="btnConfirm" class="btn btn-primary btn-block rounded-0"><i class="fas fa-save"></i> Save</button>
 
-                            </div>
-
-                        </div>
-
-                        <div class="row">
-
-                            <div class="col-md-12 mt-2">
-
-                                <button id="btnCancelService"
-                                    class="btn btn-default btn-block rounded-0">Cancle</button>
+                                </div>
 
                             </div>
 
-                        </div>
+                            <div class="row">
+
+                                <div class="col-md-12 mt-2">
+
+                                    <button id="btnCancelService" class="btn btn-default btn-block rounded-0">Cancle</button>
+
+                                </div>
+
+                            </div>
 
                         <?php endif; ?>
 
@@ -499,25 +561,23 @@
 
                         <?php if ($service->service_status != 'created') : ?>
 
-                        <div class="row">
+                            <div class="row">
 
-                            <div class="col-md-6 mt-2">
+                                <div class="col-md-6 mt-2">
 
-                                <a id="paper_receipt" class="btn btn-default btn-block rounded-0" target="_blank"
-                                    href="<?= base_url(); ?>/service/print_receipt?invoice=<?= $service->service_invoice; ?>">Job
-                                    Order<a>
+                                    <a id="paper_receipt" class="btn btn-default btn-block rounded-0" target="_blank" href="<?= base_url(); ?>/service/print_receipt?invoice=<?= $service->service_invoice; ?>">Job
+                                        Order<a>
+
+                                </div>
+
+                                <div class="col-md-6 mt-2">
+
+                                    <a id="paper_receipt" class="btn btn-default btn-block rounded-0" target="_blank" href="<?= base_url(); ?>/service/print_tax?invoice=<?= $service->service_invoice; ?>">ATP
+                                        Report<a>
+
+                                </div>
 
                             </div>
-
-                            <div class="col-md-6 mt-2">
-
-                                <a id="paper_receipt" class="btn btn-default btn-block rounded-0" target="_blank"
-                                    href="<?= base_url(); ?>/service/print_tax?invoice=<?= $service->service_invoice; ?>">ATP
-                                    Report<a>
-
-                            </div>
-
-                        </div>
 
                         <?php endif; ?>
 
@@ -527,27 +587,25 @@
 
                         <?php if ($service->service_status == 'wait') : ?>
 
-                        <div class="row">
+                            <div class="row">
 
-                            <div class="col-md-12 mt-2">
+                                <div class="col-md-12 mt-2">
 
-                                <button id="btnConfirmFixed" class="btn btn-warning btn-block rounded-0"><i
-                                        class="fas fa-check"></i> ดำเนินการเสร็จแล้ว</button>
+                                    <button id="btnConfirmFixed" class="btn btn-warning btn-block rounded-0"><i class="fas fa-check"></i> ดำเนินการเสร็จแล้ว</button>
 
-                            </div>
-
-                        </div>
-
-                        <div class="row">
-
-                            <div class="col-md-12 mt-2">
-
-                                <button id="btnCancelService"
-                                    class="btn btn-default btn-block rounded-0">ยกเลิกงาน</button>
+                                </div>
 
                             </div>
 
-                        </div>
+                            <div class="row">
+
+                                <div class="col-md-12 mt-2">
+
+                                    <button id="btnCancelService" class="btn btn-default btn-block rounded-0">ยกเลิกงาน</button>
+
+                                </div>
+
+                            </div>
 
                         <?php endif; ?>
 
@@ -557,16 +615,15 @@
 
                         <?php if ($service->service_status == 'fixed') : ?>
 
-                        <div class="row">
+                            <div class="row">
 
-                            <div class="col-md-12 mt-2">
+                                <div class="col-md-12 mt-2">
 
-                                <button id="btnConfirmPickCar" class="btn btn-success btn-block rounded-0"><i
-                                        class="fas fa-check"></i> ยืนยันปิดงาน</button>
+                                    <button id="btnConfirmPickCar" class="btn btn-success btn-block rounded-0"><i class="fas fa-check"></i> ยืนยันปิดงาน</button>
+
+                                </div>
 
                             </div>
-
-                        </div>
 
                         <?php endif; ?>
 
@@ -591,8 +648,7 @@
 
 <!-- Modal เพิ่มส่วนลด -->
 
-<div class="modal fade" id="modalAddDiscount" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
-    aria-hidden="true">
+<div class="modal fade" id="modalAddDiscount" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
 
     <div class="modal-dialog modal-sm rounded-0" role="document">
 
@@ -616,8 +672,7 @@
 
                     <div class="col-md-12 mb-2">
 
-                        <input type="number" class="form-control rounded-0" id="service_discount"
-                            placeholder="กรอกส่วนลด">
+                        <input type="number" class="form-control rounded-0" id="service_discount" placeholder="กรอกส่วนลด">
 
                     </div>
 
@@ -641,492 +696,61 @@
 
 
 <script>
-var service_invoice = '<?= $service->service_invoice; ?>'
+    var service_invoice = '<?= $service->service_invoice; ?>'
 
-function clearFormService() {
+    function clearFormService() {
 
-    $('#amount').val('');
+        $('#amount').val('');
 
-    $('#price').val('');
+        $('#price').val('');
 
-    $('#detail').val('');
-
-}
-
-//get ส่วนลด
-
-function getDiscount() {
-
-    $.ajax({
-
-        url: '<?= base_url(); ?>/service/get_discount',
-
-        method: 'POST',
-
-        dataType: 'JSON',
-
-        data: {
-
-            service_invoice: service_invoice
-
-        },
-
-        success: function(res) {
-
-            if (res.status == 'SUCCESS') {
-
-                $('#service_discount').val(res.data.service_discount);
-
-            } else {
-
-                console.log(res);
-
-            }
-
-        }
-
-    })
-
-}
-
-//update ส่วนลด
-
-function updateDiscount() {
-
-    let service_discount = $('#service_discount').val();
-
-    if (service_discount == '') {
-
-        Swal.fire({
-
-            icon: 'warning',
-
-            title: 'แจ้งเตือน',
-
-            text: 'กรุณากรอกส่วนลด',
-
-            confirmButtonText: 'ตกลง'
-
-        });
-
-        return false;
+        $('#detail').val('');
 
     }
 
-    Swal.fire({
+    //get ส่วนลด
 
-        title: 'บันทึกส่วนลด',
+    function getDiscount() {
 
-        text: "ต้องการบันทึกส่วนลดนี้?",
+        $.ajax({
 
-        icon: 'warning',
+            url: '<?= base_url(); ?>/service/get_discount',
 
-        showCancelButton: true,
+            method: 'POST',
 
-        confirmButtonText: 'ตกลง',
+            dataType: 'JSON',
 
-        cancelButtonText: 'ยกเลิก'
+            data: {
 
-    }).then((result) => {
+                service_invoice: service_invoice
 
-        if (result.isConfirmed) {
+            },
 
-            $.ajax({
+            success: function(res) {
 
-                url: '<?= base_url(); ?>/service/update_discount',
+                if (res.status == 'SUCCESS') {
 
-                method: 'POST',
+                    $('#service_discount').val(res.data.service_discount);
 
-                dataType: 'JSON',
+                } else {
 
-                data: {
-
-                    service_invoice: service_invoice,
-
-                    service_discount: service_discount
-
-                },
-
-                success: function(res) {
-
-                    if (res.status == 'SUCCESS') {
-
-                        Swal.fire({
-
-                            icon: 'success',
-
-                            title: 'สำเร็จ',
-
-                            text: 'บันทึกส่วนลดเรียบร้อยแล้ว',
-
-                            showConfirmButton: false,
-
-                            timer: 1500
-
-                        });
-
-                        getInvoice();
-
-                        $('#modalAddDiscount').modal('hide');
-
-                    } else {
-
-                        Swal.fire({
-
-                            icon: 'warning',
-
-                            title: 'แจ้งเตือน',
-
-                            text: res.message,
-
-                            confirmButtonText: 'ตกลง'
-
-                        });
-
-                        return false;
-
-                    }
+                    console.log(res);
 
                 }
-
-            })
-
-        }
-
-    })
-
-}
-
-
-
-function getInvoice() {
-
-    $.ajax({
-
-        url: '<?= base_url(); ?>/service/get_invoice',
-
-        method: 'POST',
-
-        dataType: 'JSON',
-
-        data: {
-
-            service_invoice: service_invoice
-
-        },
-
-        success: function(res) {
-
-            if (res.status == 'SUCCESS') {
-
-                $('#titleInvoice').html(res.data.service_invoice);
-
-                $('#showServicePrice').html(res.data.service_price);
-
-                $('#showServiceVat').html(res.data.service_vat);
-
-                $('#showServiceTotal').html(res.data.service_total)
-
-                $('#showServiceDiscount').html(res.data.service_discount);
-
-                document.getElementById('option_vat').value = res.data.option_vat;
-
-                if (res.data.service_status === 'done') {
-
-                    $('#delServiceDetail').hide();
-
-                }
-
-            } else {
-
-                Swal.fire({
-
-                    title: 'ผิดพลาด',
-
-                    text: res.message + ' ระบบจะกลับสู่ในหน้าสร้างรายการ',
-
-                    icon: 'error',
-
-                    showCancelButton: false,
-
-                    confirmButtonText: 'ตกลง',
-
-                    allowEnterKey: false,
-
-                    allowEscapeKey: false,
-
-                    allowOutsideClick: false
-
-                }).then((result) => {
-
-                    if (result.isConfirmed) {
-
-                        window.location.assign('<?= base_url(); ?>/pages/service_create')
-
-                    }
-
-                });
 
             }
 
-        }
-
-    })
-
-}
-
-
-
-//update Vat
-
-function updateVat() {
-
-    let option_vat = $('#option_vat').val();
-
-    if (option_vat == '') {
-
-        return false;
+        })
 
     }
 
-    $.ajax({
+    //update ส่วนลด
 
-        url: '<?= base_url(); ?>/service/update_option_vat',
+    function updateDiscount() {
 
-        method: 'POST',
+        let service_discount = $('#service_discount').val();
 
-        dataType: 'JSON',
-
-        data: {
-
-            option_vat: option_vat,
-
-            service_invoice: service_invoice
-
-        },
-
-        success: function(res) {
-
-            if (res.status == 'SUCCESS') {
-
-                getInvoice();
-
-            } else {
-
-                console.log(res);
-
-            }
-
-        }
-
-    })
-
-}
-
-
-//ดึงOption ของ Product
-function optionProduct() {
-
-    $.ajax({
-
-        url: '<?= base_url(); ?>/product/option_product',
-
-        method: 'POST',
-
-        success: function(res) {
-
-            $('#service_name').html(res);
-
-        }
-
-    })
-
-}
-
-//ดึงข้อมูลรายละเอียด Service Detail
-function getServiceDetail() {
-
-    $.ajax({
-
-        url: '<?= base_url(); ?>/service/tbl_service_detail',
-
-        method: 'POST',
-
-        data: {
-
-            service_invoice: service_invoice
-
-        },
-
-        success: function(res) {
-
-            $('#showServiceDetail').html(res);
-
-        }
-
-    })
-
-}
-
-//ลบข้อมูลรายละเอียด
-
-function delServiceDetail(detail_id) {
-
-    Swal.fire({
-
-        title: 'ลบข้อมูล',
-
-        text: "ต้องการลบสินค้า & บริการนี้?",
-
-        icon: 'warning',
-
-        showCancelButton: true,
-
-        confirmButtonText: 'ตกลง',
-
-        cancelButtonText: 'ยกเลิก'
-
-    }).then((result) => {
-
-        if (result.isConfirmed) {
-
-            Swal.fire({
-
-                allowEnterKey: false,
-
-                allowOutsideClick: false,
-
-                allowEscapeKey: false,
-
-                html: 'กำลังบันทึกข้อมูล กรุณารอสักครู่...',
-
-                timerProgressBar: true,
-
-                didOpen: () => {
-
-                    Swal.showLoading();
-
-                    $.ajax({
-
-                        url: '<?= base_url(); ?>/service/del_service_detail',
-
-                        method: 'POST',
-
-                        dataType: 'JSON',
-
-                        data: {
-
-                            service_invoice: service_invoice,
-
-                            detail_id: detail_id
-
-                        },
-
-                        success: function(res) {
-
-                            if (res.status == 'SUCCESS') {
-
-                                Swal.fire({
-
-                                    allowEnterKey: false,
-
-                                    allowOutsideClick: false,
-
-                                    allowEscapeKey: false,
-
-                                    icon: 'success',
-
-                                    title: 'สำเร็จ',
-
-                                    text: 'ลบสินค้า & บริการเรียบร้อยแล้ว',
-
-                                    showConfirmButton: false,
-
-                                    timer: 1500
-
-                                });
-
-                                getServiceDetail();
-
-                                getInvoice();
-
-                            } else {
-
-                                Swal.fire({
-
-                                    icon: 'warning',
-
-                                    title: 'ผิดพลาด',
-
-                                    text: res.message,
-
-                                    confirmButtonText: 'ตกลง'
-
-                                })
-
-                                return false;
-
-                            }
-
-                        }
-
-                    })
-
-                }
-
-            })
-
-
-
-        }
-
-    })
-
-}
-
-$(document).ready(function() {
-
-    getInvoice();
-
-    optionProduct();
-
-    getServiceDetail();
-
-
-});
-
-
-$(document).on('click', '#addServiceDetail', function() {
-
-    let service_name = $('#service_name').val();
-
-    let amount = $('#amount').val();
-
-    //let price = $('#price').val();
-
-    let detail = $('#detail').val();
-
-    if (service_invoice == '' || service_name == '' || amount == '') {
-
-        Swal.fire({
-
-            icon: 'warning',
-
-            title: 'แจ้งเตือน',
-
-            text: 'กรุณากรอกข้อมูลให้ครบถ้วน',
-
-            confirmButtonText: 'ตกลง'
-
-        });
-
-        return false;
-
-    }
-
-    if (service_name == 'other') {
-
-        if (detail == '') {
+        if (service_discount == '') {
 
             Swal.fire({
 
@@ -1134,7 +758,7 @@ $(document).on('click', '#addServiceDetail', function() {
 
                 title: 'แจ้งเตือน',
 
-                text: 'กรุณากรอกรายละเอียดเพิ่มเติม',
+                text: 'กรุณากรอกส่วนลด',
 
                 confirmButtonText: 'ตกลง'
 
@@ -1144,59 +768,672 @@ $(document).on('click', '#addServiceDetail', function() {
 
         }
 
-        service_name = 'อื่นๆ';
+        Swal.fire({
+
+            title: 'บันทึกส่วนลด',
+
+            text: "ต้องการบันทึกส่วนลดนี้?",
+
+            icon: 'warning',
+
+            showCancelButton: true,
+
+            confirmButtonText: 'ตกลง',
+
+            cancelButtonText: 'ยกเลิก'
+
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+
+                $.ajax({
+
+                    url: '<?= base_url(); ?>/service/update_discount',
+
+                    method: 'POST',
+
+                    dataType: 'JSON',
+
+                    data: {
+
+                        service_invoice: service_invoice,
+
+                        service_discount: service_discount
+
+                    },
+
+                    success: function(res) {
+
+                        if (res.status == 'SUCCESS') {
+
+                            Swal.fire({
+
+                                icon: 'success',
+
+                                title: 'สำเร็จ',
+
+                                text: 'บันทึกส่วนลดเรียบร้อยแล้ว',
+
+                                showConfirmButton: false,
+
+                                timer: 1500
+
+                            });
+
+                            getInvoice();
+
+                            $('#modalAddDiscount').modal('hide');
+
+                        } else {
+
+                            Swal.fire({
+
+                                icon: 'warning',
+
+                                title: 'แจ้งเตือน',
+
+                                text: res.message,
+
+                                confirmButtonText: 'ตกลง'
+
+                            });
+
+                            return false;
+
+                        }
+
+                    }
+
+                })
+
+            }
+
+        })
 
     }
 
-    $.ajax({
 
-        url: '<?= base_url(); ?>/service/add_service_detail',
 
-        method: 'POST',
+    function getInvoice() {
 
-        dataType: 'JSON',
+        $.ajax({
 
-        data: {
+            url: '<?= base_url(); ?>/service/get_invoice',
 
-            service_invoice: service_invoice,
+            method: 'POST',
 
-            service_name: service_name,
+            dataType: 'JSON',
 
-            amount: amount,
+            data: {
 
-            //price: price,
+                service_invoice: service_invoice
 
-            detail: detail
+            },
 
-        },
+            success: function(res) {
 
-        success: function(res) {
+                if (res.status == 'SUCCESS') {
 
-            if (res.status == 'SUCCESS') {
+                    $('#titleInvoice').html(res.data.service_invoice);
+
+                    $('#showServicePrice').html(res.data.service_price);
+
+                    $('#showServiceVat').html(res.data.service_vat);
+
+                    $('#showServiceTotal').html(res.data.service_total)
+
+                    $('#showServiceDiscount').html(res.data.service_discount);
+
+                    document.getElementById('option_vat').value = res.data.option_vat;
+
+                    if (res.data.service_status === 'done') {
+
+                        $('#delServiceDetail').hide();
+
+                    }
+
+                } else {
+
+                    Swal.fire({
+
+                        title: 'ผิดพลาด',
+
+                        text: res.message + ' ระบบจะกลับสู่ในหน้าสร้างรายการ',
+
+                        icon: 'error',
+
+                        showCancelButton: false,
+
+                        confirmButtonText: 'ตกลง',
+
+                        allowEnterKey: false,
+
+                        allowEscapeKey: false,
+
+                        allowOutsideClick: false
+
+                    }).then((result) => {
+
+                        if (result.isConfirmed) {
+
+                            window.location.assign('<?= base_url(); ?>/pages/service_create')
+
+                        }
+
+                    });
+
+                }
+
+            }
+
+        })
+
+    }
+
+
+
+    //update Vat
+
+    function updateVat() {
+
+        let option_vat = $('#option_vat').val();
+
+        if (option_vat == '') {
+
+            return false;
+
+        }
+
+        $.ajax({
+
+            url: '<?= base_url(); ?>/service/update_option_vat',
+
+            method: 'POST',
+
+            dataType: 'JSON',
+
+            data: {
+
+                option_vat: option_vat,
+
+                service_invoice: service_invoice
+
+            },
+
+            success: function(res) {
+
+                if (res.status == 'SUCCESS') {
+
+                    getInvoice();
+
+                } else {
+
+                    console.log(res);
+
+                }
+
+            }
+
+        })
+
+    }
+
+
+    //ดึงOption ของ Product
+    function optionProduct() {
+
+        $.ajax({
+
+            url: '<?= base_url(); ?>/product/option_product',
+
+            method: 'POST',
+
+            success: function(res) {
+
+                $('#service_name').html(res);
+
+            }
+
+        })
+
+    }
+
+    //ดึงOption ของ Product
+    function optionQuantity($product_name) {
+        $.ajax({
+
+            url: '<?= base_url(); ?>/product/option_quantity',
+
+            method: 'POST',
+
+            data: {
+                product_name: $product_name
+            },
+
+
+            success: function(res) {
+
+                $('#amount').html(res);
+
+            }
+
+        })
+
+    }
+
+    //ดึงข้อมูลรายละเอียด Service Detail
+    function getServiceDetail() {
+
+        $.ajax({
+
+            url: '<?= base_url(); ?>/service/tbl_service_detail',
+
+            method: 'POST',
+
+            data: {
+
+                service_invoice: service_invoice
+
+            },
+
+            success: function(res) {
+
+                $('#showServiceDetail').html(res);
+
+            }
+
+        })
+
+    }
+
+    //ลบข้อมูลรายละเอียด
+
+    function delServiceDetail(detail_id) {
+
+        Swal.fire({
+
+            title: 'ลบข้อมูล',
+
+            text: "ต้องการลบสินค้า & บริการนี้?",
+
+            icon: 'warning',
+
+            showCancelButton: true,
+
+            confirmButtonText: 'ตกลง',
+
+            cancelButtonText: 'ยกเลิก'
+
+        }).then((result) => {
+
+            if (result.isConfirmed) {
 
                 Swal.fire({
 
-                    icon: 'success',
+                    allowEnterKey: false,
 
-                    title: 'สำเร็จ',
+                    allowOutsideClick: false,
 
-                    text: 'เพิ่มสินค้าและบริการสำเร็จ',
+                    allowEscapeKey: false,
 
-                    showConfirmButton: false,
+                    html: 'กำลังบันทึกข้อมูล กรุณารอสักครู่...',
 
-                    timer: 1500
+                    timerProgressBar: true,
 
-                });
+                    didOpen: () => {
 
-                getInvoice();
+                        Swal.showLoading();
 
-                clearFormService();
+                        $.ajax({
 
-                optionProduct();
+                            url: '<?= base_url(); ?>/service/del_service_detail',
 
-                getServiceDetail();
+                            method: 'POST',
 
-            } else {
+                            dataType: 'JSON',
+
+                            data: {
+
+                                service_invoice: service_invoice,
+
+                                detail_id: detail_id
+
+                            },
+
+                            success: function(res) {
+
+                                if (res.status == 'SUCCESS') {
+
+                                    Swal.fire({
+
+                                        allowEnterKey: false,
+
+                                        allowOutsideClick: false,
+
+                                        allowEscapeKey: false,
+
+                                        icon: 'success',
+
+                                        title: 'สำเร็จ',
+
+                                        text: 'ลบสินค้า & บริการเรียบร้อยแล้ว',
+
+                                        showConfirmButton: false,
+
+                                        timer: 1500
+
+                                    });
+
+                                    getServiceDetail();
+
+                                    getInvoice();
+
+                                } else {
+
+                                    Swal.fire({
+
+                                        icon: 'warning',
+
+                                        title: 'ผิดพลาด',
+
+                                        text: res.message,
+
+                                        confirmButtonText: 'ตกลง'
+
+                                    })
+
+                                    return false;
+
+                                }
+
+                            }
+
+                        })
+
+                    }
+
+                })
+
+
+
+            }
+
+        })
+
+    }
+
+    $(document).ready(function() {
+
+        getInvoice();
+
+        optionProduct();
+
+        getServiceDetail();
+
+
+    });
+
+    // Create Contract
+
+    $(document).on('click', '#createContract', function() {
+
+        let con_name = $('#con_names').val();
+
+        let con_tel = $('#con_tels').val();
+
+        let con_email = $('#con_emails').val();
+
+        if (con_name == '' || con_tel == '' || con_email == '') {
+
+            Swal.fire({
+
+                icon: 'warning',
+
+                title: 'แจ้งเตือน',
+
+                text: 'กรุณากรอกข้อมูลให้ครบถ้วน',
+
+                confirmButtonText: 'ตกลง'
+
+            });
+
+            return false;
+
+        }
+
+        Swal.fire({
+
+            title: 'เพิ่มผู้ใช้บริการ',
+
+            text: "ต้องการสร้างรายการซ่อมนี้?",
+
+            icon: 'warning',
+
+            showCancelButton: true,
+
+            confirmButtonText: 'ตกลง',
+
+            cancelButtonText: 'ยกเลิก'
+
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+
+                Swal.fire({
+
+                    allowEnterKey: false,
+
+                    allowEscapeKey: false,
+
+                    allowOutsideClick: false,
+
+                    html: 'กำลังสร้างรายการ กรุณารอสักครู่...',
+
+                    timerProgressBar: true,
+
+                    didOpen: () => {
+
+                        Swal.showLoading();
+
+                        $.ajax({
+
+                            url: '<?= base_url(); ?>/vessel/create_Contract',
+
+                            method: 'POST',
+
+                            dataType: 'JSON',
+
+                            data: {
+
+                                con_name: con_name,
+
+                                con_tel: con_tel,
+
+                                con_email: con_email
+
+                            },
+
+                            success: function(res) {
+
+                                if (res.status == 'SUCCESS') {
+
+                                    Swal.fire({
+
+                                        icon: 'success',
+
+                                        title: 'สำเร็จ',
+
+                                        text: 'สร้างรายการซ่อมสำเร็จ',
+
+                                        showConfirmButton: false,
+
+                                        timer: 1500
+
+                                    });
+
+                                    setTimeout(function() {
+
+                                        window.location.assign('<?= base_url(); ?>/pages/service_create/');
+
+                                    }, 1500);
+
+                                } else {
+
+                                    Swal.fire({
+
+                                        icon: 'error',
+
+                                        title: 'ผิดพลาด!',
+
+                                        text: res.message,
+
+                                        confirmButtonText: 'ตกลง'
+
+                                    });
+
+                                    return false;
+
+                                }
+
+                            }
+
+                        })
+
+                    }
+
+                })
+
+            }
+
+        })
+
+    });
+
+    //Update Service Remark
+
+    $(document).on('click', '#updateRemark', function() {
+
+        let service_name = $('#service_name').val();
+
+        let remark = $('#remark').val();
+
+        if (service_invoice == '' || remark == '') {
+
+            Swal.fire({
+
+                icon: 'warning',
+
+                title: 'แจ้งเตือน',
+
+                text: 'กรุณากรอกข้อมูลให้ครบถ้วน',
+
+                confirmButtonText: 'ตกลง'
+
+            });
+
+            return false;
+
+        }
+
+        $.ajax({
+
+            url: '<?= base_url(); ?>/service/updateRemark',
+
+            method: 'POST',
+
+            dataType: 'JSON',
+
+            data: {
+
+                service_invoice: service_invoice,
+
+                remark: remark
+
+            },
+
+            success: function(res) {
+
+                if (res.status == 'SUCCESS') {
+
+                    Swal.fire({
+
+                        icon: 'success',
+
+                        title: 'สำเร็จ',
+
+                        text: 'เพิ่มรีมาร์คสำเร็จ',
+
+                        showConfirmButton: false,
+
+                        timer: 1500
+
+                    });
+
+                    getInvoice();
+
+                    clearFormService();
+
+                    optionProduct();
+
+                    getServiceDetail();
+
+                } else {
+
+                    Swal.fire({
+
+                        icon: 'warning',
+
+                        title: 'แจ้งเตือน',
+
+                        text: res.message,
+
+                        confirmButtonText: 'ตกลง'
+
+                    });
+
+                    return false;
+
+                }
+
+            }
+
+        })
+
+    });
+
+    //Add Service Detail
+
+    $(document).on('click', '#addServiceDetail', function() {
+
+        let service_name = $('#service_name').val();
+
+        let amount = $('#amount').val();
+
+        //let price = $('#price').val();
+
+        let detail = $('#detail').val();
+
+        if (service_invoice == '' || service_name == '' || amount == '') {
+
+            Swal.fire({
+
+                icon: 'warning',
+
+                title: 'แจ้งเตือน',
+
+                text: 'กรุณากรอกข้อมูลให้ครบถ้วน',
+
+                confirmButtonText: 'ตกลง'
+
+            });
+
+            return false;
+
+        }
+
+        if (service_name == 'other') {
+
+            if (detail == '') {
 
                 Swal.fire({
 
@@ -1204,7 +1441,7 @@ $(document).on('click', '#addServiceDetail', function() {
 
                     title: 'แจ้งเตือน',
 
-                    text: res.message,
+                    text: 'กรุณากรอกรายละเอียดเพิ่มเติม',
 
                     confirmButtonText: 'ตกลง'
 
@@ -1214,469 +1451,537 @@ $(document).on('click', '#addServiceDetail', function() {
 
             }
 
+            service_name = 'อื่นๆ';
+
         }
 
-    })
+        $.ajax({
 
-});
+            url: '<?= base_url(); ?>/service/add_service_detail',
 
+            method: 'POST',
 
+            dataType: 'JSON',
 
-//ยืนยันงานซ่อม
+            data: {
 
-$(document).on('click', '#btnConfirm', function() {
+                service_invoice: service_invoice,
 
-    Swal.fire({
+                service_name: service_name,
 
-        title: 'ส่งงานซ่อม',
+                amount: amount,
 
-        text: "ยืนยันการส่งงาน",
+                detail: detail
 
-        icon: 'warning',
+            },
 
-        showCancelButton: true,
+            success: function(res) {
 
-        confirmButtonText: 'ตกลง',
+                if (res.status == 'SUCCESS') {
 
-        cancelButtonText: 'ยกเลิก'
+                    Swal.fire({
 
-    }).then((result) => {
+                        icon: 'success',
 
-        if (result.isConfirmed) {
+                        title: 'สำเร็จ',
 
-            Swal.fire({
+                        text: 'เพิ่มสินค้าและบริการสำเร็จ',
 
-                allowEnterKey: false,
+                        showConfirmButton: false,
 
-                allowOutsideClick: false,
+                        timer: 1500
 
-                allowEscapeKey: false,
+                    });
 
-                html: 'กำลังบันทึกข้อมูล กรุณารอสักครู่...',
+                    getInvoice();
 
-                timerProgressBar: true,
+                    clearFormService();
 
-                didOpen: () => {
+                    optionProduct();
 
-                    Swal.showLoading();
+                    getServiceDetail();
 
-                    $.ajax({
+                } else {
 
-                        url: '<?= base_url(); ?>/service/confirm_fix',
+                    Swal.fire({
 
-                        method: 'POST',
+                        icon: 'warning',
 
-                        dataType: 'JSON',
+                        title: 'แจ้งเตือน',
 
-                        data: {
+                        text: res.message,
 
-                            service_invoice: service_invoice
+                        confirmButtonText: 'ตกลง'
 
-                        },
+                    });
 
-                        success: function(res) {
-
-                            if (res.status == 'SUCCESS') {
-
-                                Swal.fire({
-
-                                    allowEnterKey: false,
-
-                                    allowOutsideClick: false,
-
-                                    allowEscapeKey: false,
-
-                                    icon: 'success',
-
-                                    title: 'สำเร็จ',
-
-                                    text: 'รับงานเรียบร้อย',
-
-                                    showConfirmButton: false,
-
-                                    timer: 1400
-
-                                });
-
-                                setTimeout(function() {
-
-                                    window.location.reload();
-
-                                }, 1500);
-
-                            } else {
-
-                                Swal.fire({
-
-                                    icon: 'error',
-
-                                    title: 'ผิดพลาด',
-
-                                    text: res.message,
-
-                                    confirmButtonText: 'ตกลง'
-
-                                });
-
-                                return false;
-
-                            }
-
-                        }
-
-                    })
+                    return false;
 
                 }
 
-            })
+            }
 
-        }
+        })
 
-    })
-
-})
+    });
 
 
 
-//ซ่อมเรียบเสร็จแล้ว
+    //ยืนยันงานซ่อม
 
-$(document).on('click', '#btnConfirmFixed', function() {
+    $(document).on('click', '#btnConfirm', function() {
 
-    Swal.fire({
+        Swal.fire({
 
-        title: 'ยืนยันการซ่อม',
+            title: 'ส่งงานซ่อม',
 
-        text: "Job Order เรียบร้อยแล้ว?",
+            text: "ยืนยันการส่งงาน",
 
-        icon: 'warning',
+            icon: 'warning',
 
-        showCancelButton: true,
+            showCancelButton: true,
 
-        confirmButtonText: 'ตกลง',
+            confirmButtonText: 'ตกลง',
 
-        cancelButtonText: 'ยกเลิก'
+            cancelButtonText: 'ยกเลิก'
 
-    }).then((result) => {
+        }).then((result) => {
 
-        if (result.isConfirmed) {
+            if (result.isConfirmed) {
 
-            Swal.fire({
+                Swal.fire({
 
-                allowEnterKey: false,
+                    allowEnterKey: false,
 
-                allowEscapeKey: false,
+                    allowOutsideClick: false,
 
-                allowOutsideClick: false,
+                    allowEscapeKey: false,
 
-                html: 'กำลังบันทึกข้อมูล กรุณารอสักครู่...',
+                    html: 'กำลังบันทึกข้อมูล กรุณารอสักครู่...',
 
-                timerProgressBar: true,
+                    timerProgressBar: true,
 
-                didOpen: () => {
+                    didOpen: () => {
 
-                    Swal.showLoading();
+                        Swal.showLoading();
 
-                    $.ajax({
+                        $.ajax({
 
-                        url: '<?= base_url(); ?>/service/confirm_fixed',
+                            url: '<?= base_url(); ?>/service/confirm_fix',
 
-                        method: 'POST',
+                            method: 'POST',
 
-                        dataType: 'JSON',
+                            dataType: 'JSON',
 
-                        data: {
+                            data: {
 
-                            service_invoice: service_invoice
+                                service_invoice: service_invoice
 
-                        },
+                            },
 
-                        success: function(res) {
+                            success: function(res) {
 
-                            if (res.status == 'SUCCESS') {
+                                if (res.status == 'SUCCESS') {
 
-                                Swal.fire({
+                                    Swal.fire({
 
-                                    allowEnterKey: false,
+                                        allowEnterKey: false,
 
-                                    allowOutsideClick: false,
+                                        allowOutsideClick: false,
 
-                                    allowEscapeKey: false,
+                                        allowEscapeKey: false,
 
-                                    icon: 'success',
+                                        icon: 'success',
 
-                                    title: 'สำเร็จ',
+                                        title: 'สำเร็จ',
 
-                                    text: 'อัพเดตสถานะข้อมูลเรียบร้อยแล้ว',
+                                        text: 'รับงานเรียบร้อย',
 
-                                    showConfirmButton: false,
+                                        showConfirmButton: false,
 
-                                    timer: 1500
+                                        timer: 1400
 
-                                });
+                                    });
 
-                                setTimeout(function() {
+                                    setTimeout(function() {
 
-                                    window.location.reload();
+                                        window.location.reload();
 
-                                }, 1400);
+                                    }, 1500);
 
-                            } else {
+                                } else {
 
-                                Swal.fire({
+                                    Swal.fire({
 
-                                    icon: 'error',
+                                        icon: 'error',
 
-                                    title: 'ผิดพลาด',
+                                        title: 'ผิดพลาด',
 
-                                    text: res.message,
+                                        text: res.message,
 
-                                    confirmButtonText: 'ตกลง'
+                                        confirmButtonText: 'ตกลง'
 
-                                })
+                                    });
+
+                                    return false;
+
+                                }
 
                             }
 
-                        }
+                        })
 
-                    })
+                    }
 
-                }
+                })
 
-            })
+            }
 
-        }
+        })
 
     })
 
-});
 
 
+    //ซ่อมเรียบเสร็จแล้ว
 
-//รับรถเรียบร้อย
+    $(document).on('click', '#btnConfirmFixed', function() {
 
-$(document).on('click', '#btnConfirmPickCar', function() {
+        Swal.fire({
 
-    Swal.fire({
+            title: 'ยืนยันการซ่อม',
 
-        title: 'ยืนยันการซ่อม',
+            text: "Job Order เรียบร้อยแล้ว?",
 
-        text: "Job Order เรียบร้อยแล้ว?",
+            icon: 'warning',
 
-        icon: 'warning',
+            showCancelButton: true,
 
-        showCancelButton: true,
+            confirmButtonText: 'ตกลง',
 
-        confirmButtonText: 'ตกลง',
+            cancelButtonText: 'ยกเลิก'
 
-        cancelButtonText: 'ยกเลิก'
+        }).then((result) => {
 
-    }).then((result) => {
+            if (result.isConfirmed) {
 
-        if (result.isConfirmed) {
+                Swal.fire({
 
-            Swal.fire({
+                    allowEnterKey: false,
 
-                allowEnterKey: false,
+                    allowEscapeKey: false,
 
-                allowEscapeKey: false,
+                    allowOutsideClick: false,
 
-                allowOutsideClick: false,
+                    html: 'กำลังบันทึกข้อมูล กรุณารอสักครู่...',
 
-                html: 'กำลังบันทึกข้อมูล กรุณารอสักครู่...',
+                    timerProgressBar: true,
 
-                timerProgressBar: true,
+                    didOpen: () => {
 
-                didOpen: () => {
+                        Swal.showLoading();
 
-                    Swal.showLoading();
+                        $.ajax({
 
-                    $.ajax({
+                            url: '<?= base_url(); ?>/service/confirm_fixed',
 
-                        url: '<?= base_url(); ?>/service/confirm_pick_car',
+                            method: 'POST',
 
-                        method: 'POST',
+                            dataType: 'JSON',
 
-                        dataType: 'JSON',
+                            data: {
 
-                        data: {
+                                service_invoice: service_invoice
 
-                            service_invoice: service_invoice
+                            },
 
-                        },
+                            success: function(res) {
 
-                        success: function(res) {
+                                if (res.status == 'SUCCESS') {
 
-                            if (res.status == 'SUCCESS') {
+                                    Swal.fire({
 
-                                Swal.fire({
+                                        allowEnterKey: false,
 
-                                    allowEnterKey: false,
+                                        allowOutsideClick: false,
 
-                                    allowOutsideClick: false,
+                                        allowEscapeKey: false,
 
-                                    allowEscapeKey: false,
+                                        icon: 'success',
 
-                                    icon: 'success',
+                                        title: 'สำเร็จ',
 
-                                    title: 'สำเร็จ',
+                                        text: 'อัพเดตสถานะข้อมูลเรียบร้อยแล้ว',
 
-                                    text: 'ยืนยันการรับรถเรียบร้อยแล้ว',
+                                        showConfirmButton: false,
 
-                                    showConfirmButton: false,
+                                        timer: 1500
 
-                                    timer: 1500
+                                    });
 
-                                });
+                                    setTimeout(function() {
 
-                                setTimeout(function() {
+                                        window.location.reload();
 
-                                    window.location.reload();
+                                    }, 1400);
 
-                                }, 1400);
+                                } else {
 
-                            } else {
+                                    Swal.fire({
 
-                                Swal.fire({
+                                        icon: 'error',
 
-                                    icon: 'error',
+                                        title: 'ผิดพลาด',
 
-                                    title: 'ผิดพลาด',
+                                        text: res.message,
 
-                                    text: res.message,
+                                        confirmButtonText: 'ตกลง'
 
-                                    confirmButtonText: 'ตกลง'
+                                    })
 
-                                })
+                                }
 
                             }
 
-                        }
+                        })
 
-                    })
+                    }
 
-                }
+                })
 
-            })
+            }
 
-        }
+        })
 
-    })
-
-});
+    });
 
 
 
-$(document).on('click', '#btnCancelService', function() {
+    //รับรถเรียบร้อย
 
-    Swal.fire({
+    $(document).on('click', '#btnConfirmPickCar', function() {
 
-        title: 'ยกเลิก',
+        Swal.fire({
 
-        text: "ต้องการยกเลิก?",
+            title: 'ยืนยันการซ่อม',
 
-        icon: 'warning',
+            text: "Job Order เรียบร้อยแล้ว?",
 
-        showCancelButton: true,
+            icon: 'warning',
 
-        confirmButtonText: 'ตกลง',
+            showCancelButton: true,
 
-        cancelButtonText: 'ยกเลิก'
+            confirmButtonText: 'ตกลง',
 
-    }).then((result) => {
+            cancelButtonText: 'ยกเลิก'
 
-        if (result.isConfirmed) {
+        }).then((result) => {
 
-            Swal.fire({
+            if (result.isConfirmed) {
 
-                html: 'กำลังลบข้อมูล กรุณารอสักครู่...',
+                Swal.fire({
 
-                timerProgressBar: true,
+                    allowEnterKey: false,
 
-                allowEnterKey: false,
+                    allowEscapeKey: false,
 
-                allowEscapeKey: false,
+                    allowOutsideClick: false,
 
-                allowOutsideClick: false,
+                    html: 'กำลังบันทึกข้อมูล กรุณารอสักครู่...',
 
-                didOpen: () => {
+                    timerProgressBar: true,
 
-                    Swal.showLoading();
+                    didOpen: () => {
 
-                    $.ajax({
+                        Swal.showLoading();
 
-                        url: '<?= base_url(); ?>/service/cancel_service',
+                        $.ajax({
 
-                        method: 'POST',
+                            url: '<?= base_url(); ?>/service/confirm_pick_car',
 
-                        data: {
+                            method: 'POST',
 
-                            service_invoice: service_invoice
+                            dataType: 'JSON',
 
-                        },
+                            data: {
 
-                        dataType: 'JSON',
+                                service_invoice: service_invoice
 
-                        success: function(res) {
+                            },
 
-                            if (res.status == 'SUCCESS') {
+                            success: function(res) {
 
-                                Swal.fire({
+                                if (res.status == 'SUCCESS') {
 
-                                    icon: 'success',
+                                    Swal.fire({
 
-                                    title: 'สำเร็จ',
+                                        allowEnterKey: false,
 
-                                    text: 'ยกเลิกเรียบร้อยแล้ว',
+                                        allowOutsideClick: false,
 
-                                    showConfirmButton: false,
+                                        allowEscapeKey: false,
 
-                                    timer: 1500,
+                                        icon: 'success',
 
-                                    timerProgressBar: true,
+                                        title: 'สำเร็จ',
 
-                                    allowEnterKey: false,
+                                        text: 'ยืนยันการรับรถเรียบร้อยแล้ว',
 
-                                    allowEscapeKey: false,
+                                        showConfirmButton: false,
 
-                                    allowOutsideClick: false,
+                                        timer: 1500
 
-                                });
+                                    });
 
-                                setTimeout(function() {
+                                    setTimeout(function() {
 
-                                    window.history.back();
+                                        window.location.reload();
 
-                                }, 1400);
+                                    }, 1400);
 
-                            } else {
+                                } else {
 
-                                Swal.fire({
+                                    Swal.fire({
 
-                                    icon: 'error',
+                                        icon: 'error',
 
-                                    title: 'ผิดพลาด',
+                                        title: 'ผิดพลาด',
 
-                                    text: res.message,
+                                        text: res.message,
 
-                                    confirmButtonText: 'ตกลง'
+                                        confirmButtonText: 'ตกลง'
 
-                                });
+                                    })
 
-                                return false;
+                                }
 
                             }
 
-                        }
+                        })
 
-                    })
+                    }
 
-                }
+                })
 
-            })
+            }
 
-        }
+        })
+
+    });
+
+
+
+    $(document).on('click', '#btnCancelService', function() {
+
+        Swal.fire({
+
+            title: 'ยกเลิก',
+
+            text: "ต้องการยกเลิก?",
+
+            icon: 'warning',
+
+            showCancelButton: true,
+
+            confirmButtonText: 'ตกลง',
+
+            cancelButtonText: 'ยกเลิก'
+
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+
+                Swal.fire({
+
+                    html: 'กำลังลบข้อมูล กรุณารอสักครู่...',
+
+                    timerProgressBar: true,
+
+                    allowEnterKey: false,
+
+                    allowEscapeKey: false,
+
+                    allowOutsideClick: false,
+
+                    didOpen: () => {
+
+                        Swal.showLoading();
+
+                        $.ajax({
+
+                            url: '<?= base_url(); ?>/service/cancel_service',
+
+                            method: 'POST',
+
+                            data: {
+
+                                service_invoice: service_invoice
+
+                            },
+
+                            dataType: 'JSON',
+
+                            success: function(res) {
+
+                                if (res.status == 'SUCCESS') {
+
+                                    Swal.fire({
+
+                                        icon: 'success',
+
+                                        title: 'สำเร็จ',
+
+                                        text: 'ยกเลิกเรียบร้อยแล้ว',
+
+                                        showConfirmButton: false,
+
+                                        timer: 1500,
+
+                                        timerProgressBar: true,
+
+                                        allowEnterKey: false,
+
+                                        allowEscapeKey: false,
+
+                                        allowOutsideClick: false,
+
+                                    });
+
+                                    setTimeout(function() {
+
+                                        window.history.back();
+
+                                    }, 1400);
+
+                                } else {
+
+                                    Swal.fire({
+
+                                        icon: 'error',
+
+                                        title: 'ผิดพลาด',
+
+                                        text: res.message,
+
+                                        confirmButtonText: 'ตกลง'
+
+                                    });
+
+                                    return false;
+
+                                }
+
+                            }
+
+                        })
+
+                    }
+
+                })
+
+            }
+
+        })
 
     })
-
-})
 </script>

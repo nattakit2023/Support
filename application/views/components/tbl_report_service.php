@@ -30,7 +30,7 @@
 
                 <td class="text-center"><span class="badge badge-dark"><?=$item->service_invoice;?></span></td>
 
-                <td><?=$item->license_plate;?></td>
+                <td><?=$item->ves_name;?></td>
 
                 <td><?=$item->cus_name;?></td>
 
@@ -38,7 +38,7 @@
 
                 <td class="text-center">
 
-                    <?=date_format(date_create($item->create_date), 'd/m/Y');?>
+                    <?=date_format(date_create($item->due_date), 'd/m/Y');?>
 
                 </td>
 

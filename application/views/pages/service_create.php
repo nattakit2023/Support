@@ -209,7 +209,7 @@
 
                                     <select class="form-control select2 rouned-0" id="ves_fleet">
 
-                                        <option value="">Loading...</option>
+                                        <option value="fleet">Loading...</option>
 
                                     </select>
 

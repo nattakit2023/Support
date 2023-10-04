@@ -8,9 +8,9 @@
 
                 <div class="col-sm-6">
 
-                    <h3><i class="fas fa-ship"></i><strong> Detail <?= $customer->license_plate; ?></strong></h3>
+                    <h3><i class="fas fa-ship"></i><strong> Detail <?= $customer->ves_name; ?></strong></h3>
 
-                    <p class="text-muted">History <?= $customer->license_plate; ?></p>
+                    <p class="text-muted">History <?= $customer->ves_name; ?></p>
 
                 </div>
 
@@ -226,7 +226,7 @@
 
 <script>
 
-    var cus_id = '<?=$customer->cus_id;?>';
+    var service_id = '<?=$customers->service_id;?>';
 
     function tblCustomerHistory(){
 
@@ -242,7 +242,7 @@
 
             data : {
 
-                cus_id : cus_id,
+                service_id : service_id,
 
                 datestart : datestart,
 

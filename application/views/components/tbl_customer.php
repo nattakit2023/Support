@@ -10,7 +10,7 @@
 
             <th style="width: 15%">Telephone</th>
 
-            <th style="width: 20%">Tax</th>
+            <th style="width: 20%">Email</th>
 
             <th style="width: 22%">Option</th>
 
@@ -20,29 +20,29 @@
 
     <tbody>
 
-        <?php foreach ($customer as $item) : ?>
+        <?php foreach ($customers as $item) : ?>
 
-            <tr id="item<?= $item->cus_id; ?>">
+            <tr id="item<?= $item->service_id; ?>">
 
-                <td><?= $item->license_plate ?></td>
+                <td><?= $item->ves_name ?></td>
 
                 <td><?= $item->cus_name; ?></td>
 
                 <td><?= $item->cus_tel; ?></td>
 
-                <td><?= $item->cus_tax; ?></td>
+                <td><?= $item->cus_email; ?></td>
 
                 <td class="text-center">
 
-                    <a href="<?=base_url();?>pages/customer_detail/<?= $item->cus_id; ?>" class="btn btn-flat btn-default btn-sm">Service History</a>
+                    <a href="<?=base_url();?>pages/customer_detail/<?= $item->service_id; ?>" class="btn btn-flat btn-default btn-sm">Service History</a>
 
-                    <button type="button" onclick="getCustomer('<?= $item->cus_id; ?>');" title="แก้ไขข้อมูลลูกค้า" class="btn btn-outline-primary btn-sm btn-flat" data-toggle="modal" data-target="#modalEditCustomer">
+                    <button type="button" onclick="getCustomer('<?= $item->service_id; ?>');" title="แก้ไขข้อมูลลูกค้า" class="btn btn-outline-primary btn-sm btn-flat" data-toggle="modal" data-target="#modalEditCustomer">
 
                         <i class="fas fa-edit"></i>
 
                     </button>
 
-                    <button onclick="delCustomer('<?= $item->cus_id; ?>')" class="btn btn-flat btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+                    <button onclick="delCustomer('<?= $item->service_id; ?>')" class="btn btn-flat btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
 
                 </td>
 

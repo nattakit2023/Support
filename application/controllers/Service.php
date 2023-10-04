@@ -52,9 +52,9 @@ class Service extends CI_Controller
 
         $where_arr = array(
 
-            'create_date >=' => $datestart,
+            'due_date >=' => $datestart,
 
-            'create_date <=' => $dateend
+            'due_date <=' => $dateend
 
         );
 
@@ -87,7 +87,7 @@ class Service extends CI_Controller
         }
 
         $service_invoice = $this->Function_model->genInvoice();
-        
+
         $projects = $this->input->post('projects');
 
         $cus_name = $this->input->post('cus_name');
@@ -146,11 +146,13 @@ class Service extends CI_Controller
 
         $contract_end = $this->input->post('contract_end');
 
-        if ($service_invoice == null || $projects == null || $cus_name == null || $cus_tel == null ||  $cus_email == null || $cus_address == null || $cus_zipcode == null 
-        ||$ves_fleet == null || $ves_name == null || $ves_type == null || $ves_callsign == null || $ves_imo == null || $ves_mmsi == null || $ves_year == null 
-        ||$ves_maintenance == null || $con_name == null || $con_tel == null || $con_port == null || $con_email == null 
-        || $admin_name == null || $admin_names == null||$create_date == null || $due_date == null || $end_date == null || $eta == null || $etd == null || $contract_start == null
-        || $contract_end == null) {
+        if (
+            $service_invoice == null || $projects == null || $cus_name == null || $cus_tel == null ||  $cus_email == null || $cus_address == null || $cus_zipcode == null
+            || $ves_fleet == null || $ves_name == null || $ves_type == null || $ves_callsign == null || $ves_imo == null || $ves_mmsi == null || $ves_year == null
+            || $ves_maintenance == null || $con_name == null || $con_tel == null || $con_port == null || $con_email == null
+            || $admin_name == null || $admin_names == null || $create_date == null || $due_date == null || $end_date == null || $eta == null || $etd == null || $contract_start == null
+            || $contract_end == null
+        ) {
 
             echo json_encode([
 
@@ -163,14 +165,12 @@ class Service extends CI_Controller
             exit();
         }
 
-        if($ves_survey == null && $ves_installation == null){
+        if ($ves_survey == null && $ves_installation == null) {
             $ves_survey = '';
             $ves_installation = '';
-        }
-        elseif($ves_survey == null ){
+        } elseif ($ves_survey == null) {
             $ves_survey = '';
-        }
-        elseif($ves_installation == null){
+        } elseif ($ves_installation == null) {
             $ves_installation = '';
         }
 
@@ -197,7 +197,7 @@ class Service extends CI_Controller
             'ves_type' => $ves_type,
 
             'ves_callsign' => $ves_callsign,
-            
+
             'ves_imo' => $ves_imo,
 
             'ves_mmsi' => $ves_mmsi,
@@ -402,6 +402,78 @@ class Service extends CI_Controller
         $this->load->view('components/tbl_service_detail', $data);
     }
 
+    //อัพเดท รีมาร์ค
+
+    function updateRemark()
+
+    {
+
+        if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+
+            show_404();
+
+            exit();
+        }
+
+        $service_invoice = $this->input->post('service_invoice');
+
+        $remark = $this->input->post('remark');
+
+        if ($service_invoice == null || $remark == null) {
+
+            echo json_encode([
+
+                'status' => 'ERROR',
+
+                'message' => 'No data input'
+
+            ]);
+
+            exit();
+        }
+
+
+        $res = $this->Function_model->updateData('tbl_service', ['service_invoice' => $service_invoice], ['remark' => $remark]);
+
+        if ($res != TRUE) {
+
+            echo json_encode([
+
+                'status' => 'ERROR',
+
+                'message' => 'Have someting wrong when insert service_detail'
+
+            ]);
+
+            exit();
+        }
+
+
+        if ($res == TRUE) {
+
+            echo json_encode([
+
+                'status' => 'SUCCESS',
+
+                'message' => 'เพิ่มรายการสินค้าและบริการเรียบร้อยแล้ว'
+
+            ]);
+
+            exit();
+        } else {
+
+            echo json_encode([
+
+                'status' => 'ERROR',
+
+                'message' => 'มีบางอย่างผิดพลาด กรุณาทำรายการใหม่อีกครั้ง'
+
+            ]);
+        }
+
+
+    }
+
     //เพิ่มสินค้าและบริการ
 
     function add_service_detail()
@@ -421,13 +493,10 @@ class Service extends CI_Controller
 
         $amount = $this->input->post('amount');
 
-        $price = $this->input->post('price');
-
         $detail = $this->input->post('detail');
 
         $service = $this->Function_model->getDataRow('tbl_service', ['service_invoice' => $service_invoice]);
 
-        $total = $price * $amount;
 
         if ($service_invoice == null || $service_name == null || $amount == null) {
 
@@ -457,10 +526,6 @@ class Service extends CI_Controller
 
             'amount' => $amount,
 
-            //'price' => $price,
-
-            'total' => $total,
-
             'detail' => $detail
 
         ];
@@ -483,61 +548,7 @@ class Service extends CI_Controller
         }
 
 
-
-        //ขั้นตอนการคำนวณสรุปยอด
-
-        $sum_detail = $this->Function_model->getSum('tbl_service_detail', 'total', ['service_invoice' => $service_invoice]);
-
-        switch ($service->option_vat) {
-
-            case 'in':
-
-                $sum_after_discount = $sum_detail - $service->service_discount; //ยอดหลังหักจากส่วนลด
-
-                $service_vat = ($sum_after_discount * 7) / 107; //หาค่าของ vat 7%
-
-                $service_price = $sum_after_discount - $service_vat;
-
-                $service_total = $sum_after_discount;
-
-                break;
-
-            case 'out':
-
-                $sum_after_discount = $sum_detail - $service->service_discount; //ยอดหลังหักจากส่วนลด
-
-                $service_vat = ($sum_after_discount * 7) / 100; //หาค่าของ vat 7%
-
-                $service_price = $sum_after_discount;
-
-                $service_total = ($sum_detail - $service->service_discount) + $service_vat;
-
-                break;
-
-            default:
-
-                $service_total = $sum_detail - $service->service_discount;
-
-                $service_price = $sum_detail - $service->service_discount;
-
-                $service_vat = 0;
-        }
-
-        $data_arr = [
-
-            'service_total' => $service_total,
-
-            'service_vat' => $service_vat,
-
-            'service_price' => $service_price
-
-        ];
-
-        $res = $this->Function_model->updateData('tbl_service', ['service_invoice' => $service_invoice], $data_arr);
-
-
-
-        if ($res == TRUE) {
+        if ($res_detail == TRUE) {
 
             echo json_encode([
 
@@ -788,58 +799,7 @@ class Service extends CI_Controller
             exit();
         }
 
-        //ขั้นตอนการคำนวณสรุปยอด
-
-        $sum_detail = $this->Function_model->getSum('tbl_service_detail', 'total', ['service_invoice' => $service_invoice]);
-
-        switch ($service->option_vat) {
-
-            case 'in':
-
-                $sum_after_discount = $sum_detail - $service->service_discount; //ยอดหลังหักจากส่วนลด
-
-                $service_vat = ($sum_after_discount * 7) / 107; //หาค่าของ vat 7%
-
-                $service_price = $sum_after_discount - $service_vat;
-
-                $service_total = $sum_after_discount;
-
-                break;
-
-            case 'out':
-
-                $sum_after_discount = $sum_detail - $service->service_discount; //ยอดหลังหักจากส่วนลด
-
-                $service_vat = ($sum_after_discount * 7) / 100; //หาค่าของ vat 7%
-
-                $service_price = $sum_after_discount;
-
-                $service_total = ($sum_detail - $service->service_discount) + $service_vat;
-
-                break;
-
-            default:
-
-                $service_total = $sum_detail - $service->service_discount;
-
-                $service_price = $sum_detail - $service->service_discount;
-
-                $service_vat = 0;
-        }
-
-        $data_arr = [
-
-            'service_total' => $service_total,
-
-            'service_vat' => $service_vat,
-
-            'service_price' => $service_price
-
-        ];
-
-        $res = $this->Function_model->updateData('tbl_service', ['service_invoice' => $service_invoice], $data_arr);
-
-        if ($res == TRUE) {
+        if ($res_del == TRUE) {
 
             echo json_encode([
 
@@ -1499,7 +1459,7 @@ class Service extends CI_Controller
 
         $amount_service_fixed = count($this->Function_model->fetchDataResult('tbl_service', ['service_status' => 'fixed']));
 
-        $amount_customer = count($this->Function_model->fetchDataResult('tbl_customer'));
+        $amount_customer = count($this->Function_model3->fetchDataResult('customers'));
 
         echo json_encode([
 

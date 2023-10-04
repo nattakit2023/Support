@@ -19,7 +19,6 @@ function Convert($amount_number)
         $number = substr($amount_number, 0, $pt);
 
         $fraction = substr($amount_number, $pt + 1);
-
     }
 
 
@@ -45,7 +44,6 @@ function Convert($amount_number)
         $ret .= "ถ้วน";
 
     return $ret;
-
 }
 
 
@@ -69,7 +67,6 @@ function ReadNumber($number)
         $ret .= ReadNumber(intval($number / 1000000)) . "ล้าน";
 
         $number = intval(fmod($number, 1000000));
-
     }
 
 
@@ -91,11 +88,9 @@ function ReadNumber($number)
         $divider = $divider / 10;
 
         $pos++;
-
     }
 
     return $ret;
-
 }
 
 ## วิธีใช้งาน
@@ -129,7 +124,6 @@ function ReadNumber($number)
     <title><?= $title; ?></title>
 
     <style>
-
         h1,
 
         h2,
@@ -191,7 +185,6 @@ function ReadNumber($number)
             color: white;
 
         }
-
     </style>
 
 </head>
@@ -202,7 +195,7 @@ function ReadNumber($number)
 
     <?php
 
-    $startYear = date('Y', strtotime($service->create_date)) + 543;
+    $startYear = date('Y', strtotime($service->due_date)) + 543;
 
 
 
@@ -212,37 +205,9 @@ function ReadNumber($number)
 
     ?>
 
-    <table>
 
-        <tr>
 
-            <td>
-
-                <!-- <img src="<?=base_url();?>/assets/img/logo.png" alt="" style="max-width: 120px;"> -->
-
-            </td>
-
-            <td>
-
-                <h2><strong>Job Order <?= $service->service_id; ?> </strong></h2>
-
-                <p><strong>Administrator: </strong><?=$service->admin_name?><br>
-
-                    โทร. <?= $service->cus_tel; ?><br>
-
-                    <strong>Email : </strong> <?= $service->cus_tax; ?>
-
-                </p>
-
-            </td>
-
-        </tr>
-
-    </table>
-
-    <hr>
-
-    <h2 style="text-align:center"><strong>Job Order  <?= $service->service_id?></strong></h2>
+    <h2 style="text-align:center"><strong>Job Order <?= $service->service_id ?></strong></h2>
 
     <p style="text-align:center; margin:0px; padding:0px;">
 
@@ -254,56 +219,164 @@ function ReadNumber($number)
 
     </p>
 
-    <!-- ข้อมูลเจ้าของรถ  -->
+    <!-- ข้อมูลเรือ  -->
 
     <div style="border-collapse: collapse; border:1px solid #333; padding-left: 10px; padding-right : 10px;">
 
         <table style="width: 100%; margin-top: 10px;">
+            <!----------------------------------------------------------------C U S T O M E R--------------------------------------------------------------------------->
+            <tr>
+                <td>
+                    <strong>CUSTOMER</strong>
+                </td>
+            </tr>
+
 
             <tr>
 
                 <td style="width: 50%">
 
-                    <strong>เจ้าของรถ :</strong> <?= $service->cus_name; ?>
+                    <strong>Name :</strong> <?= $service->cus_name; ?>
+
+                </td>
+
+                <td style="width: 25%">
+                    <strong>Tel : </strong><?= $service->cus_tel; ?>
+
 
                 </td>
 
                 <td style="width: 25%">
 
-                    <strong>MMSI :</strong> <?= $service->car_brand; ?>
+                    <strong>Email :</strong> <?= $service->cus_email; ?>
 
                 </td>
 
-                <td style="width: 25%">
 
-                    <strong>Call Sign :</strong> <?= $service->car_model; ?>
+
+
+            </tr>
+
+            <tr>
+                <td>
+
+                    <strong>Address :</strong> <?= $service->cus_address; ?>
 
                 </td>
+                <td>
 
+                    <strong>Zipcode :</strong> <?= $service->cus_zipcode; ?>
+
+                </td>
+            </tr>
+
+            <!----------------------------------------------------------------V E S S E L--------------------------------------------------------------------------->
+
+            <tr>
+                <td>
+                    <strong>_________________________________________________</strong>
+                </td>
+                <td>
+                    <strong>__________________________________</strong>
+                </td>
+                <td>
+                    <strong>__________________________________</strong>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>VESSEL</strong>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <strong>Fleet : </strong><?= $service->ves_fleet; ?>
+                </td>
+                <td>
+                    <strong>Type : </strong><?= $service->ves_type; ?>
+                </td>
+                <td>
+                    <strong>Call Sign : </strong><?= $service->ves_callsign; ?>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <strong>Name : </strong><?= $service->ves_name; ?>
+                </td>
+                <td>
+                    <strong>MMSI : </strong><?= $service->ves_mmsi; ?>
+                </td>
+                <td>
+                    <strong>IMO : </strong><?= $service->ves_imo; ?>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <strong>Maintenance : </strong><?= $service->ves_maintenance; ?>
+                </td>
+                <td>
+                    <strong>Survey : </strong><?= $service->ves_survey; ?>
+                </td>
+                <td>
+                    <strong>Installation : </strong><?= $service->ves_installation; ?>
+                </td>
+            </tr>
+
+            <!----------------------------------------------------------------C O N T R A C T--------------------------------------------------------------------------->
+            <tr>
+                <td>
+                    <strong>_________________________________________________</strong>
+                </td>
+                <td>
+                    <strong>__________________________________</strong>
+                </td>
+                <td>
+                    <strong>__________________________________</strong>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>CONTRACT ONBOARD</strong>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <strong>Name : </strong><?= $service->con_name; ?>
+                </td>
+                <td>
+                    <strong>Tel : </strong><?= $service->con_tel; ?>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <strong>Port : </strong><?= $service->con_port; ?>
+                </td>
+                <td>
+                    <strong>Email : </strong><?= $service->con_email; ?>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <strong>_________________________________________________</strong>
+                </td>
+                <td>
+                    <strong>__________________________________</strong>
+                </td>
+                <td>
+                    <strong>__________________________________</strong>
+                </td>
             </tr>
 
             <tr>
 
-                <td><strong>ที่อยู่ : </strong><?= $service->cus_address; ?> </td>
-
-                <td colspan="2"><strong>Vessel : </strong><?= $service->license_plate; ?></td>
-
-            </tr>
-
-            <tr>
-
-                <td><strong>Emal :</strong> <?=($service->cus_tax != null)?$service->cus_tax:'-';?></td>
-
-                <td colspan="2"><strong>IMO : </strong> <?= $service->car_mile_number; ?> km</td>
-
-            </tr>
-
-            <tr>
-
-                <td><strong>วันที่รับซ่อม :</strong> <?= date_format(date_create($service->create_date), 'd/m/' . $startYear); ?></td>
-
-                <td></td>
-
+                <td><strong>Due Date :</strong> <?= date_format(date_create($service->due_date), 'd/m/' . $startYear); ?></td>
+                <td><strong>Complete Date :</strong> <?= date_format(date_create($service->end_date), 'd/m/' . $startYear); ?></td>
             </tr>
 
         </table>
@@ -330,10 +403,10 @@ function ReadNumber($number)
 
                     <th style="width: 8%; color:white;">จำนวน</th>
 
-                <!--    <th style="width: 20%; color:white;">หน่วยละ</th>
+                    <!--    <th style="width: 20%; color:white;">หน่วยละ</th>
 
                     <th style="width: 10%; color:white;" colspan="2">ราคารวม</th>
-                -->    
+                -->
 
                 </tr>
 
@@ -363,7 +436,7 @@ function ReadNumber($number)
 
                         </td>
 
-                     <!--   <td style="text-align: center;">
+                        <!--   <td style="text-align: center;">
 
                             <?= number_format($item->price, 2); ?>
 
@@ -418,25 +491,17 @@ function ReadNumber($number)
 
     </div>
 
-    <!-- หมายเหตุ -->
 
-    <div style="padding-top: 10px;">
-
-        <p><small><em><strong>เงื่อนไขเพิ่มเติม :</strong> ข้าพเจ้าอนุญาตให้ <strong>อู่.....................</strong> ปฏิบัติงานดังกล่าวข้างต้นให้โดยตระหนักว่าทาง
-
-                    <strong>อู่...........................</strong> ไม่ได้รับผิดชอบในการสูญหายที่เกิดขึ้นแก่รถ หรือสิ่งอื่นๆ </em></small></p>
-
-    </div>
 
     <!--ลายเซ็น -->
 
-    <div style="padding-top:20px;">
+    <div style="padding-top:20px; ">
 
         <table style="width: 100%">
 
             <tr>
 
-                <td style="width: 50%; text-align: center;">ลงชื่อ...............................................ผู้รับแจ้งซ่อม</td>
+                <td style="width: 50%; text-align: center;">ลงชื่อ...............................................ผู้อนุมัติ</td>
 
                 <td style="width: 50%; text-align: center;">ลงชื่อ...............................................เจ้าของหรือผู้ส่งซ่อม</td>
 
@@ -444,6 +509,14 @@ function ReadNumber($number)
 
         </table>
 
+    </div>
+
+    <div>
+        <div>**************************************************************************************************************************************</div>
+        <h3>REMARK</h3>
+        <div>
+            <?= $service->remark ?>
+        </div>
     </div>
 
 </body>

@@ -132,6 +132,6 @@ $autoload['language'] = array();
 |
 |	$autoload['model'] = array('first_model' => 'first');
 */
-$autoload['model'] = array('Function_model', 'Function_model2', 'Function_model3');
+$autoload['model'] = array('Function_model', 'Function_model2', 'Function_model3','Function_model4');
 
 $autoload['time_zone'] = date_default_timezone_set('Asia/Bangkok');

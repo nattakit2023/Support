@@ -152,9 +152,9 @@ class Function_model extends CI_Model
 
         $where_arr = [
 
-            'create_date >=' => date('Y-01-01'),
+            'due_date >=' => date('Y-01-01'),
 
-            'create_date <=' => date('Y-12-31')
+            'due_date <=' => date('Y-12-31')
 
         ];
 

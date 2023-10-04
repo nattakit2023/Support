@@ -157,7 +157,7 @@
                 </li>
 
 
-
+<!---
                 <li class="nav-header text-info">Customer Information</li>
 
                 <li class="nav-item">
@@ -172,7 +172,7 @@
 
                 </li>
 
-
+--->
 
                 <!-- รายงานต่างๆ -->
 
@@ -194,6 +194,8 @@
 
                 <li class="nav-header text-info">Management</li>
 
+                <!---
+
                 <li class="nav-item">
 
                     <a href="<?=base_url();?>/pages/product" class="nav-link <?= ($active == 'product') ? 'active' : ''; ?>">
@@ -205,6 +207,7 @@
                     </a>
 
                 </li>
+                --->
 
                 <?php if ($this->session->userdata('admin_position') == 'admin') : ?>
 

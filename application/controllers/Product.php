@@ -378,18 +378,51 @@ class Product extends CI_Controller
 
         }
 
-        $product = $this->Function_model->fetchDataResult('tbl_product','','product_id', 'DESC');
+        $product = $this->Function_model2->fetchDataResult('sma_products','','id', 'ASC');
 
-        echo '<option value="">--เลือกสินค้า & บริการ--</option>';
+        echo '<option value="" disabled selected>--เลือกสินค้า & บริการ--</option>';
 
         foreach($product as $item){
 
-            echo '<option value="'.$item->product_name.'">'.$item->product_name.'</option>';
+            if(($item->track_quantity - $item->quantity) == 0){
+            }
+            else{
+                echo '<option value="'.$item->name.'">'.$item->id.". ".$item->name.'</option>';
+            }
+
+            
 
         }
 
-        echo '<option value="other">อื่นๆ</option>';
 
+    }
+
+    //option สินค้าและบริการ
+
+    function option_quantity(){
+
+        $product_name = $this->input->post('product_name');
+
+        if($_SERVER['REQUEST_METHOD'] != 'POST'){
+
+            show_404();exit();
+
+        }
+
+        $product = $this->Function_model2->fetchDataResult('sma_products','','id', 'ASC');
+        
+        echo '<option value="" selected>เลือกจำนวนสินค้า</option>';
+
+        foreach($product as $item){
+            if($item->name == $product_name){
+                $quantity = $item->quantity - $item->track_quantity;
+                while ($quantity>0){
+                    echo '<option value="'.$quantity.'">'.$quantity.'</option>';
+                    $quantity--;
+                }
+                exit();
+            }
+        }
     }
 
 }

@@ -154,11 +154,11 @@ class Customer extends CI_Controller
             exit();
         }
 
-        $license_plate = $this->input->post('license_plate');
+        $name = $this->input->post('name');
 
-        $this->db->like('license_plate', $license_plate, 'both');
+        $this->db->like('cus_name', $name, 'both');
 
-        $data['customer'] = $this->db->get('tbl_customer')->result();
+        $data['customers'] = $this->db->get('tbl_service')->result();
 
         $this->load->view('components/tbl_customer', $data);
     }
@@ -180,32 +180,32 @@ class Customer extends CI_Controller
 
         $dateend = $this->input->post('dateend');
 
-        $cus_id = $this->input->post('cus_id');
+        $service_id = $this->input->post('service_id');
 
-        if ($cus_id == null) {
+        if ($service_id == null) {
 
             show_404();
             exit();
         }
 
-        $license_plate = $this->Function_model->getDataRow('tbl_customer', ['cus_id' => $cus_id])->license_plate;
+        $ves_name = $this->Function_model->getDataRow('tbl_service', ['service_id' => $service_id])->ves_name;
 
         if ($datestart == null || $dateend == null) {
 
             $where_arr = [
 
-                'license_plate' => $license_plate
+                'ves_name' => $ves_name
 
             ];
         } else {
 
             $where_arr = [
 
-                'create_date >=' => $datestart,
+                'due_date >=' => $datestart,
 
                 'end_date <=' => $dateend,
 
-                'license_plate' => $license_plate
+                'ves_name' => $ves_name
 
             ];
         }

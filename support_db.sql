@@ -101,30 +101,6 @@ INSERT INTO `tbl_admin` (`admin_id`, `admin_name`, `admin_username`, `admin_pass
 (4, 'Kirk Vilaimal', 'kirk', '7c222fb2927d828af22f592134e8932480637c0d', 'admin', 'active');
 
 -- --------------------------------------------------------
-
---
--- Table structure for table `tbl_customer`
---
-
-CREATE TABLE `tbl_customer` (
-  `cus_id` int(11) NOT NULL,
-  `cus_name` varchar(100) NOT NULL COMMENT 'ชื่อลูกค้า',
-  `cus_tel` varchar(15) NOT NULL COMMENT 'เบอร์โทร',
-  `cus_address` text NOT NULL COMMENT 'ที่อยู่',
-  `cus_zip` int(6) DEFAULT NULL COMMENT 'รหัสไปรษณีย์',
-  `cus_email` varchar(50) DEFAULT NULL COMMENT 'อีเมล'
-
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `tbl_customer`
---
-
-INSERT INTO `tbl_customer` (`cus_id`, `cus_name`, `cus_tel`, `cus_address`, `cus_zip`, `cus_email`) VALUES
-(1, 'test', '0956695752', 'Bang Na', '10260', 'kiwi@gmail.com');
-
--- --------------------------------------------------------
-
 --
 -- Table structure for table `tbl_contract`
 --
@@ -136,50 +112,6 @@ CREATE TABLE `tbl_contract` (
   `con_email` varchar(50) DEFAULT NULL COMMENT 'อีเมล'
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `tbl_contract`
---
-
-INSERT INTO `tbl_contract` (`con_id`, `con_name`, `con_tel`, `con_email`) VALUES
-(1, 'test', '0956695752', 'kiwi@gmail.com');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_product`
---
-
-CREATE TABLE `tbl_product` (
-  `product_id` int(11) NOT NULL COMMENT 'ไอดีสินค้าและบริการ',
-  `product_name` varchar(100) NOT NULL COMMENT 'ชื่อสินค้าและบริการ',
-  `product_price` float(10,2) DEFAULT 0.00
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `tbl_product`
---
-
-INSERT INTO `tbl_product` (`product_id`, `product_name`, `product_price`) VALUES
-(1, 'Installation', NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_fleet`
---
-
-CREATE TABLE `tbl_fleet` (
-  `id` int(11) NOT NULL COMMENT 'ไอดีเรือ',
-  `ves_fleet` varchar(20) NOT NULL COMMENT 'ฟรีทเรือ'
-
-)  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `tbl_fleet`
---
-
-INSERT INTO `tbl_fleet` (`id`, `ves_fleet`) VALUES (1, 'SC');
 
 
 -- --------------------------------------------------------
@@ -255,6 +187,7 @@ CREATE TABLE `tbl_service` (
   `con_port` varchar(50) NOT NULL COMMENT 'ท่าเรือ',
   `engineer` varchar(50) NOT NULL COMMENT 'วิศวกรคุมงาน',
   `support_1` varchar(50) NOT NULL COMMENT 'ผู้ช่วยวิศวกรคนที่1',
+  `remark` varchar(1000) COMMENT 'รีมาร์ค',  
   `create_date` date NOT NULL COMMENT 'สร้างJob Order',
   `due_date` date NOT NULL COMMENT 'เริ่ม',
   `end_date` date NOT NULL COMMENT 'สิ้นสุด',
@@ -267,12 +200,6 @@ CREATE TABLE `tbl_service` (
   
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
---
--- Dumping data for table `tbl_service`
---
-
-INSERT INTO `tbl_service` (`service_id`, `service_invoice`, `cus_name`, `cus_address`, `cus_tel`, `cus_email`, `service_status`) VALUES
-(1, '', 'test', 'ergergergdfrebfdbtr', '0944814562', '1100700700995', '12354');
 
 -- --------------------------------------------------------
 
@@ -284,17 +211,12 @@ CREATE TABLE `tbl_service_detail` (
   `id` int(11) NOT NULL,
   `service_invoice` varchar(13) NOT NULL COMMENT 'เลขใบสั่งซื้อ',
   `service_name` varchar(100) NOT NULL COMMENT 'ชื่อสินค้าและบริการ',
-  `detail` varchar(250) DEFAULT NULL COMMENT 'รายละเอียด',
-  `service_remark` varchar(500) NOT NULL COMMENT 'Remark'
+  `amount` int(10) NOT NULL COMMENT 'จำนวนสินค้า',  
+  `detail` varchar(250) DEFAULT NULL COMMENT 'รายละเอียด'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
---
--- Dumping data for table `tbl_service_detail`
---
 
-INSERT INTO `tbl_service_detail` (`id`, `service_invoice`, `service_name`, `detail`,`service_remark`) VALUES
-(1, '230001', 'Installation', 'aaa','aaa');
-
+-- --------------------------------------------------------
 --
 -- Indexes for dumped tables
 --
@@ -311,29 +233,12 @@ ALTER TABLE `ci_sessions`
 ALTER TABLE `tbl_admin`
   ADD PRIMARY KEY (`admin_id`);
 
---
--- Indexes for table `tbl_fleet`
---
-ALTER TABLE `tbl_fleet`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `tbl_type_vessel`
 --
 ALTER TABLE `tbl_type_vessel`
   ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tbl_customer`
---
-ALTER TABLE `tbl_customer`
-  ADD PRIMARY KEY (`cus_id`);
-
---
--- Indexes for table `tbl_product`
---
-ALTER TABLE `tbl_product`
-  ADD PRIMARY KEY (`product_id`);
 
 --
 -- Indexes for table `tbl_contract`
@@ -364,18 +269,6 @@ ALTER TABLE `tbl_admin`
   MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `tbl_customer`
---
-ALTER TABLE `tbl_customer`
-  MODIFY `cus_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `tbl_fleet`
---
-ALTER TABLE `tbl_fleet`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
 -- AUTO_INCREMENT for table `tbl_vessel`
 --
 ALTER TABLE `tbl_type_vessel`
@@ -385,25 +278,19 @@ ALTER TABLE `tbl_type_vessel`
 -- AUTO_INCREMENT for table `tbl_contract`
 --
 ALTER TABLE `tbl_contract`
-  MODIFY `con_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `tbl_product`
---
-ALTER TABLE `tbl_product`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ไอดีสินค้าและบริการ', AUTO_INCREMENT=2;
+  MODIFY `con_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT for table `tbl_service`
 --
 ALTER TABLE `tbl_service`
-  MODIFY `service_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `service_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT for table `tbl_service_detail`
 --
 ALTER TABLE `tbl_service_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
