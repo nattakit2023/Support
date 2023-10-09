@@ -117,6 +117,8 @@
                         <select id="admin_position" class="form-control rounded-0">
 
                             <option value="employee">พนักงานทั่วไป</option>
+                            
+                            <option value="support">ซัพพอร์ต</option>
 
                             <option value="admin">ผู้ดูแลระบบ</option>
 
@@ -199,6 +201,8 @@
                         <select id="edit_admin_position" class="form-control rounded-0">
 
                             <option value="employee">พนักงานทั่วไป</option>
+
+                            <option value="support">ซัพพอร์ต</option>
 
                             <option value="admin">ผู้ดูแลระบบ</option>
 

@@ -350,6 +350,9 @@ function ReadNumber($number)
                 <td>
                     <strong>Tel : </strong><?= $service->con_tel; ?>
                 </td>
+                <td>
+                    <strong>ETA : </strong><?= date_format(date_create($service->ETA), ' d/m/Y H:i:s');; ?>
+                </td>
             </tr>
 
             <tr>
@@ -358,6 +361,9 @@ function ReadNumber($number)
                 </td>
                 <td>
                     <strong>Email : </strong><?= $service->con_email; ?>
+                </td>
+                <td>
+                    <strong>ETD : </strong><?= date_format(date_create($service->ETD), ' d/m/Y H:i:s');; ?>
                 </td>
             </tr>
 

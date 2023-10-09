@@ -19,17 +19,14 @@
 
                 <div class="col-sm-6">
 
-                    <h3><i class="fas fa-tools"></i> Job Order <strong id="titleInvoice"></strong></h3>
+                    <h3><i class="fas fa-tools"></i> Job Order <strong><?= $service->service_invoice ?></strong></h3>
 
                     <p class="text-muted">Installation Date :
-                        <?= date_format(date_create($service->create_date), 'd/m/Y'); ?>
+                        <?= date_format(date_create($service->due_date), 'd/m/Y'); ?>
+                    </p>
 
-                        <?php if ($service->end_date != null) : ?>
-
-                            Completed Date : <?= date_format(date_create($service->end_date), 'd/m/Y'); ?>
-
-                        <?php endif; ?>
-
+                    <p class="text-muted">Completed Date :
+                        <?= date_format(date_create($service->end_date), 'd/m/Y'); ?>
                     </p>
 
                 </div>
@@ -202,20 +199,6 @@
 
                                 </div>
 
-                                <div class="col-md-2">
-
-                                    <p style="padding:0px; margin :0px;" class="text-muted"><strong>Start Date :
-                                        </strong><em> <?= $service->ETA ?> </em></p>
-
-                                </div>
-
-                                <div class="col-md-2">
-
-                                    <p style="padding:0px; margin :0px;" class="text-muted"><strong>End Date :
-                                        </strong><em> <?= $service->ETD ?> </em></p>
-
-                                </div>
-
                             </div>
 
                             <p style="margin:0px;" class="text-info mt-2"><i class="fas fa-circle"></i> Contract Onboard</p>
@@ -243,6 +226,19 @@
 
                                     <p style="padding:0px; margin :0px;" class="text-muted"><strong>Port :
                                         </strong><em> <?= $service->con_port; ?></em></p>
+
+                                </div>
+                                <div class="col-md-2">
+
+                                    <p style="padding:0px; margin :0px;" class="text-muted"><strong>ETA :
+                                        </strong><em> <?= date_format(date_create($service->ETA), ' d/m/Y H:i:s'); ?> </em></p>
+
+                                </div>
+
+                                <div class="col-md-2">
+
+                                    <p style="padding:0px; margin :0px;" class="text-muted"><strong>ETD :
+                                        </strong><em> <?= date_format(date_create($service->ETD), ' d/m/Y  H:i:s'); ?> </em></p>
 
                                 </div>
 
@@ -282,7 +278,7 @@
 
             </div>
 
-            <?php if ($service->service_status == 'created' || $service->service_status == 'wait') : ?>
+            <?php if ($service->service_status == 'created') : ?>
 
                 <div class="row">
 
@@ -528,38 +524,9 @@
                             <?php endif; ?>
                             -->
 
-
-                        <!-- สร้างงานรับซ่อม -->
-
-                        <?php if ($service->service_status == 'created') : ?>
-
-                            <div class="row">
-
-                                <div class="col-md-12 mt-2">
-
-                                    <button id="btnConfirm" class="btn btn-primary btn-block rounded-0"><i class="fas fa-save"></i> Save</button>
-
-                                </div>
-
-                            </div>
-
-                            <div class="row">
-
-                                <div class="col-md-12 mt-2">
-
-                                    <button id="btnCancelService" class="btn btn-default btn-block rounded-0">Cancle</button>
-
-                                </div>
-
-                            </div>
-
-                        <?php endif; ?>
-
-
-
                         <!-- ใบกำกับภาษี ใบเสร็จ -->
 
-                        <?php if ($service->service_status != 'created') : ?>
+                        <?php if ($service->service_status != 'created' && $service->service_status != 'approve' && $service->service_status != 'verify') : ?>
 
                             <div class="row">
 
@@ -583,15 +550,15 @@
 
 
 
-                        <!-- ซ่อมเสร็จแล้ว -->
+                        <!-- สร้างงานรับซ่อม -->
 
-                        <?php if ($service->service_status == 'wait') : ?>
+                        <?php if ($service->service_status == 'created') : ?>
 
                             <div class="row">
 
                                 <div class="col-md-12 mt-2">
 
-                                    <button id="btnConfirmFixed" class="btn btn-warning btn-block rounded-0"><i class="fas fa-check"></i> ดำเนินการเสร็จแล้ว</button>
+                                    <button id="btnVerify" class="btn btn-primary btn-block rounded-0"><i class="fas fa-save"></i> Save</button>
 
                                 </div>
 
@@ -601,7 +568,7 @@
 
                                 <div class="col-md-12 mt-2">
 
-                                    <button id="btnCancelService" class="btn btn-default btn-block rounded-0">ยกเลิกงาน</button>
+                                    <button id="btnCancelService" class="btn btn-default btn-block rounded-0">Cancle</button>
 
                                 </div>
 
@@ -609,24 +576,136 @@
 
                         <?php endif; ?>
 
+
+                        <!-- รอการเช็คของ -->
+                        <?php if ($this->session->userdata('admin_position') == 'support' || $this->session->userdata('admin_position') == 'admin') : ?>
+                            <?php if ($service->service_status == 'verify') : ?>
+
+                                <div class="row">
+
+                                    <div class="col-md-12 mt-2">
+
+                                        <button id="btnCheck" class="btn btn-success btn-block rounded-0"><i class="fas fa-check"></i> Verify</button>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12 mt-2">
+
+                                        <button type="button" class="btn btn-danger btn-block rounded-0" data-toggle="modal" data-target="#modalAddContract">Back Order</button>
+
+                                    </div>
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="col-md-12 mt-2">
+
+                                        <button id="btnCancelService" class="btn btn-default btn-block rounded-0">Cancel Order</button>
+
+                                    </div>
+
+                                </div>
+
+                            <?php endif; ?>
+                        <?php endif; ?>
+
+                        <!-- รอการอนุมัติการซ่อม -->
+                        <?php if ($this->session->userdata('admin_position') == 'admin') : ?>
+                            <?php if ($service->service_status == 'approve') : ?>
+
+                                <div class="row">
+
+                                    <div class="col-md-12 mt-2">
+
+                                        <button id="btnConfirm" class="btn btn-primary btn-block rounded-0"><i class="fas fa-check"></i> Approve</button>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12 mt-2">
+
+                                        <button type="button" class="btn btn-danger btn-block rounded-0" data-toggle="modal" data-target="#modalAddContract">Back Order</button>
+
+                                    </div>
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="col-md-12 mt-2">
+
+                                        <button id="btnCancelService" class="btn btn-default btn-block rounded-0">Cancel Order</button>
+
+                                    </div>
+
+                                </div>
+
+                            <?php endif; ?>
+                        <?php endif; ?>
+
+
+                        <!-- ซ่อมเสร็จแล้ว -->
+                        <?php if (($this->session->userdata('admin_position') == 'support') || ($this->session->userdata('admin_position') == 'admin')) : ?>
+                            <?php if ($service->service_status == 'wait') : ?>
+
+                                <div class="row">
+
+                                    <div class="col-md-12 mt-2">
+
+                                        <button id="btnConfirmFixed" class="btn btn-warning btn-block rounded-0"><i class="fas fa-check"></i> Completed Job</button>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12 mt-2">
+
+                                        <button type="button" class="btn btn-danger btn-block rounded-0" data-toggle="modal" data-target="#modalAddContract">Back Order</button>
+
+                                    </div>
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="col-md-12 mt-2">
+
+                                        <button id="btnCancelService" class="btn btn-default btn-block rounded-0">Cancel Order</button>
+
+                                    </div>
+
+                                </div>
+
+                            <?php endif; ?>
+                        <?php endif; ?>
 
 
                         <!-- รับรถ  -->
+                        <?php if (($this->session->userdata('admin_position') == 'support') || ($this->session->userdata('admin_position') == 'admin')) : ?>
+                            <?php if ($service->service_status == 'fixed') : ?>
 
-                        <?php if ($service->service_status == 'fixed') : ?>
+                                <div class="row">
 
-                            <div class="row">
+                                    <div class="col-md-12 mt-2">
 
-                                <div class="col-md-12 mt-2">
+                                        <button id="btnConfirmPickCar" class="btn btn-success btn-block rounded-0"><i class="fas fa-check"></i> Success Job Order</button>
 
-                                    <button id="btnConfirmPickCar" class="btn btn-success btn-block rounded-0"><i class="fas fa-check"></i> ยืนยันปิดงาน</button>
+                                    </div>
+
+                                    <div class="col-md-12 mt-2">
+
+                                        <button type="button" class="btn btn-danger btn-block rounded-0" data-toggle="modal" data-target="#modalAddContract">Back Order</button>
+
+                                    </div>
 
                                 </div>
 
-                            </div>
-
+                            <?php endif; ?>
                         <?php endif; ?>
-
 
                     </div>
 
@@ -639,6 +718,95 @@
 </div>
 
 </section>
+
+</div>
+
+<!-- Modal Add History -->
+
+<div class="modal fade" id="modalAddContract" tabindex="-1" role="dialog" aria-labelledby="modelBackOrder" aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+
+        <div class="modal-content rounded-0">
+
+            <div class="modal-header bg-dark rounded-0">
+
+                <h5 class="modal-title">รายละเอียด</h5>
+
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+
+                    <span aria-hidden="true">&times;</span>
+
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <div class="row">
+
+                    <div class="col-md-12 mb-2">
+
+                        <div class="row mb-2">
+
+                            <label class="col-md-3"><strong class="text-danger">*</strong>Name:</label>
+                            <div class="col-md-9">
+                                <select class="form-control select2 rouned-0" id="his_name">
+                                    <option value="">Loading ...</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div class="row mb-2">
+
+                            <label class="col-md-3"><strong class="text-danger">*</strong>Descript :</label>
+
+                            <div class="col-md-9">
+                                <textarea name="descript" id="descript" class="form-control rounded-0" placeholder="Descript"></textarea>
+                            </div>
+
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-5"></div>
+
+                            <div class="col-md-4 mt-2">
+
+                                <button id="btnBacktoOrder" class="btn btn-primary rounded-0">Create</button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-12 mb-2" id="showSearch">
+
+                        <div class="row">
+
+                            <div class="col-md-12 mt-2 mb-2 text-center">
+
+                                <h5 class="text-info"><small>กรอกข้อมูลให้ครบทุกช่อง</small></h5>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 
@@ -705,6 +873,25 @@
         $('#price').val('');
 
         $('#detail').val('');
+
+    }
+
+    //Option History
+    function optionHistory() {
+
+        $.ajax({
+
+            url: '<?= base_url(); ?>/service/option_history',
+
+            method: 'POST',
+
+            success: function(res) {
+
+                $('#his_name').html(res);
+
+            }
+
+        })
 
     }
 
@@ -1170,6 +1357,7 @@
 
         getServiceDetail();
 
+        optionHistory();
 
     });
 
@@ -1409,8 +1597,6 @@
 
         let amount = $('#amount').val();
 
-        //let price = $('#price').val();
-
         let detail = $('#detail').val();
 
         if (service_invoice == '' || service_name == '' || amount == '') {
@@ -1524,6 +1710,371 @@
         })
 
     });
+
+    //btnBacktoOrder
+
+    $(document).on('click', '#btnBacktoOrder', function() {
+
+        let invoice = "<?= $service->service_invoice ?>";
+
+        let his_name = $('#his_name').val();
+
+        let descript = $('#descript').val();
+
+        if (his_name == '' || descript == '' || invoice == '') {
+
+            Swal.fire({
+
+                icon: 'warning',
+
+                title: 'แจ้งเตือน',
+
+                text: 'กรุณากรอกข้อมูลให้ครบถ้วน',
+
+                confirmButtonText: 'ตกลง'
+
+            });
+
+            return false;
+
+        }
+
+        Swal.fire({
+
+            title: 'เพิ่มข้อความเรียบร้อย',
+
+            text: "ต้องการสร้างรายการซ่อมนี้?",
+
+            icon: 'warning',
+
+            showCancelButton: true,
+
+            confirmButtonText: 'ตกลง',
+
+            cancelButtonText: 'ยกเลิก'
+
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+
+                Swal.fire({
+
+                    allowEnterKey: false,
+
+                    allowEscapeKey: false,
+
+                    allowOutsideClick: false,
+
+                    html: 'กำลังสร้างรายการ กรุณารอสักครู่...',
+
+                    timerProgressBar: true,
+
+                    didOpen: () => {
+
+                        Swal.showLoading();
+
+                        $.ajax({
+
+                            url: '<?= base_url(); ?>/service/Back_Order',
+
+                            method: 'POST',
+
+                            dataType: 'JSON',
+
+                            data: {
+
+                                his_name: his_name,
+
+                                descript: descript,
+
+                                invoice: invoice,
+
+                            },
+
+                            success: function(res) {
+
+                                if (res.status == 'SUCCESS') {
+
+                                    Swal.fire({
+
+                                        icon: 'success',
+
+                                        title: 'สำเร็จ',
+
+                                        text: 'เตรียมพร้อมแก้ไขสำเร็จ',
+
+                                        showConfirmButton: false,
+
+                                        timer: 1500
+
+                                    });
+
+                                    setTimeout(function() {
+
+                                        window.location.assign('<?= base_url(); ?>/pages/service_status?status=created');
+
+                                    }, 1500);
+
+                                } else {
+
+                                    Swal.fire({
+
+                                        icon: 'error',
+
+                                        title: 'ผิดพลาด!',
+
+                                        text: res.message,
+
+                                        confirmButtonText: 'ตกลง'
+
+                                    });
+
+                                    return false;
+
+                                }
+
+                            }
+
+                        })
+
+                    }
+
+                })
+
+            }
+
+        })
+
+
+    });
+
+    //ตรวจสอบงานซ่อม
+
+    $(document).on('click', '#btnVerify', function() {
+
+        Swal.fire({
+
+            title: 'ส่งงานซ่อม',
+
+            text: "ยืนยันการส่งงาน",
+
+            icon: 'warning',
+
+            showCancelButton: true,
+
+            confirmButtonText: 'ตกลง',
+
+            cancelButtonText: 'ยกเลิก'
+
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+
+                Swal.fire({
+
+                    allowEnterKey: false,
+
+                    allowOutsideClick: false,
+
+                    allowEscapeKey: false,
+
+                    html: 'กำลังบันทึกข้อมูล กรุณารอสักครู่...',
+
+                    timerProgressBar: true,
+
+                    didOpen: () => {
+
+                        Swal.showLoading();
+
+                        $.ajax({
+
+                            url: '<?= base_url(); ?>/service/confirm_verify',
+
+                            method: 'POST',
+
+                            dataType: 'JSON',
+
+                            data: {
+
+                                service_invoice: service_invoice
+
+                            },
+
+                            success: function(res) {
+
+                                if (res.status == 'SUCCESS') {
+
+                                    Swal.fire({
+
+                                        allowEnterKey: false,
+
+                                        allowOutsideClick: false,
+
+                                        allowEscapeKey: false,
+
+                                        icon: 'success',
+
+                                        title: 'สำเร็จ',
+
+                                        text: 'ตรวจสอบงานเรียบร้อย',
+
+                                        showConfirmButton: false,
+
+                                        timer: 1400
+
+                                    });
+
+                                    setTimeout(function() {
+
+                                        window.location.reload();
+
+                                    }, 1500);
+
+                                } else {
+
+                                    Swal.fire({
+
+                                        icon: 'error',
+
+                                        title: 'ผิดพลาด',
+
+                                        text: res.message,
+
+                                        confirmButtonText: 'ตกลง'
+
+                                    });
+
+                                    return false;
+
+                                }
+
+                            }
+
+                        })
+
+                    }
+
+                })
+
+            }
+
+        })
+
+    })
+
+    //รอการอนุมัติการซ่อม
+
+    $(document).on('click', '#btnCheck', function() {
+
+        Swal.fire({
+
+            title: 'ส่งงานซ่อม',
+
+            text: "ยืนยันการส่งงาน",
+
+            icon: 'warning',
+
+            showCancelButton: true,
+
+            confirmButtonText: 'ตกลง',
+
+            cancelButtonText: 'ยกเลิก'
+
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+
+                Swal.fire({
+
+                    allowEnterKey: false,
+
+                    allowOutsideClick: false,
+
+                    allowEscapeKey: false,
+
+                    html: 'กำลังบันทึกข้อมูล กรุณารอสักครู่...',
+
+                    timerProgressBar: true,
+
+                    didOpen: () => {
+
+                        Swal.showLoading();
+
+                        $.ajax({
+
+                            url: '<?= base_url(); ?>/service/confirm_check',
+
+                            method: 'POST',
+
+                            dataType: 'JSON',
+
+                            data: {
+
+                                service_invoice: service_invoice
+
+                            },
+
+                            success: function(res) {
+
+                                if (res.status == 'SUCCESS') {
+
+                                    Swal.fire({
+
+                                        allowEnterKey: false,
+
+                                        allowOutsideClick: false,
+
+                                        allowEscapeKey: false,
+
+                                        icon: 'success',
+
+                                        title: 'สำเร็จ',
+
+                                        text: 'ตรวจสอบงานเรียบร้อย',
+
+                                        showConfirmButton: false,
+
+                                        timer: 1400
+
+                                    });
+
+                                    setTimeout(function() {
+
+                                        window.location.reload();
+
+                                    }, 1500);
+
+                                } else {
+
+                                    Swal.fire({
+
+                                        icon: 'error',
+
+                                        title: 'ผิดพลาด',
+
+                                        text: res.message,
+
+                                        confirmButtonText: 'ตกลง'
+
+                                    });
+
+                                    return false;
+
+                                }
+
+                            }
+
+                        })
+
+                    }
+
+                })
+
+            }
+
+        })
+
+    })
 
 
 

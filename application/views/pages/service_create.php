@@ -74,6 +74,20 @@
                                     </select>
 
                                 </div>
+
+                                <div class="col-md-1">
+
+                                </div>
+
+                                <div class="col-md-2 mb-2">
+
+                                    <h3><strong class="text-danger"></strong>Select Files :</h3>
+
+                                </div>
+
+                                <div>
+                                    <input type="file" id="myfile" name="myfile" multiple>
+                                </div>
                             </div>
 
                             <div class="row mb-2">
@@ -163,7 +177,7 @@
 
                             <div class="row mb-2">
 
-                                <div class="col-md-8 mb-2">
+                                <div class="col-md-4 mb-2">
 
                                     <label><strong class="text-danger">*</strong>Address :</label>
 
@@ -244,8 +258,8 @@
 
                                     <select class="form-control select2 rouned-0" id="ves_maintenance">
 
-                                        <option value="PM">Preventive Maintenance</option>
-                                        <option value="CM">Corrective Maintenance</option>
+                                        <option value="Preventive Maintenance">Preventive Maintenance</option>
+                                        <option value="Corrective Maintenance">Corrective Maintenance</option>
 
                                     </select>
 
@@ -266,7 +280,7 @@
                                             <label><strong class="text-danger">*</strong>Installation :</label>
                                         </div>
                                         <div class="col-md-2">
-                                            <input type="checkbox" id="ves_installation" name="ves_installation" >
+                                            <input type="checkbox" id="ves_installation" name="ves_installation">
                                         </div>
                                     </div>
 
@@ -350,13 +364,17 @@
 
                                 </div>
 
-                                <div class="col-md-6 mb-2">
+                                <div class="col-md-3 mb-2">
 
                                     <label><strong class="text-danger">*</strong>ETA :</label>
 
-                                    <input type="date" id="ETA" class="form-control rounded-0" placeholder="วันที่ส่งซ่อม" value="<?= date('Y-m-d'); ?>">
+                                    <input type="datetime-local" id="ETA" class="form-control rounded-0" placeholder="วันที่ส่งซ่อม" value="<?= date('d-m-Y'); ?>">
+
+
 
                                 </div>
+
+                                <div class="col-md-3"></div>
 
                                 <div class="col-md-3 mb-2">
 
@@ -378,11 +396,11 @@
 
                                 </div>
 
-                                <div class="col-md-6 mb-2">
+                                <div class="col-md-3 mb-2">
 
                                     <label><strong class="text-danger">*</strong>ETD :</label>
 
-                                    <input type="date" id="ETD" class="form-control rounded-0" placeholder="วันที่ส่งซ่อม" value="<?= date('Y-m-d'); ?>">
+                                    <input type="datetime-local" id="ETD" class="form-control rounded-0" placeholder="วันที่ส่งซ่อม" value="<?= date('Y-m-d'); ?>">
 
                                 </div>
 
@@ -393,7 +411,33 @@
                             <div class="row">
                                 <div class="col-md-2 mb-2">
 
-                                    <p class="text-primary"><i class="fas fa-circle"></i> Contract Time</p>
+                                    <p class="text-primary"><i class="fas fa-circle"></i> Package</p>
+
+                                </div>
+
+                            </div>
+
+                            <div class="row mb-2">
+
+                                <div class="col-md-3 mb-2">
+
+                                    <label><strong class="text-danger">*</strong>Package Name :</label>
+
+                                    <select class="form-control select2 rouned-0" id="package" onchange="">
+
+                                        <option value="">Package Name</option>
+
+                                    </select>
+
+                                </div>
+
+                                <div class="col-1"></div>
+
+                                <div class="col-md-3 mb-2">
+
+                                    <label><strong class="text-danger">*</strong>Start Date :</label>
+
+                                    <input type="date" id="contract_start" class="form-control rounded-0" placeholder="Start Contract" value="<?= date('Y-m-d'); ?>">
 
                                 </div>
 
@@ -402,21 +446,13 @@
 
                             <div class="row mb-2">
 
-                                <div class="col-md-3 mb-2">
-
-                                    <label><strong class="text-danger">*</strong>Start Date :</label>
-
-                                    <input type="date" id="contract_start" class="form-control rounded-0" placeholder="วันที่ส่งซ่อม" value="<?= date('Y-m-d'); ?>">
-
-                                </div>
-
-                                <div class="col-1"></div>
+                                <div class="col-4"></div>
 
                                 <div class="col-md-3 mb-2">
 
                                     <label><strong class="text-danger">*</strong>End Date :</label>
 
-                                    <input type="date" id="contract_end" class="form-control rounded-0" placeholder="วันที่ส่งซ่อม" value="<?= date('Y-m-d'); ?>">
+                                    <input type="date" id="contract_end" class="form-control rounded-0" placeholder="End Contract" value="<?= date('Y-m-d'); ?>">
 
                                 </div>
 
@@ -462,10 +498,11 @@
                                         </select>
 
                                     </div>
-
+                                    <!---
                                     <div class="col-md-2">
                                         <button type="button" class="btn btn-primary rounded-0" id=""><i class="fas fa-plus"></i> Add</button>
                                     </div>
+                                    --->
                                 </div>
 
                             </div>
@@ -873,7 +910,7 @@
                             <label class="col-md-3"><strong class="text-danger">*</strong>Email :</label>
 
                             <div class="col-md-9">
-                                <input type="text" id="con_emails" class="form-control rounded-0" placeholder="Contract Email">
+                                <input type="email" id="con_emails" class="form-control rounded-0" placeholder="Contract Email">
                             </div>
 
                         </div>
@@ -945,13 +982,17 @@
 
         $.ajax({
 
-            url: '<?= base_url(); ?>/user/option_admin',
+            url: '<?= base_url(); ?>/user/option_admins',
 
             method: 'POST',
 
-            success: function(res) {
+            data: {
+                admin_name: ''
+            },
 
+            success: function(res) {
                 $('#admin_name').html(res);
+
 
             }
 
@@ -976,6 +1017,7 @@
             success: function(res) {
 
                 $('#admin_names').html(res);
+
 
             }
 
@@ -1105,6 +1147,24 @@
 
     }
     //-------------------------------------------------------------------------V E S S E L---------------------------------------------------------------------------------------
+
+
+    //option package
+    function optionPackage() {
+        $.ajax({
+
+            url: '<?= base_url(); ?>/vessel/option_package',
+
+            method: 'POST',
+
+            success: function(res) {
+
+                $('#package').html(res);
+
+            }
+
+        })
+    }
 
     //option project
     function optionProject() {
@@ -1310,10 +1370,8 @@
         optionVessel();
         optionTypeVessel();
         optionContractname();
+        optionPackage();
     });
-
-
-
 
 
 
@@ -1761,6 +1819,8 @@
 
     $(document).on('click', '#createService', function() {
 
+        let files = document.getElementById('myfile');
+
         let projects = $('#projects').val();
 
         let cus_name = $('#cus_name').val();
@@ -1818,7 +1878,6 @@
         let contract_start = $('#contract_start').val();
 
         let contract_end = $('#contract_end').val();
-
 
         if (projects == '' || cus_name == '' || cus_tel == '' || cus_address == '' || cus_email == '' || cus_zipcode == '' || ves_fleet == '' || ves_name == '' ||
             ves_type == '' || ves_callsign == '' || ves_imo == '' || ves_mmsi == '' || ves_year == '' || ves_maintenance == '' || con_name == '' || con_tel == '' ||
@@ -1912,9 +1971,9 @@
                                 ves_year: ves_year,
 
                                 ves_maintenance: ves_maintenance,
-                                
+
                                 ves_survey: ves_survey,
-                                
+
                                 ves_installation: ves_installation,
 
                                 con_name: con_name,
@@ -1942,9 +2001,9 @@
                                 contract_start: contract_start,
 
                                 contract_end: contract_end
-                                
+
                             },
-                            
+
 
                             success: function(res) {
 
@@ -1966,7 +2025,7 @@
 
                                     setTimeout(function() {
 
-                                        window.location.assign('<?= base_url(); ?>/pages/service_detail/' + res.service_invoice);
+                                        window.location.assign('<?= base_url(); ?>pages/service_detail/' + res.service_invoice);
 
                                     }, 1500);
 

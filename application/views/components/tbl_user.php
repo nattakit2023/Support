@@ -38,7 +38,7 @@
 
                     <?php else : ?>
 
-                        <span class="badge badge-danger">พนักงาน</span>
+                        <span class="badge badge-danger">ซัพพอร์ต</span>
 
                     <?php endif; ?>
 

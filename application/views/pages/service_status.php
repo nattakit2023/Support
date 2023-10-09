@@ -16,7 +16,7 @@
 
                     <ol class="breadcrumb float-sm-right">
 
-                        <li class="breadcrumb-item"><a href="<?=base_url();?>/pages">Index</a></li>
+                        <li class="breadcrumb-item"><a href="<?= base_url(); ?>/pages">Index</a></li>
 
                         <li class="breadcrumb-item active"> Job Order</li>
 
@@ -38,7 +38,7 @@
 
                 <div class="col-md-12 mb-2">
 
-                    <a href="<?=base_url();?>/pages/service_create" class="btn btn-primary rounded-0"><i class="fas fa-tools"></i> Create Job Order</a>
+                    <a href="<?= base_url(); ?>/pages/service_create" class="btn btn-primary rounded-0"><i class="fas fa-tools"></i> Create Job Order</a>
 
                 </div>
 
@@ -79,26 +79,41 @@
 
 
 <script>
-
-    
-
     function tblService() {
 
-        let status = '<?=$this->input->get('status');?>';
+        let status = '<?= $this->input->get('status'); ?>';
 
-        if(status==''){
+        let admin_name = '<?= $this->input->get('admin_name'); ?>';
 
-            window.location.assign('<?=base_url();?>/pages/service');
+        if (status == '') {
+
+            window.location.assign('<?= base_url(); ?>/pages/service');
 
         }
 
-        switch(status){
+        switch (status) {
 
             case 'created':
 
-                document.title = 'รายการที่รอ';
+                document.title = 'ขั้นตอนการเพิ่มข้อมูล';
 
-                $('#titleHeader').html('รายการที่รอ');
+                $('#titleHeader').html('ขั้นตอนการเพิ่มข้อมูล');
+
+                break;
+
+            case 'verify':
+
+                document.title = 'ขั้นตอนการตรวจสอบรายการ';
+
+                $('#titleHeader').html('ขั้นตอนการตรวจสอบรายการ');
+
+                break;
+
+            case 'approve':
+
+                document.title = 'รายการรอการอนุมัติ';
+
+                $('#titleHeader').html('รายการรอการอนุมัติ');
 
                 break;
 
@@ -118,7 +133,7 @@
 
                 break;
 
-            case 'done' :
+            case 'done':
 
                 document.title = 'รายการที่ปิดงานเรียบร้อยแล้ว';
 
@@ -126,21 +141,22 @@
 
                 break;
 
-            default :
+            default:
 
-            window.location.assign('<?=base_url();?>/pages/service');
+                window.location.assign('<?= base_url(); ?>/pages/service');
 
         }
 
         $.ajax({
 
-            url: '<?=base_url();?>/service/tblService',
+            url: '<?= base_url(); ?>/service/tblService',
 
             method: 'POST',
 
             data: {
 
-                status: status
+                status: status,
+                admin_name: admin_name
 
             },
 
@@ -161,5 +177,4 @@
         tblService();
 
     })
-
 </script>

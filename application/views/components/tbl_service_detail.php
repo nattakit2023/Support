@@ -9,44 +9,46 @@
             <th>ชื่อรายการ</th>
 
             <th style="width: 5%">จำนวน</th>
-
-            <th style="width: 10%">ตัวเลือก</th>
-
+            <?php if ($service->service_status == 'created') : ?>
+                <th style="width: 10%">ตัวเลือก</th>
+            <?php endif; ?>
         </tr>
 
     </thead>
 
     <tbody>
 
-        <?php $sum=0; $i=0; foreach($service_detail as $item):?>
+        <?php $sum = 0;
+        $i = 0;
+        foreach ($service_detail as $item) : ?>
 
             <tr>
 
-                <td class="text-center"><?=++$i;?></td>
+                <td class="text-center"><?= ++$i; ?></td>
 
-                <td><?=$item->service_name;?> <br>
+                <td><?= $item->service_name; ?> <br>
 
-                <small class="text-muted"><?=$item->detail;?></small>
-
-                </td>
-
-                <td class="text-center"><?=$item->amount;?></td>
-                
-
-                <td class="text-center">
-
-                    <button id="delServiceDetail" onclick="delServiceDetail('<?=$item->id;?>');" class="btn btn-danger btn-sm rounded-0"><i class="fas fa-trash-alt"></i></button>
+                    <small class="text-muted"><?= $item->detail; ?></small>
 
                 </td>
 
+                <td class="text-center"><?= $item->amount; ?></td>
+
+                <?php if ($service->service_status == 'created') : ?>
+                    <td class="text-center">
+
+                        <button id="delServiceDetail" onclick="delServiceDetail('<?= $item->id; ?>');" class="btn btn-danger btn-sm rounded-0"><i class="fas fa-trash-alt"></i></button>
+
+                    </td>
+                <?php endif; ?>
             </tr>
 
-        <?php endforeach;?>
+        <?php endforeach; ?>
 
     </tbody>
 
-    
-<!--
+
+    <!--
     <tfoot>
 
         <tr>
@@ -57,7 +59,7 @@
 
             </th>
 
-            <th class="text-danger"><?=number_format($sum, 2);?></th>
+            <th class="text-danger"><?= number_format($sum, 2); ?></th>
 
             <th>บาท</th>
 
@@ -70,7 +72,6 @@
 
 
 <script>
-
     $('#tblServiceDetail').DataTable({
 
         "paging": true,
@@ -118,5 +119,4 @@
         },
 
     });
-
 </script>

@@ -33,16 +33,24 @@ class Customer extends CI_Controller
 
     function option_customer()
     {
-
+        
         if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
             show_404();
             exit();
         }
 
+        $name = $this->input->post('name');
+
         $customer = $this->Function_model3->fetchDataResult('customers', '', 'id', 'ASC');
 
-        echo '<option value="" disabled selected>Customer</option>';
+        if($name == ''){
+            echo '<option value="" disabled selected>Customer Name</option>';
+        }else{
+            echo '<option value="'.$name.'"  selected>'.$name.'</option>';
+        }
+
+        
 
         foreach ($customer as $item) {
 
@@ -63,14 +71,9 @@ class Customer extends CI_Controller
 
         $cus_name = $this->input->post('cus_names');
 
-        $customer = $this->Function_model3->fetchDataResult('customers', '', 'id', 'ASC');
+        $customer = $this->Function_model3->getDataRow('customers', ['name' => $cus_name]);
 
-        foreach ($customer as $item) {
-
-            if ($cus_name == $item->name) {
-                echo '<option value="' . $item->phone . '"> ' .  $item->phone . '</option>';
-            }
-        }
+        echo '<option value="' . $customer->phone . '" selected> ' .  $customer->phone . '</option>';
     }
 
     //option phone
@@ -86,14 +89,9 @@ class Customer extends CI_Controller
 
         $cus_name = $this->input->post('cus_names');
 
-        $customer = $this->Function_model3->fetchDataResult('customers', '', 'id', 'ASC');
+        $customer = $this->Function_model3->getDataRow('customers', ['name' => $cus_name]);
 
-        foreach ($customer as $item) {
-
-            if ($cus_name == $item->name) {
-                echo '<option value="' . $item->email . '"> ' .  $item->email . '</option>';
-            }
-        }
+        echo '<option value="' . $customer->email . '"  selected> ' .  $customer->email . '</option>';
     }
 
     //option address
@@ -109,14 +107,9 @@ class Customer extends CI_Controller
 
         $cus_name = $this->input->post('cus_names');
 
-        $customer = $this->Function_model3->fetchDataResult('customers', '', 'id', 'ASC');
+        $customer = $this->Function_model3->getDataRow('customers', ['name' => $cus_name]);
 
-        foreach ($customer as $item) {
-
-            if ($cus_name == $item->name) {
-                echo '<option value="' . $item->address . '"> ' .  $item->address . '</option>';
-            }
-        }
+        echo '<option value="' . $customer->address . '"  selected> ' .  $customer->address . '</option>';
     }
 
     //option zipcode
@@ -132,14 +125,9 @@ class Customer extends CI_Controller
 
         $cus_name = $this->input->post('cus_names');
 
-        $customer = $this->Function_model3->fetchDataResult('customers', '', 'id', 'ASC');
+        $customer = $this->Function_model3->getDataRow('customers', ['name' => $cus_name]);
 
-        foreach ($customer as $item) {
-
-            if ($cus_name == $item->name) {
-                echo '<option value="' . $item->postbox . '"> ' .  $item->postbox . '</option>';
-            }
-        }
+        echo '<option value="' . $customer->postbox . '"  selected> ' .  $customer->postbox . '</option>';
     }
 
 

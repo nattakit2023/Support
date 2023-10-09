@@ -29,6 +29,84 @@ class Vessel extends CI_Controller
 
     //-------------------------------------------------------------------------V E S S E L---------------------------------------------------------------------------------------
 
+    //option package
+
+    function option_package()
+    {
+        if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+
+            show_404();
+            exit();
+        }
+
+        $package = $this->Function_model->fetchDataResult('package', '', 'id', 'ASC');
+
+        echo '<option value="" disabled selected>Project</option>';
+
+        foreach ($package as $item) {
+
+            echo '<option value="' . $item->pack_name . '">' . $item->id . " . " .  $item->pack_name . '</option>';
+        }
+    }
+
+    //option project
+
+    function option_project()
+    {
+
+        if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+
+            show_404();
+            exit();
+        }
+
+        $projects = $this->Function_model3->fetchDataResult('projects', '', 'id', 'ASC');
+
+        $project = $this->input->post('project');
+
+        if ($project != '') {
+            echo '<option value="'  . $project . '"  selected>' . $project . '</option>';
+        } else {
+            echo '<option value="" disabled selected>Project</option>';
+        }
+
+
+
+        foreach ($projects as $item) {
+
+            echo '<option value="' . $item->name . '">' . $item->id . " . " .  $item->name . '</option>';
+        }
+    }
+
+
+    // option vessel
+
+    function option_vessel()
+    {
+        
+        if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+
+            show_404();
+            exit();
+        }
+
+        $vessel = $this->Function_model3->fetchDataResult('product_warehouse', '', 'id', 'ASC');
+
+        $name = $this->input->post('name');
+
+        if ($name != '') {
+            echo '<option value="' . $name . '" selected>' . $name . '</option>';
+        } else {
+            echo '<option value="" disabled selected>Vessel Name</option>';
+        }
+
+        foreach ($vessel as $item) {
+
+            echo '<option value="' . $item->title . '">' .  $item->title . '</option>';
+        }
+    }
+
+    
     // option Type Vessel
     function option_type_vessel()
     {
@@ -40,7 +118,13 @@ class Vessel extends CI_Controller
 
         $vessel = $this->Function_model->fetchDataResult('tbl_type_vessel', '', 'id', 'ASC');
 
-        echo '<option value="" disabled selected>Vessel Type</option>';
+        $type = $this->input->post('type');
+
+        if ($type != '') {
+            echo '<option value="' . $type . '" selected>' . $type . '</option>';
+        } else {
+            echo '<option value="" disabled selected>Vessel Name</option>';
+        }
 
         foreach ($vessel as $item) {
 
@@ -48,45 +132,6 @@ class Vessel extends CI_Controller
         }
     }
 
-    //option project
-
-    function option_project()
-    {
-        if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-
-            show_404();
-            exit();
-        }
-
-        $projects = $this->Function_model3->fetchDataResult('projects', '', 'id', 'ASC');
-
-        echo '<option value="" disabled selected>Project</option>';
-
-        foreach ($projects as $item) {
-
-            echo '<option value="' . $item->name . '">' . $item->id . " . " .  $item->name . '</option>';
-        }
-    }
-
-
-    // option vessel
-    function option_vessel()
-    {
-        if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-
-            show_404();
-            exit();
-        }
-
-        $vessel = $this->Function_model3->fetchDataResult('product_warehouse', '', 'id', 'ASC');
-
-        echo '<option value="" disabled selected>Vessel Name</option>';
-
-        foreach ($vessel as $item) {
-
-            echo '<option value="' . $item->title . '">' .  $item->title . '</option>';
-        }
-    }
 
     // option fleet
 
@@ -100,18 +145,17 @@ class Vessel extends CI_Controller
 
         $vessel = $this->Function_model4->fetchDataResult('departments', '', 'id', 'ASC');
 
+        $fleet = $this->input->post('fleet');
 
-        $vessel_fleet = "";
-        echo '<option value="" disabled selected>Vessel Fleet</option>';
+        if ($fleet != '') {
+            echo '<option value="' . $fleet . '" selected>' . $fleet . '</option>';
+        } else {
+            echo '<option value="" disabled selected>Vessel Name</option>';
+        }
 
         foreach ($vessel as $item) {
-            $check = $item->name;
 
-            if (strtoupper($check) == strtoupper($vessel_fleet)) {
-            } else {
-                $vessel_fleet = $check;
-                echo '<option value="' . $item->name . '">' .  $item->name . '</option>';
-            }
+            echo '<option value="' . $item->name . '">' .  $item->name . '</option>';
         }
     }
 
@@ -217,9 +261,17 @@ class Vessel extends CI_Controller
             exit();
         }
 
+        $con_name = $this->input->post('con_name');
+
         $con = $this->Function_model->fetchDataResult('tbl_contract', '', 'con_id', 'ASC');
 
-        echo '<option value="" disabled selected>Contract Name</option>';
+        if ($con_name == '') {
+            echo '<option value="" disabled selected>Contract Name</option>';
+        } else {
+            echo '<option value="'.$con_name.'"  selected>'.$con_name.'</option>';
+        }
+
+
 
         foreach ($con as $item) {
 
@@ -239,15 +291,9 @@ class Vessel extends CI_Controller
 
         $con_name = $this->input->post('con_name');
 
-        $con = $this->Function_model->fetchDataResult('tbl_contract', '', 'con_id', 'ASC');
+        $con = $this->Function_model->getDataRow('tbl_contract', ['con_name' => $con_name]);
 
-
-        foreach ($con as $item) {
-
-            if ($con_name == $item->con_name) {
-                echo '<option value="' . $item->con_tel . '">' .  $item->con_tel . '</option>';
-            }
-        }
+        echo '<option value="' . $con->con_tel . '"  selected>' .  $con->con_tel . '</option>';
     }
 
     //Option Contract Email
@@ -261,14 +307,9 @@ class Vessel extends CI_Controller
 
         $con_name = $this->input->post('con_name');
 
-        $con = $this->Function_model->fetchDataResult('tbl_contract', '', 'con_id', 'ASC');
+        $con = $this->Function_model->getDataRow('tbl_contract', ['con_name' => $con_name]);
 
-        foreach ($con as $item) {
-
-            if ($con_name == $item->con_name) {
-                echo '<option value="' . $item->con_email . '">' .  $item->con_email . '</option>';
-            }
-        }
+        echo '<option value="' . $con->con_email . '"  selected>' .  $con->con_email . '</option>';
     }
 
     //Create Contract

@@ -195,7 +195,7 @@
 
                                 <div class="col-md-2 col-sm-6 col-6 mb-3">
 
-                                    <a href="<?=base_url();?>/pages/service_create" class="dashboard-menu">
+                                    <a href="<?=base_url();?>pages/service_create" class="dashboard-menu">
 
                                         <img src="<?=base_url();?>/assets/icon/service.jpg" style="width: 100%">
 
@@ -205,7 +205,7 @@
 
                                 <div class="col-md-2 col-sm-6 col-6 mb-3">
 
-                                    <a href="<?=base_url();?>/pages/service" class="dashboard-menu">
+                                    <a href="<?=base_url();?>pages/service" class="dashboard-menu">
 
                                         <img src="<?=base_url();?>/assets/icon/service_report.jpg" style="width: 100%">
 
@@ -215,7 +215,7 @@
 
                                 <div class="col-md-2 col-sm-6 col-6 mb-3">
 
-                                    <a href="<?=base_url();?>/pages/customer" class="dashboard-menu">
+                                    <a href="<?=base_url();?>pages/customer" class="dashboard-menu">
 
                                         <img src="<?=base_url();?>/assets/icon/customer.jpg" style="width: 100%">
 
@@ -225,7 +225,7 @@
 
                                 <div class="col-md-2 col-sm-6 col-6 mb-3">
 
-                                    <a href="<?=base_url();?>/pages/report_service" class="dashboard-menu">
+                                    <a href="<?=base_url();?>pages/report_service" class="dashboard-menu">
 
                                         <img src="<?=base_url();?>/assets/icon/report.jpg" style="width: 100%">
 
@@ -235,7 +235,7 @@
 
                                 <div class="col-md-2 col-sm-6 col-6 mb-3">
 
-                                    <a href="<?=base_url();?>/pages/product" class="dashboard-menu">
+                                    <a href="<?=base_url();?>pages/product" class="dashboard-menu">
 
                                         <img src="<?=base_url();?>/assets/icon/product.jpg" style="width: 100%">
 
@@ -245,7 +245,7 @@
 
                                 <div class="col-md-2 col-sm-6 col-6 mb-3">
 
-                                    <a href="<?=base_url();?>/pages/user" class="dashboard-menu">
+                                    <a href="<?=base_url();?>pages/user" class="dashboard-menu">
 
                                         <img src="<?=base_url();?>/assets/icon/user.jpg" style="width: 100%">
 
@@ -290,6 +290,8 @@
                 if (res.status == 'SUCCESS') {
 
                     $('#amountAllService').html(res.amount_all_service);
+
+                    $('#amountServiceApprove').html(res.amount_service_approve);
 
                     $('#amountServiceWait').html(res.amount_service_wait);
 

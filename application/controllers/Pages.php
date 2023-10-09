@@ -174,6 +174,40 @@ class Pages extends CI_Controller
 
     }
 
+    //รายละเอียดการแก้ไข
+
+    function service_edit_detail($invoice){
+
+        if($invoice == null){
+
+            show_404();exit();
+
+        }
+
+        $data['service'] = $this->Function_model->getDataRow('tbl_service', ['service_invoice'=>$invoice]);
+
+        if($data['service'] == null){
+
+            show_404();exit();
+
+        }
+
+        $data['title']= 'ใบแจ้งซ่อมเลขที่ '.$data['service']->service_invoice;
+
+        $data['active'] = 'service_detail';
+
+        $this->load->view('template/header', $data);
+
+        $this->load->view('template/navbar');
+
+        $this->load->view('template/sidebar');
+
+        $this->load->view('pages/service_edit_detail', $data);
+        
+        $this->load->view('template/footer');
+
+    }
+
 
 
     //รายละเอียลูกค้า

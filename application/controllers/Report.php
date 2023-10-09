@@ -50,7 +50,7 @@ class Report extends CI_Controller
 
             $where_arr = array(
 
-                'service_status' => 'done'
+                'service_status' => 'uninstall'
 
             );
 
@@ -62,7 +62,7 @@ class Report extends CI_Controller
 
                 'due_date <=' => $dateend,
 
-                'service_status' => 'done'
+                'service_status' => 'uninstall'
 
             );
 

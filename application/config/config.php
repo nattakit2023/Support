@@ -31,8 +31,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //DEVELOP LOCALHOST
 // $base  = "http://127.0.0.1/garage_management/";
 
-$config['base_url'] = "http://127.0.0.1/support/";
-/*
+$config['base_url'] = "http://127.0.0.1/support";
+/*$config['base_url'] = "https://support.shipexpert.info/";
 |--------------------------------------------------------------------------
 | Index File
 |--------------------------------------------------------------------------

@@ -62,7 +62,11 @@ $route['logout'] = 'pages/logout';
 $route['change_password'] = 'pages/change_password';
 $route['pages/(:any)'] = 'pages/index/$1';
 $route['pages/service_detail/(:num)'] = 'pages/service_detail/$1';
+$route['pages/service_edit_detail'] = 'pages/service_edit_detail';
 $route['pages/customer_detail/(:num)'] ='pages/customer_detail/$1';
+
+$route['service/(:any)'] = 'service/index/$1';
+$route['service/update_status'] = 'service/update_status';
 
 $route['user/(:any)'] = 'user/$1';
 $route['product/(:any)'] = 'product/$1';

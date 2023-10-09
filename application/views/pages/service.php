@@ -46,9 +46,8 @@
 
             </div>
 
-            <!-- เวลา -->
-
-            <form method="GET" id="formSubmit">
+            
+            <form method="GET" id="formSubmit">     <!-- เวลา -->
 
                 <div class="row">
 
@@ -100,7 +99,7 @@
 
                 </div>
 
-            </form>
+            </form>         <!-- เวลา -->
 
             <div class="row">
 
@@ -146,7 +145,7 @@
 
         $.ajax({
 
-            url: '/service/tblService',
+            url: '<?= base_url(); ?>/service/tblService',
 
             method: 'POST',
 

@@ -96,8 +96,8 @@ CREATE TABLE `tbl_admin` (
 
 INSERT INTO `tbl_admin` (`admin_id`, `admin_name`, `admin_username`, `admin_password`, `admin_position`, `admin_status`) VALUES
 (1, 'Administrator', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'admin', 'active'),
-(2, 'Sirawit Nachom', 'sirawit', 'd7316a3074d562269cf4302e4eed46369b523687', 'employee', 'active'),
-(3, 'Sayumpron Sirimajan', 'sayumpron', '7c222fb2927d828af22f592134e8932480637c0d', 'employee', 'active'),
+(2, 'Sirawit Nachom', 'sirawit', 'd7316a3074d562269cf4302e4eed46369b523687', 'support', 'active'),
+(3, 'Sayumpron Sirimajan', 'sayumpron', '7c222fb2927d828af22f592134e8932480637c0d', 'support', 'active'),
 (4, 'Kirk Vilaimal', 'kirk', '7c222fb2927d828af22f592134e8932480637c0d', 'admin', 'active');
 
 -- --------------------------------------------------------
@@ -112,6 +112,33 @@ CREATE TABLE `tbl_contract` (
   `con_email` varchar(50) DEFAULT NULL COMMENT 'อีเมล'
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+--
+-- Table structure for table `tbl_package`
+--
+
+CREATE TABLE `tbl_package` (
+  `id` int(11) NOT NULL,
+  `pack_name` varchar(100) NOT NULL COMMENT 'ชื่อแพคเกจ'
+
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+--
+-- Table structure for table `tbl_history`
+--
+
+CREATE TABLE `tbl_history` (
+  `id` int(11) NOT NULL,
+  `service_invoice` varchar(20) NOT NULL COMMENT 'เลขที่ใบส่งซ่อม',
+  `admin_name` varchar(20) NOT NULL COMMENT 'แอดมินที่ตีกลับ',
+  `his_name` varchar(100) NOT NULL COMMENT 'หัวข้อแก้ไข',
+  `descript` varchar(500) NOT NULL COMMENT 'เนื้อหา'
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
 
 
 -- --------------------------------------------------------
@@ -187,15 +214,16 @@ CREATE TABLE `tbl_service` (
   `con_port` varchar(50) NOT NULL COMMENT 'ท่าเรือ',
   `engineer` varchar(50) NOT NULL COMMENT 'วิศวกรคุมงาน',
   `support_1` varchar(50) NOT NULL COMMENT 'ผู้ช่วยวิศวกรคนที่1',
-  `remark` varchar(1000) COMMENT 'รีมาร์ค',  
+  `remark` varchar(1000) COMMENT 'รีมาร์ค',
   `create_date` date NOT NULL COMMENT 'สร้างJob Order',
   `due_date` date NOT NULL COMMENT 'เริ่ม',
   `end_date` date NOT NULL COMMENT 'สิ้นสุด',
-  `ETA` date NOT NULL COMMENT 'เรือเข้าท่า',
-  `ETD` date NOT NULL COMMENT 'เรือออกท่า',
+  `ETA` datetime NOT NULL COMMENT 'เรือเข้าท่า',
+  `ETD` datetime NOT NULL COMMENT 'เรือออกท่า',
   `contract_start` date NOT NULL COMMENT 'เริ่มสัญญา',
   `contract_end` date NOT NULL COMMENT 'สิ้นสุดสัญญา',
   `service_status` varchar(10) NOT NULL DEFAULT 'created' COMMENT 'สถานะ\r\n-created สร้างใบแจ้งซ่อม\r\n-wait รับซ่อม/ระหว่างซ่อม\r\n- fixed รอรับ\r\n- done รับรถเรียบร้อย',
+  `his_count` varchar(20) NOT NULL COMMENT 'จำนวนการตีกลับ',
   `timestamp` datetime NOT NULL DEFAULT current_timestamp()
   
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
@@ -232,6 +260,19 @@ ALTER TABLE `ci_sessions`
 --
 ALTER TABLE `tbl_admin`
   ADD PRIMARY KEY (`admin_id`);
+
+--
+-- Indexes for table `tbl_admin`
+--
+ALTER TABLE `tbl_uploads`
+  ADD PRIMARY KEY (`service_invoice`);
+
+
+--
+-- Indexes for table `tbl_history`
+--
+ALTER TABLE `tbl_history`
+  ADD PRIMARY KEY (`id`);
 
 
 --
@@ -273,6 +314,12 @@ ALTER TABLE `tbl_admin`
 --
 ALTER TABLE `tbl_type_vessel`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
+-- AUTO_INCREMENT for table `tbl_history`
+--
+ALTER TABLE `tbl_history`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT for table `tbl_contract`

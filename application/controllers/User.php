@@ -11,7 +11,6 @@ class User extends CI_Controller
     function __construct()
 
     {
-
         parent::__construct();
 
         if ($this->session->userdata('admin_id') == null) {
@@ -46,29 +45,6 @@ class User extends CI_Controller
 
     //option แอดมิน
 
-    function option_admin()
-    {
-
-        if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-
-            show_404();
-            exit();
-        }
-
-        $admin = $this->Function_model->fetchDataResult('tbl_admin', '', 'admin_id', 'DESC');
-
-        echo '<option value="" disabled selected>Select Engineer</option>';
-
-        foreach ($admin as $item) {
-
-            if ($item->admin_position == "employee") {
-                echo '<option value="' . $item->admin_name . '">' .  $item->admin_name . '</option>';
-            }
-        }
-    }
-
-    //option แอดมิน
-
     function option_admins()
     {
 
@@ -78,22 +54,35 @@ class User extends CI_Controller
             exit();
         }
 
+        $invoice = $this->input->post('invoice');
         $admin_name = $this->input->post('admin_name');
 
-        $admin = $this->Function_model->fetchDataResult('tbl_admin', '', 'admin_id', 'DESC');
+        $admin = $this->Function_model->fetchDataResult('tbl_admin', '', 'admin_id', 'ASC');
 
-        echo '<option value="" selected>Select Support Engineer</option>';
+        $service = $this->Function_model->getDataRow('tbl_service', ['service_invoice' => $invoice]);
+
+        if($admin_name != ''){
+            echo '<option value=""  >Select Support Engineer</option>';
+        }else{
+            if($invoice != ''){
+                echo '<option value="'.$service->engineer.'" >'.$service->engineer.'</option>';
+            }else{
+                echo '<option value="" >Select Engineer</option>';
+            }
+            
+        }
 
         foreach ($admin as $item) {
 
-            if ($item->admin_position == "employee") {
+            if ($item->admin_position == "support") {
 
-                if ($item->admin_name == $admin_name) {
-                } else {
+                if ($item->admin_name == $admin_name || $item->admin_name == $service->engineer) {  } 
+
+                else {
                     echo '<option value="' . $item->admin_name . '">' .  $item->admin_name . '</option>';
                 }
+                
             }
-
         }
     }
 
