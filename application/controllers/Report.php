@@ -50,7 +50,7 @@ class Report extends CI_Controller
 
             $where_arr = array(
 
-                'service_status' => 'uninstall'
+                'service_status' => ''
 
             );
 
@@ -62,13 +62,17 @@ class Report extends CI_Controller
 
                 'due_date <=' => $dateend,
 
-                'service_status' => 'uninstall'
+                'service_status' => ''
 
             );
 
         }
 
-        $data['service'] = $this->Function_model->fetchDataResult('tbl_service', $where_arr, 'service_id', 'DESC');
+        $data['service'] = $this->Function_model->fetchDataResult('tbl_service', $where_arr, 'service_invoice', 'DESC');
+
+        $data['service_project'] = $this->Function_model->fetchDataResult('tbl_service_project', '', 'service_invoice', 'DESC');
+
+        $data['service_vessel'] = $this->Function_model->fetchDataResult('tbl_vessel_name','','id','ASC');
 
         $this->load->view('components/tbl_report_service', $data);
 

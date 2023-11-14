@@ -6,17 +6,17 @@
 
             <th style="width: 10%">Job Order</th>
 
+            <th style="width: 15%">Project Code</th>
+
             <th style="width: 15%">Vessel</th>
 
-            <th>Name</th>
+            <th style="width: 15%">Customer Name</th>
 
-            <th style="width: 12%">Telephone</th>
+            <th style="width: 10%">Installation Date</th>
 
-            <th style="width: 15%">Installation Date</th>
+            <th style="width: 10%">Completed Date</th>
 
-            <th style="width: 15%">Completed Date</th>
-
-            <th style="width: 12%">Option</th>
+            <th style="width: 10%">Option</th>
 
         </tr>
 
@@ -28,29 +28,60 @@
 
             <tr>
 
-                <td class="text-center"><span class="badge badge-dark"><?=$item->service_invoice;?></span></td>
-
-                <td><?=$item->ves_name;?></td>
-
-                <td><?=$item->cus_name;?></td>
-
-                <td><?=$item->cus_tel;?></td>
-
-                <td class="text-center">
-
-                    <?=date_format(date_create($item->due_date), 'd/m/Y');?>
-
-                </td>
+                <td class="text-center"><span class="badge badge-dark"><?= $item->service_invoice; ?></span></td>
 
                 <td>
+                    <?php $i = 1;
+                    foreach ($service_project as $project) : ?>
+                        <?php if ($project->service_invoice == $item->service_invoice) : ?>
+                            <?php if ($i > 1) : ?>
+                                /
+                            <?php
+                            endif; ?>
 
-                <?=date_format(date_create($item->end_date), 'd/m/Y');?>
+                            <?= $project->projects ?>
+
+                        <?php $i++;
+                        endif; ?>
+
+                    <?php endforeach; ?>
+                </td>
+
+                <td><?php $i = 1;
+                    foreach ($service_vessel as $vessel) : ?>
+
+                        <?php if ($item->service_invoice == $vessel->service_invoice) : ?>
+                            <?php if ($i > 1) : ?>
+                                /
+                            <?php
+                            endif; ?>
+
+                            <?= $vessel->ves_name;  ?>
+
+                        <?php $i++;
+                        endif; ?>
+
+                    <?php endforeach; ?></td>
+
+                <td><?= $item->cus_name; ?></td>
+
+
+
+                <td class="text-center">
+
+                    <?= date_format(date_create($item->due_date), 'd/m/Y'); ?>
 
                 </td>
 
                 <td class="text-center">
 
-                    <a href="<?=base_url();?>pages/service_detail/<?=$item->service_invoice;?>" class="btn btn-sm btn-default rounded-0">Details</a>
+                    <?= date_format(date_create($item->end_date), 'd/m/Y'); ?>
+
+                </td>
+
+                <td class="text-center">
+
+                    <a href="<?= base_url(); ?>pages/service_detail/<?= $item->service_invoice; ?>" class="btn btn-sm btn-default rounded-0">Details</a>
 
                 </td>
 
@@ -63,7 +94,6 @@
 </table>
 
 <script>
-
     $('#tblReportService').DataTable({
 
         "paging": true,
@@ -109,5 +139,4 @@
         },
 
     });
-
 </script>

@@ -86,7 +86,26 @@ if ($service->ves_installation == true) {
 
                                 <div class="col-md-2">
 
-                                    <select class="form-control select2 rouned-0" id="projects">
+                                    <select class="form-select" data-placeholder="Project Code" id="projects" multiple="multiple">
+
+                                        <option value="">Loading...</option>
+
+                                    </select>
+
+                                </div>
+
+                                <div class="col-md-4">
+
+                                </div>
+
+                                <div class="col-md-1 mb-2">
+
+                                    <h4><strong class="text-danger"></strong>Product :</h2>
+
+                                </div>
+
+                                <div class="col-md-2">
+                                    <select class="form-select" id="product" data-placeholder="Product" multiple="multiple">
 
                                         <option value="">Loading...</option>
 
@@ -222,7 +241,7 @@ if ($service->ves_installation == true) {
 
                             <div class="row mb-2">
 
-                                <div class="col-md-3 mb-2">
+                                <div class="col-md-2 mb-2">
 
                                     <label><strong class="text-danger">*</strong>Fleet :</label>
 
@@ -234,11 +253,11 @@ if ($service->ves_installation == true) {
 
                                 </div>
 
-                                <div class="col-md-3 mb-2">
+                                <div class="col-md-2 mb-2">
 
                                     <label><strong class="text-danger">*</strong>Name :</label>
 
-                                    <select class="form-control select2 rouned-0" id="ves_name">
+                                    <select class="form-select" id="ves_name" data-placeholder="Vessel Name" multiple="multiple">
 
                                         <option value="">Loading...</option>
 
@@ -259,13 +278,82 @@ if ($service->ves_installation == true) {
 
                                 <div class="col-md-2 mb-2">
 
+                                    <label><strong class="text-danger">*</strong>Flag :</label>
+
+                                    <input type="text" id="ves_flag" class="form-control rounded-0" value="<?= $service->ves_flag ?>">
+
+                                </div>
+
+                                <div class="col-md-2 mb-2">
+
+                                    <label><strong class="text-danger">*</strong>Home Port :</label>
+
+                                    <input type="text" id="ves_home_port" class="form-control rounded-0" value="<?= $service->ves_home_port ?>">
+
+                                </div>
+
+                                <div class="col-md-2 mb-2">
+
+                                    <label><strong class="text-danger">*</strong>Gross Tonnage :</label>
+
+                                    <input type="text" id="ves_gross_tonnage" class="form-control rounded-0" value="<?= $service->ves_gross_tonnage ?>" maxlength="6" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
+
+                                </div>
+
+                                <div class="col-md-2 mb-2">
+
+                                    <label><strong class="text-danger">*</strong>Call Sign :</label>
+
+                                    <input type="text" id="ves_callsign" class="form-control rounded-0" placeholder="Call Sign" value="<?= $service->ves_callsign ?>">
+
+                                </div>
+
+                                <div class="col-md-2 mb-2">
+
+                                    <label><strong class="text-danger">*</strong>IMO :</label>
+
+                                    <input type="text" maxlength="6" id="ves_imo" class="form-control rounded-0" placeholder="IMO" value="<?= $service->ves_imo ?>" maxlength="6" oninput="this.value=this.value.replace(/[^0-9\s]/g,'');">
+
+                                </div>
+
+                                <div class="col-md-2 mb-2">
+
+                                    <label><strong class="text-danger">*</strong>MMSI :</label>
+
+                                    <input type="text" id="ves_mmsi" class="form-control rounded-0" placeholder="MMSI" value="<?= $service->ves_mmsi ?>">
+
+                                </div>
+
+                                <div class="col-md-2 mb-2">
+
+                                    <label><strong class="text-danger">*</strong>Year Built :</label>
+
+                                    <input type="text" id="ves_year" class="form-control rounded-0" placeholder="Year Built" value="<?= $service->ves_year ?>" maxlength="4" oninput="this.value=this.value.replace(/[^0-9\s]/g,'');">
+
+                                </div>
+
+                                <div class="col-md-2 mb-2">
+
                                     <label><strong class="text-danger">*</strong>Maintenance :</label>
 
                                     <select class="form-control select2 rouned-0" id="ves_maintenance">
 
                                         <option value="<?= $service->ves_maintenance ?>" selected><?= $service->ves_maintenance ?></option>
-                                        <option value="Preventive Maintenance">Preventive Maintenance</option>
-                                        <option value="Corrective Maintenance">Corrective Maintenance</option>
+
+                                        <?php if ($service->ves_maintenance != "Preventive Maintenance") : ?>
+                                            <option value="Preventive Maintenance">Preventive Maintenance</option>
+                                        <?php endif; ?>
+
+                                        <?php if ($service->ves_maintenance != "Corrective Maintenance") : ?>
+                                            <option value="Corrective Maintenance">Corrective Maintenance</option>
+                                        <?php endif; ?>
+
+                                        <?php if ($service->ves_maintenance != "New Installation") : ?>
+                                            <option value="New Installation">New Installation</option>
+                                        <?php endif; ?>
+
+
+
 
                                     </select>
 
@@ -295,45 +383,12 @@ if ($service->ves_installation == true) {
                                                 <input type="checkbox" id="ves_installation" name="ves_installation" checked>
                                             <?php endif; ?>
                                             <?php if ($service->ves_installation == 'false') : ?>
-                                                <input type="checkbox" id="ves_installation" name="ves_installation" >
+                                                <input type="checkbox" id="ves_installation" name="ves_installation">
                                             <?php endif; ?>
                                         </div>
                                     </div>
 
                                 </div>
-
-                                <div class="col-md-3 mb-2">
-
-                                    <label><strong class="text-danger">*</strong>Call Sign :</label>
-
-                                    <input type="text" id="ves_callsign" class="form-control rounded-0" placeholder="Call Sign" value="<?= $service->ves_callsign ?>">
-
-                                </div>
-
-                                <div class="col-md-3 mb-2">
-
-                                    <label><strong class="text-danger">*</strong>IMO :</label>
-
-                                    <input type="text" maxlength="6" id="ves_imo" class="form-control rounded-0" placeholder="IMO" value="<?= $service->ves_imo ?>" maxlength="6" oninput="this.value=this.value.replace(/[^0-9\s]/g,'');">
-
-                                </div>
-
-                                <div class="col-md-2 mb-2">
-
-                                    <label><strong class="text-danger">*</strong>MMSI :</label>
-
-                                    <input type="text" id="ves_mmsi" class="form-control rounded-0" placeholder="MMSI" value="<?= $service->ves_mmsi ?>">
-
-                                </div>
-
-                                <div class="col-md-2 mb-2">
-
-                                    <label><strong class="text-danger">*</strong>Year Built :</label>
-
-                                    <input type="text" id="ves_year" class="form-control rounded-0" placeholder="Year Built" value="<?= $service->ves_year ?>" maxlength="4" oninput="this.value=this.value.replace(/[^0-9\s]/g,'');">
-
-                                </div>
-
 
                             </div>
 
@@ -341,7 +396,7 @@ if ($service->ves_installation == true) {
                             <div class="row">
                                 <div class="col-md-2 mb-2">
 
-                                    <p class="text-primary"><i class="fas fa-circle"></i> Contract Onboard</p>
+                                    <p class="text-primary"><i class="fas fa-circle"></i> Contact Onboard</p>
 
                                 </div>
                             </div>
@@ -353,9 +408,9 @@ if ($service->ves_installation == true) {
 
                                     <label><strong class="text-danger">*</strong>Name :</label>
 
-                                    <select class="form-control select2 rouned-0" id="con_name" onchange="optionContractphone(value),optionContractemail(value)">
+                                    <select class="form-control select2 rouned-0" id="con_name" onchange="optionContactphone(value),optionContactemail(value)">
 
-                                        <option value="">Contract Name</option>
+                                        <option value="">Contact Name</option>
 
                                     </select>
 
@@ -375,11 +430,13 @@ if ($service->ves_installation == true) {
 
                                 <div class="col-md-3 mb-2">
 
-                                    <label><strong class="text-danger">*</strong>ETA :</label>
+                                    <label><strong class="text-danger">*</strong>Email :</label>
 
-                                    <input type="datetime-local" id="ETA" class="form-control rounded-0" placeholder="วันที่ส่งซ่อม" value="<?= $service->ETA ?>">
+                                    <select class="form-control select2 rouned-0" id="con_email">
 
+                                        <option value="<?= $service->con_email ?>" selected><?= $service->con_email ?></option>
 
+                                    </select>
 
                                 </div>
 
@@ -389,19 +446,33 @@ if ($service->ves_installation == true) {
 
                                     <label><strong class="text-danger">*</strong>Port :</label>
 
-                                    <input type="text" id="con_port" class="form-control rounded-0" placeholder="Port" value="<?= $service->con_port ?>">
+                                    <select class="form-control select2 rouned-0" id="port_name" onchange="optionProvince(value)">
+
+                                        <option value="">Port Name</option>
+
+                                    </select>
 
                                 </div>
 
                                 <div class="col-md-3 mb-2">
 
-                                    <label><strong class="text-danger">*</strong>Email :</label>
+                                    <label><strong class="text-danger">*</strong>Province :</label>
 
-                                    <select class="form-control select2 rouned-0" id="con_email">
+                                    <select class="form-control select2 rouned-0" id="port_province">
 
-                                        <option value="<?= $service->con_email ?>" selected><?= $service->con_email ?></option>
+                                        <option value="">Province of Port</option>
 
                                     </select>
+
+                                </div>
+
+                                <div class="col-md-3 mb-2">
+
+                                    <label><strong class="text-danger">*</strong>ETA :</label>
+
+                                    <input type="datetime-local" id="ETA" class="form-control rounded-0" placeholder="วันที่ส่งซ่อม" value="<?= $service->ETA ?>">
+
+
 
                                 </div>
 
@@ -428,13 +499,13 @@ if ($service->ves_installation == true) {
 
                             <div class="row mb-2">
 
-                                <div class="col-md-3 mb-2">
+                                <div class="col-md-5 mb-2">
 
                                     <label><strong class="text-danger">*</strong>Package Name :</label>
 
-                                    <select class="form-control select2 rouned-0" id="package" onchange="">
+                                    <select class="form-select" id="pack_name" name="pack_name[]" data-placeholder="Select Package" multiple="multiple" onchange="optionPackageInternet()">
 
-                                        <option value="">Package Name</option>
+                                        <option value="">Loading...</option>
 
                                     </select>
 
@@ -455,7 +526,20 @@ if ($service->ves_installation == true) {
 
                             <div class="row mb-2">
 
-                                <div class="col-4"></div>
+                                <div class="col-md-5 mb-2">
+
+                                    <label><strong class="text-danger">*</strong>Package Internet :</label>
+
+
+                                    <select class="form-select" id="pack_internet" data-placeholder="Select Package Internet" multiple="multiple">
+
+                                        <option value="">Loading ..</option>
+
+                                    </select>
+
+                                </div>
+
+                                <div class="col-1"></div>
 
                                 <div class="col-md-3 mb-2">
 
@@ -483,9 +567,9 @@ if ($service->ves_installation == true) {
 
                                     <div class="col-md-6">
 
-                                        <select class="form-control select2 rouned-0" id="admin_name" onchange="optionAdmins(value)">
+                                        <select class="form-select" id="admin_name" data-placeholder="Select Engineer" multiple="multiple">
 
-                                            <option value="" selected>Loading ...</option>
+                                            <option value="">Loading...</option>
 
                                         </select>
 
@@ -493,26 +577,17 @@ if ($service->ves_installation == true) {
 
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-md-2 ">
-                                        <label><strong class="text-danger">*</strong>Support :</label>
-                                    </div>
+                            </div>
 
-                                    <div class="col-md-6">
+                            <div class="row mb-2">
 
-                                        <select class="form-control select2 rouned-0" id="admin_names">
+                                <p class="text-primary"><i class="fas fa-circle"></i> Remark</p>
 
-                                            <option value="<?= $service->support_1 ?>" selected><?= $service->support_1 ?></option>
+                            </div>
 
-                                        </select>
+                            <div class="col-md-5 mb-2">
 
-                                    </div>
-                                    <!---
-                                    <div class="col-md-2">
-                                        <button type="button" class="btn btn-primary rounded-0" id=""><i class="fas fa-plus"></i> Add</button>
-                                    </div>
-                                    --->
-                                </div>
+                                <textarea id="remark_create" class="form-control rounded-0" placeholder="Remark" required><?= $service->remark_create ?></textarea>
 
                             </div>
 
@@ -620,12 +695,14 @@ if ($service->ves_installation == true) {
 <script>
     //-------------------------------------------------------------------------S C R I P T-----------------------------------------------------------------------------------
 
+    service_invoice = <?= $service->service_invoice ?>;
+
+    port_name = "<?= $service->port_name ?>";
+
     //option admin
 
     function optionAdmin() {
 
-        let admin_name = "<?= $service->engineer ?>";
-
         $.ajax({
 
             url: '<?= base_url(); ?>/user/option_admins',
@@ -633,45 +710,24 @@ if ($service->ves_installation == true) {
             method: 'POST',
 
             data: {
-                invoice: '<?= $service->service_invoice ?>',
-                admin_name: ''
+                service_invoice: service_invoice,
             },
 
             success: function(res) {
                 $('#admin_name').html(res);
-
-
+                $('#admin_name').select2({
+                    theme: "bootstrap-5",
+                    width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+                    placeholder: $(this).data('placeholder'),
+                    closeOnSelect: false,
+                });
             }
 
         })
-    }
-
-    //option admins
-
-    function optionAdmins($admin_name) {
-
-        $.ajax({
-
-            url: '<?= base_url(); ?>/user/option_admins',
-
-            method: 'POST',
-
-            data: {
-                admin_name: $admin_name
-            },
-
-            success: function(res) {
-
-                $('#admin_names').html(res);
-
-
-            }
-
-        })
-
     }
 
     //-------------------------------------------------------------------------C U S T O M E R-----------------------------------------------------------------------------------
+
     //option customer
     function optionCustomer() {
 
@@ -798,20 +854,88 @@ if ($service->ves_installation == true) {
         })
 
     }
-    //-------------------------------------------------------------------------V E S S E L---------------------------------------------------------------------------------------
 
+    //-------------------------------------------------------------------------V E S S E L---------------------------------------------------------------------------------------
 
     //option package
     function optionPackage() {
+
         $.ajax({
 
-            url: '<?= base_url(); ?>/vessel/option_package',
+            url: '<?= base_url(); ?>package/option_package',
 
             method: 'POST',
 
+            data: {
+                service_invoice: service_invoice
+            },
+
             success: function(res) {
 
-                $('#package').html(res);
+                $('#pack_name').html(res);
+                $('#pack_name').select2({
+                    theme: "bootstrap-5",
+                    width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+                    placeholder: $(this).data('placeholder'),
+                    closeOnSelect: false,
+                });
+            }
+
+        })
+    }
+
+    //option package internet
+    function optionPackageInternet() {
+
+        let pack_name = $('#pack_name').val();
+
+        $.ajax({
+
+            url: '<?= base_url(); ?>package/option_package_internet',
+
+            method: 'POST',
+
+            data: {
+                service_invoice:service_invoice,
+                package: pack_name
+            },
+
+            success: function(res) {
+
+                $('#pack_internet').html(res);
+                $('#pack_internet').select2({
+                    theme: "bootstrap-5",
+                    width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+                    placeholder: $(this).data('placeholder'),
+                    closeOnSelect: false,
+                });
+            }
+
+        })
+    }
+
+    //option product
+    function optionProduct() {
+        $.ajax({
+
+            url: '<?= base_url(); ?>/vessel/option_product',
+
+            method: 'POST',
+
+            data: {
+                service_invoice: service_invoice
+            },
+
+            success: function(res) {
+
+                $('#product').html(res);
+                $('#product').select2({
+                    theme: "bootstrap-5",
+                    width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+                    placeholder: $(this).data('placeholder'),
+                    closeOnSelect: false,
+                });
+
 
             }
 
@@ -821,8 +945,6 @@ if ($service->ves_installation == true) {
     //option project
     function optionProject() {
 
-        let project = "<?= $service->projects ?>";
-
         $.ajax({
 
             url: '<?= base_url(); ?>/vessel/option_project',
@@ -830,14 +952,18 @@ if ($service->ves_installation == true) {
             method: 'POST',
 
             data: {
-
-                project: project
+                service_invoice: service_invoice
             },
 
             success: function(res) {
 
                 $('#projects').html(res);
-
+                $('#projects').select2({
+                    theme: "bootstrap-5",
+                    width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+                    placeholder: $(this).data('placeholder'),
+                    closeOnSelect: false,
+                });
             }
 
         })
@@ -873,8 +999,6 @@ if ($service->ves_installation == true) {
     //option Vessel
     function optionVessel() {
 
-        let name = "<?= $service->ves_name ?>";
-
         $.ajax({
 
             url: '<?= base_url(); ?>/vessel/option_vessel',
@@ -882,13 +1006,18 @@ if ($service->ves_installation == true) {
             method: 'POST',
 
             data: {
-                name: name
+                service_invoice: service_invoice
             },
 
             success: function(res) {
 
                 $('#ves_name').html(res);
-
+                $('#ves_name').select2({
+                    theme: "bootstrap-5",
+                    width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+                    placeholder: $(this).data('placeholder'),
+                    closeOnSelect: false,
+                });
             }
 
         })
@@ -923,14 +1052,60 @@ if ($service->ves_installation == true) {
 
     //-------------------------------------------------------------------------C O N T R A C T----------------------------------------------------------------------------------
 
-    //Option Contract Name
-    function optionContractname() {
+    //Option Port Name
+    function optionPort() {
+
+        $.ajax({
+
+            url: '<?= base_url(); ?>port/option_port',
+
+            method: 'POST',
+
+            data: {
+                port_names: port_name
+            },
+
+            success: function(res) {
+
+                $('#port_name').html(res);
+
+            }
+
+        })
+
+    }
+
+    //Option Province 
+    function optionProvince($port_name) {
+
+        $.ajax({
+
+            url: '<?= base_url(); ?>port/option_province',
+
+            method: 'POST',
+
+            data: {
+                port_name: $port_name
+            },
+
+            success: function(res) {
+
+                $('#port_province').html(res);
+
+            }
+
+        })
+
+    }
+
+    //Option Contact Name
+    function optionContactname() {
 
         let con_name = "<?= $service->con_name ?>";
 
         $.ajax({
 
-            url: '<?= base_url(); ?>/vessel/option_contract_name',
+            url: '<?= base_url(); ?>contact/option_contact_name',
 
             method: 'POST',
 
@@ -948,12 +1123,12 @@ if ($service->ves_installation == true) {
 
     }
 
-    //Option Contract Name
-    function optionContractphone($con_name) {
+    //Option Contact Name
+    function optionContactphone($con_name) {
 
         $.ajax({
 
-            url: '<?= base_url(); ?>/vessel/option_contract_phone',
+            url: '<?= base_url(); ?>contact/option_contact_phone',
 
             method: 'POST',
 
@@ -971,12 +1146,12 @@ if ($service->ves_installation == true) {
 
     }
 
-    //Option Contract Email
-    function optionContractemail($con_name) {
+    //Option Contact Email
+    function optionContactemail($con_name) {
 
         $.ajax({
 
-            url: '<?= base_url(); ?>/vessel/option_contract_email',
+            url: '<?= base_url(); ?>contact/option_contact_email',
 
             method: 'POST',
 
@@ -1070,27 +1245,25 @@ if ($service->ves_installation == true) {
         })
     }
 
-
-
     $(document).ready(function() {
-        optionAdmin();
+        optionProject();
+        optionProduct();
         optionCustomer();
         optionFleet();
-        optionProject();
         optionVessel();
         optionTypeVessel();
-        optionContractname();
+        optionContactname();
+        optionPort();
+        optionProvince(port_name);
         optionPackage();
+        optionPackageInternet();
+        optionAdmin();
         getServiceDetail();
     });
-
-
 
     // Update Service
 
     $(document).on('click', '#updateService', function() {
-
-        let service_invoice = "<?= $service->service_invoice ?>";
 
         let projects = $('#projects').val();
 
@@ -1130,11 +1303,17 @@ if ($service->ves_installation == true) {
 
         let con_email = $('#con_email').val();
 
-        let con_port = $('#con_port').val();
+        let port_name = $('#port_name').val();
 
         let admin_name = $('#admin_name').val();
 
-        let admin_names = $('#admin_names').val();
+        let product = $('#product').val();
+
+        let pack_name = $('#pack_name').val();
+
+        let pack_internet = $('#pack_internet').val();
+
+        let remark_create = $('#remark_create').val();
 
         let create_date = $('#create_date').val();
 
@@ -1152,8 +1331,8 @@ if ($service->ves_installation == true) {
 
         if (service_invoice == '' || projects == '' || cus_name == '' || cus_tel == '' || cus_address == '' || cus_email == '' || cus_zipcode == '' || ves_fleet == '' || ves_name == '' ||
             ves_type == '' || ves_callsign == '' || ves_imo == '' || ves_mmsi == '' || ves_year == '' || ves_maintenance == '' || con_name == '' || con_tel == '' ||
-            con_port == '' || con_email == '' || admin_name == '' || admin_names == '' || create_date == '' || due_date == '' || end_date == '' || eta == '' || etd == '' ||
-            contract_start == '' || contract_end == '') {
+            port_name == '' || con_email == '' || admin_name == '' || product == '' || pack_name == '' || pack_internet == '' || remark_create == '' ||
+            create_date == '' || due_date == '' || end_date == '' || eta == '' || etd == '' || contract_start == '' || contract_end == '') {
 
             Swal.fire({
 
@@ -1170,6 +1349,7 @@ if ($service->ves_installation == true) {
             return false;
 
         }
+
 
         Swal.fire({
 
@@ -1253,13 +1433,19 @@ if ($service->ves_installation == true) {
 
                                 con_tel: con_tel,
 
-                                con_port: con_port,
+                                port_name: port_name,
 
                                 con_email: con_email,
 
                                 admin_name: admin_name,
 
-                                admin_names: admin_names,
+                                product: product,
+
+                                pack_name: pack_name,
+
+                                pack_internet: pack_internet,
+
+                                remark_create: remark_create,
 
                                 create_date: create_date,
 
@@ -1273,7 +1459,7 @@ if ($service->ves_installation == true) {
 
                                 contract_start: contract_start,
 
-                                contract_end: contract_end
+                                contract_end: contract_end,
 
                             },
 

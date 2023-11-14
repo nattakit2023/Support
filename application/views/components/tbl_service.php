@@ -32,12 +32,19 @@
                     <div class="row">
 
                         <div class="col-md-8">
-                            <?= $item->ves_name;  ?>
+                            <?php $i = 1;
+                            foreach ($service_vessel as $vessel) : ?>
+                                <?php if ($item->service_invoice == $vessel->service_invoice) : ?>
+                                    <?php if ($i > 1) : ?>
+                                        /
+                                    <?php endif; ?>
+                                    <?= $vessel->ves_name;  ?>
+                                <?php $i++;
+                                endif; ?>
+                            <?php endforeach; ?>
                         </div>
                         <?php if ($item->his_count > 0) : ?>
-                            <?php if ($item->service_status == 'created') : ?>
-                                <button type="button" class="btn btn-outline-danger rounded-0" data-toggle="modal" data-target="#modalHistory<?= $item->service_invoice ?>" id="<?= $item->service_invoice; ?>" value="<?= $item->service_invoice; ?>"><i class="fas fa-exclamation"></i></button>
-                            <?php endif; ?>
+                            <button type="button" class="btn btn-outline-danger rounded-0" data-toggle="modal" data-target="#modalHistory<?= $item->service_invoice ?>" id="<?= $item->service_invoice; ?>" value="<?= $item->service_invoice; ?>"><i class="fas fa-exclamation"></i></button>
                         <?php endif; ?>
                     </div>
                 </td>
@@ -82,6 +89,12 @@
 
                             break;
 
+                        case 'uninstall':
+
+                            echo '<span class="badge badge-danger">Uninstall</span>';
+
+                            break;
+
                         case 'done':
 
                             echo '<span class="badge badge-success">Completed</span>';
@@ -101,15 +114,23 @@
 
                     <a href="<?= base_url(); ?>pages/service_detail/<?= $item->service_invoice; ?>" class="btn btn-sm btn-outline-primary rounded-0">Details</a>
 
-                    <?php if ($item->service_status == 'created') : ?>
+                    <?php if ($item->service_status == 'created' && $this->session->userdata('admin_position') != 'Engineer') : ?>
 
                         <a href="<?= base_url(); ?>pages/service_edit_detail/<?= $item->service_invoice; ?>" class="btn btn-sm btn-outline-success rounded-0">Edit</a>
 
                     <?php endif; ?>
 
+                    <?php if ($item->service_status == 'uninstall') : ?>
+
+                        <?php $atp_upload = $this->Function_model->getDataRow('tbl_atp_upload_back', ['service_invoice' => $item->service_invoice]); ?>
+                        <?php if ($atp_upload != NULL) : ?>
+                            <a href="<?= base_url(); ?>/upload_atp_back/<?= $item->service_invoice; ?>/<?= $atp_upload->uploads_name ?>" target="_blank" class="btn btn-sm btn-outline-danger rounded-0">ATP</a>
+                        <?php endif; ?>
+                    <?php endif; ?>
+
                     <?php if ($item->service_status == 'done') : ?>
 
-                        <a href="<?= base_url(); ?>service/update_status/<?= $item->service_invoice; ?>" class="btn btn-sm btn-outline-danger rounded-0">Uninstall</a>
+                        <a href="<?= base_url(); ?>service/update_status/<?= $item->service_invoice; ?>" class="btn btn-sm btn-outline-danger rounded-0">Close</a>
 
                     <?php endif; ?>
 

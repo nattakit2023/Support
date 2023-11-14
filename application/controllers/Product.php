@@ -17,9 +17,7 @@ class Product extends CI_Controller
         if ($this->session->userdata('admin_id') == null) {
 
             redirect('/');
-
         }
-
     }
 
     public function index()
@@ -27,7 +25,6 @@ class Product extends CI_Controller
     {
 
         redirect('/');
-
     }
 
 
@@ -43,13 +40,11 @@ class Product extends CI_Controller
             show_404();
 
             exit();
-
         }
 
         $data['product'] = $this->Function_model->fetchDataResult('tbl_product', '', 'product_id', 'DESC');
 
         $this->load->view('components/tbl_product', $data);
-
     }
 
 
@@ -65,7 +60,6 @@ class Product extends CI_Controller
             show_404();
 
             exit();
-
         }
 
         $product_name = $this->input->post('product_name');
@@ -83,16 +77,15 @@ class Product extends CI_Controller
             ]);
 
             exit();
-
         }
 
         //ตรวจสอบว่ามีชื่อสินค้านี้อยู่แล้วหรือยัง
 
-        $this->db->like('product_name',$product_name,'after');
+        $this->db->like('product_name', $product_name, 'after');
 
         $check_name = $this->db->get('tbl_product')->row();
 
-        if($check_name != null){
+        if ($check_name != null) {
 
             echo json_encode([
 
@@ -100,8 +93,8 @@ class Product extends CI_Controller
 
                 'message' => 'สินค้าและบริการนี้มีในระบบเรียบร้อยแล้ว'
 
-            ]);exit();
-
+            ]);
+            exit();
         }
 
         $data_arr = [
@@ -125,7 +118,6 @@ class Product extends CI_Controller
             ]);
 
             exit();
-
         } else {
 
             echo json_encode([
@@ -137,9 +129,7 @@ class Product extends CI_Controller
             ]);
 
             exit();
-
         }
-
     }
 
     // ลบสินค้าและบริการ
@@ -153,7 +143,6 @@ class Product extends CI_Controller
             show_404();
 
             exit();
-
         }
 
         $product_id = $this->input->post('product_id');
@@ -169,7 +158,6 @@ class Product extends CI_Controller
             ]);
 
             exit();
-
         }
 
         $res = $this->Function_model->deleteData('tbl_product', ['product_id' => $product_id]);
@@ -185,7 +173,6 @@ class Product extends CI_Controller
             ]);
 
             exit();
-
         } else {
 
             echo json_encode([
@@ -197,9 +184,7 @@ class Product extends CI_Controller
             ]);
 
             exit();
-
         }
-
     }
 
     // แก้ไขสินค้าและบริการ
@@ -213,7 +198,6 @@ class Product extends CI_Controller
             show_404();
 
             exit();
-
         }
 
         $product_id = $this->input->post('product_id');
@@ -233,20 +217,19 @@ class Product extends CI_Controller
             ]);
 
             exit();
-
         }
 
         //ตรวจสอบชื่อซ้ำ
 
         $this->db->where('product_id !=', $product_id);
 
-        $this->db->like('product_name',$product_name,'after');
+        $this->db->like('product_name', $product_name, 'after');
 
         $check_name = $this->db->get('tbl_product')->row();
 
 
 
-        if($check_name != null){
+        if ($check_name != null) {
 
             echo json_encode([
 
@@ -254,8 +237,8 @@ class Product extends CI_Controller
 
                 'message' => 'สินค้าและบริการนี้มีในระบบเรียบร้อยแล้ว'
 
-            ]);exit();
-
+            ]);
+            exit();
         }
 
         $where_arr = [
@@ -285,7 +268,6 @@ class Product extends CI_Controller
             ]);
 
             exit();
-
         } else {
 
             echo json_encode([
@@ -297,9 +279,7 @@ class Product extends CI_Controller
             ]);
 
             exit();
-
         }
-
     }
 
     //ดึงเอาข้อมูลสินค้าและบริการ
@@ -313,7 +293,6 @@ class Product extends CI_Controller
             show_404();
 
             exit();
-
         }
 
         $product_id = $this->input->post('product_id');
@@ -329,7 +308,6 @@ class Product extends CI_Controller
             ]);
 
             exit();
-
         }
 
         $res = $this->Function_model->getDataRow('tbl_product', ['product_id' => $product_id]);
@@ -351,8 +329,7 @@ class Product extends CI_Controller
                 ]
 
             );
-
-        }else{
+        } else {
 
             echo json_encode([
 
@@ -360,70 +337,63 @@ class Product extends CI_Controller
 
                 'message' => 'No data in this ID'
 
-            ]);exit();
-
+            ]);
+            exit();
         }
-
     }
 
 
 
     //option สินค้าและบริการ
 
-    function option_product(){
+    function option_product()
+    {
 
-        if($_SERVER['REQUEST_METHOD'] != 'POST'){
+        if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
-            show_404();exit();
-
+            show_404();
+            exit();
         }
 
-        $product = $this->Function_model2->fetchDataResult('sma_products','','id', 'ASC');
+        $product = $this->Function_model2->fetchDataResult('sma_products', '', 'id', 'ASC');
 
         echo '<option value="" disabled selected>--เลือกสินค้า & บริการ--</option>';
 
-        foreach($product as $item){
+        foreach ($product as $item) {
 
-            if(($item->track_quantity - $item->quantity) == 0){
+            if (($item->quantity - $item->track_quantity) <= 0) {
+            } else {
+                echo '<option value="' . $item->name . '">' . $item->id . ". " . $item->name . '</option>';
             }
-            else{
-                echo '<option value="'.$item->name.'">'.$item->id.". ".$item->name.'</option>';
-            }
-
-            
-
         }
-
-
     }
 
     //option สินค้าและบริการ
 
-    function option_quantity(){
+    function option_quantity()
+    {
 
         $product_name = $this->input->post('product_name');
 
-        if($_SERVER['REQUEST_METHOD'] != 'POST'){
+        if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
-            show_404();exit();
-
+            show_404();
+            exit();
         }
 
-        $product = $this->Function_model2->fetchDataResult('sma_products','','id', 'ASC');
-        
+        $product = $this->Function_model2->fetchDataResult('sma_products', '', 'id', 'ASC');
+
         echo '<option value="" selected>เลือกจำนวนสินค้า</option>';
 
-        foreach($product as $item){
-            if($item->name == $product_name){
+        foreach ($product as $item) {
+            if ($item->name == $product_name) {
                 $quantity = $item->quantity - $item->track_quantity;
-                while ($quantity>0){
-                    echo '<option value="'.$quantity.'">'.$quantity.'</option>';
+                while ($quantity > 0) {
+                    echo '<option value="' . $quantity . '">' . $quantity . '</option>';
                     $quantity--;
                 }
                 exit();
             }
         }
     }
-
 }
-

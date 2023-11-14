@@ -14,12 +14,10 @@ class Pages extends CI_Controller
 
         parent::__construct();
 
-        if($this->session->userdata('admin_id')==null){
+        if ($this->session->userdata('admin_id') == null) {
 
             redirect('/');
-
         }
-
     }
 
     //จัดการหน้าต่างๆ
@@ -31,14 +29,13 @@ class Pages extends CI_Controller
         if (!file_exists('./application/views/pages/' . $page . '.php')) {
 
             show_404();
-
         }
 
         $data['active'] = $page;
 
         switch ($page) {
 
-            //หน้าหลัก
+                //หน้าหลัก
 
             case 'dashboard':
 
@@ -46,17 +43,24 @@ class Pages extends CI_Controller
 
                 break;
 
-            //รายการซ่อม
+                //รายการซ่อม
 
             case 'service_create':
 
+                if ($this->session->userdata('admin_position') == 'Engineer') {
+
+                    redirect('/dashboard');
+                }
+
                 $data['title'] = 'รับงานซ่อม | ระบบบริหารจัดการทีม SUPPORT';
+
+                $data['service'] = $this->Function_model->fetchDataResult('tbl_service','','service_invoice','ASC');
 
                 break;
 
             case 'service':
 
-                $data['title'] ='รายการส่งซ่อม';
+                $data['title'] = 'รายการส่งซ่อม';
 
                 break;
 
@@ -66,13 +70,13 @@ class Pages extends CI_Controller
 
                 break;
 
-            case 'service_detail' :
+            case 'service_detail':
 
                 $data['title'] = 'รายละเอียดงานซ่อม';
 
                 break;
 
-            //จัดการสินค้า บริการ และอื่นๆ
+                //จัดการสินค้า บริการ และอื่นๆ
 
             case 'product':
 
@@ -80,19 +84,36 @@ class Pages extends CI_Controller
 
                 break;
 
+            case 'contact':
+
+                $data['title'] = 'จัดการข้อมูลContact';
+
+                break;
+
+            case 'port':
+
+                $data['title'] = 'จัดการข้อมูลPort';
+
+                break;
+
+            case 'package':
+
+                $data['title'] = 'จัดการข้อมูลPackage';
+
+                break;
+
             case 'user':
 
-                if($this->session->userdata('admin_position')!='admin'){
+                if ($this->session->userdata('admin_position') != 'Super admin') {
 
                     redirect('/dashboard');
-
                 }
 
                 $data['title'] = 'จัดการผู้ใช้งานระบบ';
 
                 break;
 
-            //ลูกค้า
+                //ลูกค้า
 
             case 'customer':
 
@@ -100,7 +121,7 @@ class Pages extends CI_Controller
 
                 break;
 
-            //รายงานต่างๆ 
+                //รายงานต่างๆ 
 
             case 'report_service':
 
@@ -119,7 +140,6 @@ class Pages extends CI_Controller
                 show_404();
 
                 exit();
-
         }
 
 
@@ -132,33 +152,49 @@ class Pages extends CI_Controller
 
         $this->load->view('template/sidebar');
 
-        $this->load->view('pages/'.$page, $data);
+        $this->load->view('pages/' . $page, $data);
 
         $this->load->view('template/footer');
-
     }
 
 
 
     //รายละเอียแจ้งซ่อม
 
-    function service_detail($invoice){
+    function service_detail($invoice)
+    {
 
-        if($invoice == null){
+        if ($invoice == null) {
 
-            show_404();exit();
-
+            show_404();
+            exit();
         }
 
-        $data['service'] = $this->Function_model->getDataRow('tbl_service', ['service_invoice'=>$invoice]);
+        $data['atp_upload'] = $this->Function_model->getDataRow('tbl_atp_upload_back', ['service_invoice' => $invoice]);
 
-        if($data['service'] == null){
+        $data['engineer'] = $this->Function_model->fetchDataResult('tbl_engineer', ['service_invoice' => $invoice]);
 
-            show_404();exit();
+        $data['vessel'] = $this->Function_model->fetchDataResult('tbl_vessel_name', ['service_invoice' => $invoice]);
 
+        $data['service_package'] = $this->Function_model->fetchDataResult('tbl_service_package', ['service_invoice' => $invoice]);
+
+        $data['service_product'] = $this->Function_model->fetchDataResult('tbl_service_product', ['service_invoice' => $invoice]);
+
+        $data['service_project'] = $this->Function_model->fetchDataResult('tbl_service_project', ['service_invoice' => $invoice]);
+
+        $data['service'] = $this->Function_model->getDataRow('tbl_service', ['service_invoice' => $invoice]);
+
+        $data['image'] = $this->Function_model->fetchDataResult('tbl_uploads', ['service_invoice' => $invoice]);
+
+        $data['image_back'] = $this->Function_model->fetchDataResult('tbl_uploads_back', ['service_invoice' => $invoice]);
+
+        if ($data['service'] == null) {
+
+            show_404();
+            exit();
         }
 
-        $data['title']= 'ใบแจ้งซ่อมเลขที่ '.$data['service']->service_invoice;
+        $data['title'] = 'ใบแจ้งซ่อมเลขที่ ' . $data['service']->service_invoice;
 
         $data['active'] = 'service_detail';
 
@@ -171,28 +207,28 @@ class Pages extends CI_Controller
         $this->load->view('pages/service_detail', $data);
 
         $this->load->view('template/footer');
-
     }
 
     //รายละเอียดการแก้ไข
 
-    function service_edit_detail($invoice){
+    function service_edit_detail($invoice)
+    {
 
-        if($invoice == null){
+        if ($invoice == null) {
 
-            show_404();exit();
-
+            show_404();
+            exit();
         }
 
-        $data['service'] = $this->Function_model->getDataRow('tbl_service', ['service_invoice'=>$invoice]);
+        $data['service'] = $this->Function_model->getDataRow('tbl_service', ['service_invoice' => $invoice]);
 
-        if($data['service'] == null){
+        if ($data['service'] == null) {
 
-            show_404();exit();
-
+            show_404();
+            exit();
         }
 
-        $data['title']= 'ใบแจ้งซ่อมเลขที่ '.$data['service']->service_invoice;
+        $data['title'] = 'ใบแจ้งซ่อมเลขที่ ' . $data['service']->service_invoice;
 
         $data['active'] = 'service_detail';
 
@@ -203,32 +239,65 @@ class Pages extends CI_Controller
         $this->load->view('template/sidebar');
 
         $this->load->view('pages/service_edit_detail', $data);
-        
-        $this->load->view('template/footer');
 
+        $this->load->view('template/footer');
     }
 
+    // ออกใบATP REPORt
+
+    function atp_report($invoice)
+    {
+
+        if ($invoice == null) {
+
+            show_404();
+            exit();
+        }
+
+        $data['service'] = $this->Function_model->getDataRow('tbl_service', ['service_invoice' => $invoice]);
+
+        if ($data['service'] == null) {
+
+            show_404();
+            exit();
+        }
+
+        $data['title'] = 'ATP Report ' . $data['service']->service_invoice;
+
+        $data['active'] = 'service_detail';
+
+        $this->load->view('template/header', $data);
+
+        $this->load->view('template/navbar');
+
+        $this->load->view('template/sidebar');
+
+        $this->load->view('pages/atp_report', $data);
+
+        $this->load->view('template/footer');
+    }
 
 
     //รายละเอียลูกค้า
 
-    function customer_detail($cus_id){
+    function customer_detail($cus_id)
+    {
 
-        if($cus_id == null){
+        if ($cus_id == null) {
 
-            show_404();exit();
-
+            show_404();
+            exit();
         }
 
-        $data['customer'] = $this->Function_model->getDataRow('tbl_customer', ['cus_id'=>$cus_id]);
+        $data['customer'] = $this->Function_model->getDataRow('tbl_customer', ['cus_id' => $cus_id]);
 
-        if($data['customer'] == null){
+        if ($data['customer'] == null) {
 
-            show_404();exit();
-
+            show_404();
+            exit();
         }
 
-        $data['title']= 'รายละเอียดประวัติการเข้า Service '.$data['customer']->license_plate;
+        $data['title'] = 'รายละเอียดประวัติการเข้า Service ' . $data['customer']->license_plate;
 
         $data['active'] = 'customer';
 
@@ -241,28 +310,27 @@ class Pages extends CI_Controller
         $this->load->view('pages/customer_detail', $data);
 
         $this->load->view('template/footer');
-
     }
 
 
 
     //เปลี่ยนรหัสผ่าน
 
-    function change_password(){
+    function change_password()
+    {
 
-        if($_SERVER['REQUEST_METHOD'] != 'POST'){
+        if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
             show_404();
 
             exit();
-
         }
 
         $admin_password = $this->input->post('admin_password');
 
         $admin_id = $this->session->userdata('admin_id');
 
-        if($admin_password == null){
+        if ($admin_password == null) {
 
             echo json_encode([
 
@@ -270,17 +338,17 @@ class Pages extends CI_Controller
 
                 'message' => 'กรุณากรอกข้อมูลรหัสผ่าน'
 
-            ]);exit();
-
+            ]);
+            exit();
         }
 
-        $data_arr = ['admin_password'=> sha1($admin_password)];
+        $data_arr = ['admin_password' => sha1($admin_password)];
 
-        $where_arr = ['admin_id'=>$admin_id];
+        $where_arr = ['admin_id' => $admin_id];
 
         $res = $this->Function_model->updateData('tbl_admin', $where_arr, $data_arr);
 
-        if($res == TRUE){
+        if ($res == TRUE) {
 
             echo json_encode([
 
@@ -288,9 +356,9 @@ class Pages extends CI_Controller
 
                 'message' => 'เปลี่ยนรหัสผ่านเรียบร้อยแล้ว'
 
-            ]);exit();
-
-        }else{
+            ]);
+            exit();
+        } else {
 
             echo json_encode(array(
 
@@ -298,10 +366,9 @@ class Pages extends CI_Controller
 
                 'message' => 'เปลี่ยนรหัสผ่านไม่สำเร็จ กรุณาตรวจสอบใหม่อีกครั้ง'
 
-            ));exit();
-
+            ));
+            exit();
         }
-
     }
 
 
@@ -317,8 +384,5 @@ class Pages extends CI_Controller
         $this->session->unset_userdata($sess_array);
 
         redirect('/');
-
     }
-
 }
-

@@ -38,10 +38,11 @@ class User extends CI_Controller
             exit();
         }
 
-        $data['admin'] = $this->Function_model->fetchDataResult('tbl_admin', null, 'admin_id', 'DESC');
+        $data['admin'] = $this->Function_model->fetchDataResult('tbl_admin', null, 'admin_id', 'ASC');
 
         $this->load->view('components/tbl_user', $data);
     }
+
 
     //option แอดมิน
 
@@ -54,34 +55,34 @@ class User extends CI_Controller
             exit();
         }
 
-        $invoice = $this->input->post('invoice');
+        $service_invoice = $this->input->post('service_invoice');
+
         $admin_name = $this->input->post('admin_name');
 
         $admin = $this->Function_model->fetchDataResult('tbl_admin', '', 'admin_id', 'ASC');
 
-        $service = $this->Function_model->getDataRow('tbl_service', ['service_invoice' => $invoice]);
+        $admins = $this->Function_model->fetchDataResult('tbl_engineer', ['service_invoice' => $service_invoice]);
 
-        if($admin_name != ''){
-            echo '<option value=""  >Select Support Engineer</option>';
-        }else{
-            if($invoice != ''){
-                echo '<option value="'.$service->engineer.'" >'.$service->engineer.'</option>';
-            }else{
-                echo '<option value="" >Select Engineer</option>';
-            }
-            
+        if ($admin_name != '') {
+            echo '<option value="'  . $admin_name . '"  selected>' . $admin_name . '</option>';
+        } else {
+            echo '<option value=""  >Select Engineer</option>';
         }
 
         foreach ($admin as $item) {
 
-            if ($item->admin_position == "support") {
+            if ($item->admin_position == "Engineer") {
 
-                if ($item->admin_name == $admin_name || $item->admin_name == $service->engineer) {  } 
-
-                else {
+                $i = 0;
+                foreach ($admins as $item2) {
+                    if ($item->admin_name == $item2->engineer) {
+                        echo '<option value="' . $item2->engineer . '" selected>'.  $item2->engineer . '</option>';
+                        $i++;
+                    }
+                }
+                if ($i == 0) {
                     echo '<option value="' . $item->admin_name . '">' .  $item->admin_name . '</option>';
                 }
-                
             }
         }
     }
@@ -400,6 +401,77 @@ class User extends CI_Controller
         ];
 
         $res = $this->Function_model->updateData('tbl_admin', $where_arr, $data_arr);
+
+        if ($res == TRUE) {
+
+            echo json_encode([
+
+                'status' => 'SUCCESS',
+
+                'message' => 'อัพเดตข้อมูลผู้ใช้งานเรียบร้อยแล้ว'
+
+            ]);
+            exit();
+        } else {
+
+            echo json_encode([
+
+                'status' => 'ERROR',
+
+                'message' => 'อัพเดตข้อมูลไม่สำเร็จ กรุณาทำรายการใหม่อีกครั้ง'
+
+            ]);
+            exit();
+        }
+    }
+
+
+    //อัพเดตข้อมูลผู้ใช้งาน
+
+    function update_contact()
+    {
+
+        if ($_SERVER['REQEUST_METHOD'] != 'POST') {
+
+            show_404();
+            exit();
+        }
+
+        $con_id = $this->input->post('con_id');
+
+        $con_name = $this->input->post('con_name');
+
+        $con_email = $this->input->post('con_email');
+
+        $con_tel = $this->input->post('con_tel');
+
+        if ($con_id == null || $con_name == null || $con_email == null || $con_tel == null) {
+
+            echo json_encode([
+
+                'status' => 'ERROR',
+
+                'message' => 'ไม่มีข้อมูลเข้ามา'
+
+            ]);
+            exit();
+        }
+
+        //update data
+
+        $where_arr = ['con_id' => $con_id];
+
+        $data_arr = [
+
+            'con_name' => $con_name,
+
+            'con_email' => $con_email,
+
+            'con_tel' => $con_tel,
+
+        ];
+
+        $res = $this->Function_model->updateData('tbl_contact', $where_arr, $data_arr);
 
         if ($res == TRUE) {
 

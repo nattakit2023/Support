@@ -133,6 +133,14 @@
 
                 break;
 
+            case 'uninstall':
+
+                document.title = 'รายการที่รอการรื้อถอน';
+
+                $('#titleHeader').html('รายการที่รอการรื้อถอน');
+
+                break;
+
             case 'done':
 
                 document.title = 'รายการที่ปิดงานเรียบร้อยแล้ว';

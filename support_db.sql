@@ -86,7 +86,7 @@ CREATE TABLE `tbl_admin` (
   `admin_name` varchar(100) NOT NULL COMMENT 'ชื่อ-นามสกุล',
   `admin_username` varchar(50) NOT NULL COMMENT 'ชื่อผู้ใช้งานระบบ',
   `admin_password` varchar(100) NOT NULL COMMENT 'รหัสผ่านเข้าสู่ระบบ',
-  `admin_position` varchar(10) NOT NULL COMMENT 'ตำแหน่ง \r\n- admin \r\n-employee',
+  `admin_position` varchar(20) NOT NULL COMMENT 'ตำแหน่ง \r\n- admin \r\n-employee',
   `admin_status` varchar(10) NOT NULL DEFAULT 'active' COMMENT 'สถานะ\r\n- active (ใช้งาน)\r\n- inactive (ไม่ใช้งาน)'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -95,17 +95,24 @@ CREATE TABLE `tbl_admin` (
 --
 
 INSERT INTO `tbl_admin` (`admin_id`, `admin_name`, `admin_username`, `admin_password`, `admin_position`, `admin_status`) VALUES
-(1, 'Administrator', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'admin', 'active'),
-(2, 'Sirawit Nachom', 'sirawit', 'd7316a3074d562269cf4302e4eed46369b523687', 'support', 'active'),
-(3, 'Sayumpron Sirimajan', 'sayumpron', '7c222fb2927d828af22f592134e8932480637c0d', 'support', 'active'),
-(4, 'Kirk Vilaimal', 'kirk', '7c222fb2927d828af22f592134e8932480637c0d', 'admin', 'active');
+(1, 'Administrator', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'Super admin', 'active'),
+(2, 'Kirk Vilaimal', 'kirk', '7c222fb2927d828af22f592134e8932480637c0d', 'Management', 'active'),
+(3, 'Phornphen Saksirisamphun', 'ning', 'e78b3c420c956f8aa2753568eabf6baa0b6bf4fd', 'Admin', 'active'),
+(4, 'Nutphakawat Pornsirikasame', 'nat', '085d4bee92bd902f487e6632ec63d39e93da4467', 'Engineer', 'active'),
+(5, 'Sirawit Nachom', 'sirawit', 'd7316a3074d562269cf4302e4eed46369b523687', 'Engineer', 'active'),
+(6, 'Sayumpron Sirimajan', 'sayumpron', '7c222fb2927d828af22f592134e8932480637c0d', 'Engineer', 'active'),
+(7, 'Sananyisa Eagoboln', 'frong', '15bdd766fa4c07865bd23bed5a65dcff83666f6e', 'Engineer', 'active'),
+(8, 'Cholthicha Naksala', 'ploy', '736ea64164c267c89c99753b70a285e0982020c2', 'Engineer', 'active'),
+(9, 'Nattakit Chotivilaiwan', 'kiw', '1f7f5de2d87023411a0a5a9e70dd71a2ecaf6fbc', 'Engineer', 'active');
 
+
+--
 -- --------------------------------------------------------
 --
--- Table structure for table `tbl_contract`
+-- Table structure for table `tbl_contact`
 --
 
-CREATE TABLE `tbl_contract` (
+CREATE TABLE `tbl_contact` (
   `con_id` int(11) NOT NULL,
   `con_name` varchar(100) NOT NULL COMMENT 'ชื่อลูกค้า',
   `con_tel` varchar(15) NOT NULL COMMENT 'เบอร์โทร',
@@ -113,6 +120,91 @@ CREATE TABLE `tbl_contract` (
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- --------------------------------------------------------
+--
+-- Table structure for table `tbl_atp_history`
+--
+
+CREATE TABLE `tbl_atp_history` (
+  `id` int(11) NOT NULL,
+  `service_invoice` varchar(20) NOT NULL COMMENT 'เลขที่ใบส่งซ่อม',
+  `engineer` varchar(100) NOT NULL COMMENT 'ชื่อคนดูแล',
+  `version` varchar(10) NOT NULL COMMENT 'เวอร์ชั่น',
+  `his_date` date NOT NULL COMMENT 'เริ่ม',
+  `his_detail` varchar(1000) COMMENT 'ข้อมูล'
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+
+--
+-- Table structure for table `tbl_atp_detail`
+--
+
+CREATE TABLE `tbl_atp_detail` (
+  `id` int(11) NOT NULL,
+  `service_invoice` varchar(20) NOT NULL COMMENT 'เลขที่ใบส่งซ่อม',
+  `page6_11` varchar(100) NOT NULL COMMENT 'check',
+  `page6_12` varchar(100) NOT NULL COMMENT 'check',
+  `page6_13` varchar(100) NOT NULL COMMENT 'check',
+  `page6_21` varchar(100) NOT NULL COMMENT 'check',
+  `page6_31` varchar(100) NOT NULL COMMENT 'check',
+  `page6_32` varchar(100) NOT NULL COMMENT 'check',
+  `page6_41` varchar(100) NOT NULL COMMENT 'check',
+  `page7_41` varchar(100) NOT NULL COMMENT 'check',
+  `download` varchar(20) NOT NULL COMMENT 'ดาวน์โหลด',
+  `upload` varchar(20) NOT NULL COMMENT 'อัพโหลด',
+  `remark_page6_11` varchar(1000) NOT NULL COMMENT 'remark',
+  `additional` varchar(1000) NOT NULL COMMENT 'additional',
+  `mac_address` varchar(100) NOT NULL COMMENT 'ที่อยู่',
+  `type_device` varchar(100) NOT NULL COMMENT 'ชนิด',
+  `email` varchar(100) NOT NULL COMMENT 'อีเมล',
+  `website` varchar(100) NOT NULL COMMENT 'เว็บไซต์'
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+
+--
+-- Table structure for table `tbl_atp_upload`
+--
+
+CREATE TABLE `tbl_atp_upload` (
+  `id` int(11) NOT NULL,
+  `service_invoice` varchar(20) NOT NULL COMMENT 'เลขที่ใบส่งซ่อม',
+  `uploads_name` varchar(100) NOT NULL COMMENT 'ชื่อไฟล์',
+  `uploads_tmp` varchar(100) NOT NULL COMMENT 'ที่อยู่ไฟล์',
+  `page` varchar(20) NOT NULL COMMENT 'หน้าที่'
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Table structure for table `tbl_atp_upload_back`
+--
+
+CREATE TABLE `tbl_atp_upload_back` (
+  `id` int(11) NOT NULL,
+  `service_invoice` varchar(20) NOT NULL COMMENT 'เลขที่ใบส่งซ่อม',
+  `uploads_name` varchar(100) NOT NULL COMMENT 'ชื่อไฟล์',
+  `uploads_tmp` varchar(100) NOT NULL COMMENT 'ที่อยู่ไฟล์'
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+
+--
+-- --------------------------------------------------------
+--
+-- Table structure for table `tbl_notify`
+--
+
+CREATE TABLE `tbl_notify` (
+  `id` int(11) NOT NULL,
+  `service_invoice` varchar(100) NOT NULL COMMENT 'เลขที่ใบแจ้ง',
+  `status` varchar(15) NOT NULL COMMENT 'สเตตัส',
+  `timestamp` datetime NOT NULL DEFAULT current_timestamp()
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
 -- --------------------------------------------------------
 --
 -- Table structure for table `tbl_package`
@@ -120,11 +212,112 @@ CREATE TABLE `tbl_contract` (
 
 CREATE TABLE `tbl_package` (
   `id` int(11) NOT NULL,
-  `pack_name` varchar(100) NOT NULL COMMENT 'ชื่อแพคเกจ'
+  `pack_name` varchar(100) NOT NULL COMMENT 'ชื่อแพคเกจ',
+  `pack_internet` varchar(100) NOT NULL COMMENT 'ชื่อแพคเกจ'
 
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Dumping data for table `tbl_package`
+--
+
+--
+-- IO3
+--
+
+INSERT INTO `tbl_package` (`id`, `pack_name`,`pack_internet`) VALUES (1, 'IO3', 'Regional KU MIR 2048/512Kbps CIR 32/16Kbps');
+INSERT INTO `tbl_package` (`id`, `pack_name`,`pack_internet`) VALUES (2, 'IO3', 'Regional KU MIR 2048/512Kbps CIR 128/32Kbps');
+INSERT INTO `tbl_package` (`id`, `pack_name`,`pack_internet`) VALUES (3, 'IO3', 'Regional KU MIR 2048/512Kbps CIR 128/128Kbps');
+INSERT INTO `tbl_package` (`id`, `pack_name`,`pack_internet`) VALUES (4, 'IO3', 'Regional KU MIR 4096/1024Kbps CIR 128/128Kbps');
+INSERT INTO `tbl_package` (`id`, `pack_name`,`pack_internet`) VALUES (5, 'IO3', 'Regional KU MIR 4096/1024Kbps CIR 512/128Kbps');
+INSERT INTO `tbl_package` (`id`, `pack_name`,`pack_internet`) VALUES (6, 'IO3', 'Regional KU MIR 4096/1024Kbps CIR 256/256Kbps');
+INSERT INTO `tbl_package` (`id`, `pack_name`,`pack_internet`) VALUES (7, 'IO3', 'Regional KU MIR 4096/1024Kbps CIR 1024/256Kbps');
+INSERT INTO `tbl_package` (`id`, `pack_name`,`pack_internet`) VALUES (8, 'IO3', 'Regional KU MIR 4096/1024Kbps CIR 512/512Kbps');
+INSERT INTO `tbl_package` (`id`, `pack_name`,`pack_internet`) VALUES (9, 'IO3', 'Regional KU MIR 4096/1024Kbps CIR 1024/512Kbps');
+INSERT INTO `tbl_package` (`id`, `pack_name`,`pack_internet`) VALUES (10, 'IO3', 'Regional KU MIR 4096/1024Kbps CIR 1024/1024Kbps');
+
+--
+-- TH COM
+--
+
+INSERT INTO `tbl_package` (`id`, `pack_name`,`pack_internet`) VALUES (11, 'TH COM', 'TH Assure 128/128');
+INSERT INTO `tbl_package` (`id`, `pack_name`,`pack_internet`) VALUES (12, 'TH COM', 'TH Assure 256/256');
+INSERT INTO `tbl_package` (`id`, `pack_name`,`pack_internet`) VALUES (13, 'TH COM', 'TH Assure 512/512');
+INSERT INTO `tbl_package` (`id`, `pack_name`,`pack_internet`) VALUES (14, 'TH COM', 'TH Assure 768/512');
+
+INSERT INTO `tbl_package` (`id`, `pack_name`,`pack_internet`) VALUES (15, 'TH COM', 'TH Boost MIR 1024/256 CIR 64/16');
+INSERT INTO `tbl_package` (`id`, `pack_name`,`pack_internet`) VALUES (16, 'TH COM', 'TH Boost MIR 1024/256 CIR 128/32');
+INSERT INTO `tbl_package` (`id`, `pack_name`,`pack_internet`) VALUES (17, 'TH COM', 'TH Boost MIR 1024/256 CIR 256/64');
+
+INSERT INTO `tbl_package` (`id`, `pack_name`,`pack_internet`) VALUES (18, 'TH COM', 'TH Boost MIR 2048/512 CIR 128/32');
+INSERT INTO `tbl_package` (`id`, `pack_name`,`pack_internet`) VALUES (19, 'TH COM', 'TH Boost MIR 2048/512 CIR 256/64');
+INSERT INTO `tbl_package` (`id`, `pack_name`,`pack_internet`) VALUES (20, 'TH COM', 'TH Boost MIR 2048/512 CIR 512/128');
+
+INSERT INTO `tbl_package` (`id`, `pack_name`,`pack_internet`) VALUES (21, 'TH COM', 'TH Boost MIR 4096/1024 CIR 256/64');
+INSERT INTO `tbl_package` (`id`, `pack_name`,`pack_internet`) VALUES (22, 'TH COM', 'TH Boost MIR 4096/1024 CIR 512/128');
+INSERT INTO `tbl_package` (`id`, `pack_name`,`pack_internet`) VALUES (23, 'TH COM', 'TH Boost MIR 4096/1024 CIR 1024/256');
+
+INSERT INTO `tbl_package` (`id`, `pack_name`,`pack_internet`) VALUES (24, 'TH COM', 'TH Boost MIR 10240/1024 CIR 640/64');
+INSERT INTO `tbl_package` (`id`, `pack_name`,`pack_internet`) VALUES (25, 'TH COM', 'TH Boost MIR 10240/1024 CIR 512/512');
+INSERT INTO `tbl_package` (`id`, `pack_name`,`pack_internet`) VALUES (26, 'TH COM', 'TH Boost MIR 10240/1024 CIR 1280/128');
+
+
+--
+-- Stellar
+--
+
+INSERT INTO `tbl_package` (`id`, `pack_name`,`pack_internet`) VALUES (27, 'STELLAR EXPRESS', '50 GB');
+INSERT INTO `tbl_package` (`id`, `pack_name`,`pack_internet`) VALUES (28, 'STELLAR EXPRESS', '1 TB');
+INSERT INTO `tbl_package` (`id`, `pack_name`,`pack_internet`) VALUES (29, 'STELLAR EXPRESS', '5 TB');
+
+--
+-- --------------------------------------------------------
+--
+-- Table structure for table `tbl_service_package`
+--
+
+CREATE TABLE `tbl_service_package` (
+  `id` int(11) NOT NULL,
+  `service_invoice` varchar(20) NOT NULL COMMENT 'เลขที่ใบส่งซ่อม',
+  `pack_name` varchar(100) NOT NULL COMMENT 'ชื่อไฟล์',
+  `pack_internet` varchar(100) NOT NULL COMMENT 'ที่อยู่ไฟล์'
+
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- --------------------------------------------------------
+--
+-- Table structure for table `tbl_uploads`
+--
+
+CREATE TABLE `tbl_uploads` (
+  `id` int(11) NOT NULL,
+  `service_invoice` varchar(20) NOT NULL COMMENT 'เลขที่ใบส่งซ่อม',
+  `uploads_name` varchar(100) NOT NULL COMMENT 'ชื่อไฟล์',
+  `uploads_tmp` varchar(100) NOT NULL COMMENT 'ที่อยู่ไฟล์'
+
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- --------------------------------------------------------
+--
+-- Table structure for table `tbl_uploads_back`
+--
+
+CREATE TABLE `tbl_uploads_back` (
+  `id` int(11) NOT NULL,
+  `service_invoice` varchar(20) NOT NULL COMMENT 'เลขที่ใบส่งซ่อม',
+  `uploads_name` varchar(100) NOT NULL COMMENT 'ชื่อไฟล์',
+  `uploads_tmp` varchar(100) NOT NULL COMMENT 'ที่อยู่ไฟล์'
+
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+
+--
 -- --------------------------------------------------------
 --
 -- Table structure for table `tbl_history`
@@ -139,12 +332,113 @@ CREATE TABLE `tbl_history` (
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
-
-
+--
 -- --------------------------------------------------------
+--
+-- Table structure for table `tbl_service_product`
+--
+
+CREATE TABLE `tbl_service_product` (
+  `id` int(11) NOT NULL,
+  `service_invoice` varchar(20) NOT NULL COMMENT 'เลขที่ใบส่งซ่อม',
+  `product` varchar(20) NOT NULL COMMENT 'Product'
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
 
 --
--- Table structure for table `tbl_type_vesserl`
+-- --------------------------------------------------------
+--
+-- Table structure for table `tbl_service_project`
+--
+
+CREATE TABLE `tbl_service_project` (
+  `id` int(11) NOT NULL,
+  `service_invoice` varchar(20) NOT NULL COMMENT 'เลขที่ใบส่งซ่อม',
+  `projects` varchar(100) NOT NULL COMMENT 'projects'
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- --------------------------------------------------------
+--
+-- Table structure for table `tbl_port`
+--
+
+CREATE TABLE `tbl_port` (
+  `id` int(11) NOT NULL,
+  `port_name` varchar(50) NOT NULL COMMENT 'port',
+  `port_province` varchar(50) NOT NULL COMMENT 'province'
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- --------------------------------------------------------
+--
+-- Table structure for table `tbl_engineer`
+--
+
+CREATE TABLE `tbl_engineer` (
+  `id` int(11) NOT NULL,
+  `service_invoice` varchar(20) NOT NULL COMMENT 'เลขที่ใบส่งซ่อม',
+  `engineer` varchar(50) NOT NULL COMMENT 'engineer'
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- --------------------------------------------------------
+--
+-- Table structure for table `tbl_vessel_name`
+--
+
+CREATE TABLE `tbl_vessel_name` (
+  `id` int(11) NOT NULL,
+  `service_invoice` varchar(20) NOT NULL COMMENT 'เลขที่ใบส่งซ่อม',
+  `ves_name` varchar(20) NOT NULL COMMENT 'engineer'
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- --------------------------------------------------------
+--
+-- Table structure for table `tbl_product`
+--
+
+CREATE TABLE `tbl_product` (
+  `id` int(11) NOT NULL,
+  `product` varchar(50) NOT NULL COMMENT 'Product'
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `tbl_product`
+--
+
+INSERT INTO `tbl_product` (`id`, `product`) VALUES (1, 'KU Band Thaicom');
+INSERT INTO `tbl_product` (`id`, `product`) VALUES (2, 'KU Band IO3');
+INSERT INTO `tbl_product` (`id`, `product`) VALUES (3, 'KA Band Thaicom');
+INSERT INTO `tbl_product` (`id`, `product`) VALUES (4, 'KA Band IO3');
+INSERT INTO `tbl_product` (`id`, `product`) VALUES (5, 'Fleet One');
+INSERT INTO `tbl_product` (`id`, `product`) VALUES (6, 'FBB(L Band)');
+INSERT INTO `tbl_product` (`id`, `product`) VALUES (7, 'V Mail');
+INSERT INTO `tbl_product` (`id`, `product`) VALUES (8, 'CCTV');
+INSERT INTO `tbl_product` (`id`, `product`) VALUES (9, 'TVRO');
+INSERT INTO `tbl_product` (`id`, `product`) VALUES (10, 'VOIP');
+INSERT INTO `tbl_product` (`id`, `product`) VALUES (11, 'Thuraya');
+INSERT INTO `tbl_product` (`id`, `product`) VALUES (12, 'Data VSAT');
+INSERT INTO `tbl_product` (`id`, `product`) VALUES (13, 'Ship Tracking');
+INSERT INTO `tbl_product` (`id`, `product`) VALUES (14, 'AirTime Global Star');
+INSERT INTO `tbl_product` (`id`, `product`) VALUES (15, 'Ship Stability');
+INSERT INTO `tbl_product` (`id`, `product`) VALUES (16, 'ERP-Ship Expert');
+INSERT INTO `tbl_product` (`id`, `product`) VALUES (17, 'Enterprise (S.E.E.)');
+INSERT INTO `tbl_product` (`id`, `product`) VALUES (18, 'F-R-I-D-A-Y');
+INSERT INTO `tbl_product` (`id`, `product`) VALUES (19, 'Installation');
+INSERT INTO `tbl_product` (`id`, `product`) VALUES (20, 'Termination');
+
+--
+-- --------------------------------------------------------
+--
+-- Table structure for table `tbl_type_vessel`
 --
 
 CREATE TABLE `tbl_type_vessel` (
@@ -159,7 +453,7 @@ CREATE TABLE `tbl_type_vessel` (
 
 INSERT INTO `tbl_type_vessel` (`id`, `ves_type`) VALUES (1, 'Container Ship');
 INSERT INTO `tbl_type_vessel` (`id`, `ves_type`) VALUES (2, 'Bulk Carrier');
-INSERT INTO `tbl_type_vessel` (`id`, `ves_type`) VALUES (3, 'Platform Supply Vessel');
+INSERT INTO `tbl_type_vessel` (`id`, `ves_type`) VALUES (3, 'Offshore Supply Ship');
 INSERT INTO `tbl_type_vessel` (`id`, `ves_type`) VALUES (4, 'Tanker');
 INSERT INTO `tbl_type_vessel` (`id`, `ves_type`) VALUES (5, 'Cargo Ship');
 INSERT INTO `tbl_type_vessel` (`id`, `ves_type`) VALUES (6, 'Oil Tanker');
@@ -181,20 +475,18 @@ INSERT INTO `tbl_type_vessel` (`id`, `ves_type`) VALUES (21, 'Aframax');
 INSERT INTO `tbl_type_vessel` (`id`, `ves_type`) VALUES (22, 'Yacht');
 INSERT INTO `tbl_type_vessel` (`id`, `ves_type`) VALUES (23, 'LNG Carrier');
 INSERT INTO `tbl_type_vessel` (`id`, `ves_type`) VALUES (24, 'High-Speed Craft');
-
-
--- --------------------------------------------------------
+INSERT INTO `tbl_type_vessel` (`id`, `ves_type`) VALUES (25, 'Other');
 
 --
--- Table structure for table `tbl_type_vesserl`
+-- --------------------------------------------------------
+--
+-- Table structure for table `tbl_service`
 --
 
 CREATE TABLE `tbl_service` (
-  `service_id` int(11) NOT NULL,
   `service_invoice` varchar(20) NOT NULL COMMENT 'เลขที่ใบส่งซ่อม',
-  `projects` varchar(50) NOT NULL COMMENT 'รหัสโปรเจค',
   `cus_name` varchar(100) NOT NULL COMMENT 'ชื่อลูกค้า',
-  `cus_address` text NOT NULL COMMENT 'ที่อยู่ลูกค้า',
+  `cus_address` varchar(200) NOT NULL COMMENT 'ที่อยู่ลูกค้า',
   `cus_tel` varchar(20) NOT NULL COMMENT 'เบอร์โทร',
   `cus_email` varchar(20) DEFAULT NULL COMMENT 'อีเมล์',
   `cus_zipcode` varchar(20) NOT NULL COMMENT 'รหัสไปรษณีย์',
@@ -205,16 +497,19 @@ CREATE TABLE `tbl_service` (
   `ves_imo` varchar(50) NOT NULL COMMENT 'IMO',
   `ves_mmsi` varchar(50) NOT NULL COMMENT 'MMSI',
   `ves_year` varchar(50) NOT NULL COMMENT 'ปีที่สร้างเรือ',
+  `ves_flag` varchar(50) NOT NULL COMMENT 'ธงชาติ',
+  `ves_home_port` varchar(50) NOT NULL COMMENT 'สร้างที่ไหน',
+  `ves_gross_tonnage` varchar(50) NOT NULL COMMENT 'น้ำหนักบนเรือ',
   `ves_maintenance` varchar(50) NOT NULL COMMENT 'ซ่อมเรือ',
   `ves_survey` varchar(50) NOT NULL COMMENT 'สำรวจ',
   `ves_installation` varchar(50) NOT NULL COMMENT 'ติดตั้ง',
   `con_name` varchar(50) NOT NULL COMMENT 'ชื่อติดต่อคนบนเรือ',
   `con_tel` varchar(50) NOT NULL COMMENT 'เบอร์โทรติด่อคนบนเรือ',
   `con_email` varchar(50) NOT NULL COMMENT 'อีเมลติดต่อคนบนเรือ',
-  `con_port` varchar(50) NOT NULL COMMENT 'ท่าเรือ',
-  `engineer` varchar(50) NOT NULL COMMENT 'วิศวกรคุมงาน',
-  `support_1` varchar(50) NOT NULL COMMENT 'ผู้ช่วยวิศวกรคนที่1',
-  `remark` varchar(1000) COMMENT 'รีมาร์ค',
+  `port_name` varchar(50) NOT NULL COMMENT 'ท่าเรือ',
+  `port_province` varchar(50) NOT NULL COMMENT 'ที่ตั้งท่าเรือ',
+  `remark_create` varchar(1000) COMMENT 'รีมาร์คตอนสร้าง',
+  `remark_add` varchar(1000) COMMENT 'รีมาร์คหลังสร้าง',
   `create_date` date NOT NULL COMMENT 'สร้างJob Order',
   `due_date` date NOT NULL COMMENT 'เริ่ม',
   `end_date` date NOT NULL COMMENT 'สิ้นสุด',
@@ -224,13 +519,13 @@ CREATE TABLE `tbl_service` (
   `contract_end` date NOT NULL COMMENT 'สิ้นสุดสัญญา',
   `service_status` varchar(10) NOT NULL DEFAULT 'created' COMMENT 'สถานะ\r\n-created สร้างใบแจ้งซ่อม\r\n-wait รับซ่อม/ระหว่างซ่อม\r\n- fixed รอรับ\r\n- done รับรถเรียบร้อย',
   `his_count` varchar(20) NOT NULL COMMENT 'จำนวนการตีกลับ',
+  `atp_create` varchar(20) COMMENT 'สร้างATP',
   `timestamp` datetime NOT NULL DEFAULT current_timestamp()
   
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
-
+--
 -- --------------------------------------------------------
-
 --
 -- Table structure for table `tbl_service_detail`
 --
@@ -240,10 +535,11 @@ CREATE TABLE `tbl_service_detail` (
   `service_invoice` varchar(13) NOT NULL COMMENT 'เลขใบสั่งซื้อ',
   `service_name` varchar(100) NOT NULL COMMENT 'ชื่อสินค้าและบริการ',
   `amount` int(10) NOT NULL COMMENT 'จำนวนสินค้า',  
-  `detail` varchar(250) DEFAULT NULL COMMENT 'รายละเอียด'
+  `service_detail` varchar(100) COMMENT 'รายละเอียด',
+  `detail` varchar(250) DEFAULT NULL COMMENT 'รายละเอียดเพิ่มเติม'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
-
+--
 -- --------------------------------------------------------
 --
 -- Indexes for dumped tables
@@ -256,22 +552,107 @@ ALTER TABLE `ci_sessions`
   ADD KEY `ci_sessions_timestamp` (`timestamp`);
 
 --
+-- Indexes for table `tbl_product`
+--
+ALTER TABLE `tbl_product`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_notify`
+--
+ALTER TABLE `tbl_notify`
+  ADD PRIMARY KEY (`id`);
+
+  --
+-- Indexes for table `tbl_atp_history`
+--
+ALTER TABLE `tbl_atp_history`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_atp_detail`
+--
+ALTER TABLE `tbl_atp_detail`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_atp_upload`
+--
+ALTER TABLE `tbl_atp_upload`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_atp_upload_back`
+--
+ALTER TABLE `tbl_atp_upload_back`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_service_product`
+--
+ALTER TABLE `tbl_service_product`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_service_project`
+--
+ALTER TABLE `tbl_service_project`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_vessel_name`
+--
+ALTER TABLE `tbl_vessel_name`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_port`
+--
+ALTER TABLE `tbl_port`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_package`
+--
+ALTER TABLE `tbl_package`
+  ADD PRIMARY KEY  (`id`);
+
+--
+-- Indexes for table `tbl_service_package`
+--
+ALTER TABLE `tbl_service_package`
+  ADD PRIMARY KEY  (`id`);
+
+
+--
 -- Indexes for table `tbl_admin`
 --
 ALTER TABLE `tbl_admin`
   ADD PRIMARY KEY (`admin_id`);
 
 --
--- Indexes for table `tbl_admin`
+-- Indexes for table `tbl_uploads`
 --
 ALTER TABLE `tbl_uploads`
-  ADD PRIMARY KEY (`service_invoice`);
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_uploads_back`
+--
+ALTER TABLE `tbl_uploads_back`
+  ADD PRIMARY KEY (`id`);
 
 
 --
 -- Indexes for table `tbl_history`
 --
 ALTER TABLE `tbl_history`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_engineer`
+--
+ALTER TABLE `tbl_engineer`
   ADD PRIMARY KEY (`id`);
 
 
@@ -282,22 +663,23 @@ ALTER TABLE `tbl_type_vessel`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tbl_contract`
+-- Indexes for table `tbl_contact`
 --
-ALTER TABLE `tbl_contract`
+ALTER TABLE `tbl_contact`
   ADD PRIMARY KEY (`con_id`);
 
 --
 -- Indexes for table `tbl_service`
 --
 ALTER TABLE `tbl_service`
-  ADD PRIMARY KEY (`service_id`);
+  ADD PRIMARY KEY (`service_invoice`);
 
 --
 -- Indexes for table `tbl_service_detail`
 --
 ALTER TABLE `tbl_service_detail`
   ADD PRIMARY KEY (`id`);
+
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -307,13 +689,101 @@ ALTER TABLE `tbl_service_detail`
 -- AUTO_INCREMENT for table `tbl_admin`
 --
 ALTER TABLE `tbl_admin`
-  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `tbl_vessel`
+-- AUTO_INCREMENT for table `tbl_product`
+--
+ALTER TABLE `tbl_product`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
+-- AUTO_INCREMENT for table `tbl_service_product`
+--
+ALTER TABLE `tbl_service_product`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT for table `tbl_notify`
+--
+ALTER TABLE `tbl_notify`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT for table `tbl_atp_history`
+--
+ALTER TABLE `tbl_atp_history`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT for table `tbl_atp_detail`
+--
+ALTER TABLE `tbl_atp_detail`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT for table `tbl_atp_upload`
+--
+ALTER TABLE `tbl_atp_upload`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT for table `tbl_atp_upload_back`
+--
+ALTER TABLE `tbl_atp_upload_back`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+
+--
+-- AUTO_INCREMENT for table `tbl_service_project`
+--
+ALTER TABLE `tbl_service_project`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT for table `tbl_port`
+--
+ALTER TABLE `tbl_port`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT for table `tbl_vessel_name`
+--
+ALTER TABLE `tbl_vessel_name`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT for table `tbl_package`
+--
+ALTER TABLE `tbl_package`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+
+
+--
+-- AUTO_INCREMENT for table `tbl_service_package`
+--
+ALTER TABLE `tbl_service_package`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+
+
+--
+-- AUTO_INCREMENT for table `tbl_type_vessel`
 --
 ALTER TABLE `tbl_type_vessel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
+--
+-- AUTO_INCREMENT for table `tbl_uploads`
+--
+ALTER TABLE `tbl_uploads`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT for table `tbl_uploads_back`
+--
+ALTER TABLE `tbl_uploads_back`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT for table `tbl_history`
@@ -321,23 +791,26 @@ ALTER TABLE `tbl_type_vessel`
 ALTER TABLE `tbl_history`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
---
--- AUTO_INCREMENT for table `tbl_contract`
---
-ALTER TABLE `tbl_contract`
-  MODIFY `con_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
--- AUTO_INCREMENT for table `tbl_service`
+-- AUTO_INCREMENT for table `tbl_engineer`
 --
-ALTER TABLE `tbl_service`
-  MODIFY `service_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+ALTER TABLE `tbl_engineer`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+
+--
+-- AUTO_INCREMENT for table `tbl_contact`
+--
+ALTER TABLE `tbl_contact`
+  MODIFY `con_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT for table `tbl_service_detail`
 --
 ALTER TABLE `tbl_service_detail`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -16,7 +16,7 @@
 
                     <ol class="breadcrumb float-sm-right">
 
-                        <li class="breadcrumb-item"><a href="<?=base_url();?>/pages">หน้าหลัก</a></li>
+                        <li class="breadcrumb-item"><a href="<?= base_url(); ?>/pages">หน้าหลัก</a></li>
 
                         <li class="breadcrumb-item active">จัดการผู้ใช้งานระบบ</li>
 
@@ -116,11 +116,13 @@
 
                         <select id="admin_position" class="form-control rounded-0">
 
-                            <option value="employee">พนักงานทั่วไป</option>
-                            
-                            <option value="support">ซัพพอร์ต</option>
+                            <option value="Engineer">วิศวกร</option>
 
-                            <option value="admin">ผู้ดูแลระบบ</option>
+                            <option value="Admin">แอดมิน</option>
+
+                            <option value="Management">ผู้จัดการ</option>
+
+                            <option value="Super admin">ผู้ดูแลระบบ</option>
 
                         </select>
 
@@ -200,11 +202,13 @@
 
                         <select id="edit_admin_position" class="form-control rounded-0">
 
-                            <option value="employee">พนักงานทั่วไป</option>
+                            <option value="Engineer">วิศวกร</option>
 
-                            <option value="support">ซัพพอร์ต</option>
+                            <option value="Admin">แอดมิน</option>
 
-                            <option value="admin">ผู้ดูแลระบบ</option>
+                            <option value="Management">ผู้จัดการ</option>
+
+                            <option value="Super admin">ผู้ดูแลระบบ</option>
 
                         </select>
 
@@ -239,12 +243,11 @@
 
 
 <script>
-
     function tblUser() {
 
         $.ajax({
 
-            url: '<?=base_url();?>/user/tbl_user',
+            url: '<?= base_url(); ?>user/tbl_user',
 
             method: 'POST',
 
@@ -352,7 +355,7 @@
 
                         $.ajax({
 
-                            url: '<?=base_url();?>/user/add_user',
+                            url: '<?= base_url(); ?>/user/add_user',
 
                             method: 'POST',
 
@@ -496,11 +499,11 @@
 
                     timerProgressBar: true,
 
-                    allowEnterKey : false,
+                    allowEnterKey: false,
 
-                    allowEscapeKey : false,
+                    allowEscapeKey: false,
 
-                    allowOutsideClick : false,
+                    allowOutsideClick: false,
 
                     didOpen: () => {
 
@@ -508,7 +511,7 @@
 
                         $.ajax({
 
-                            url: '<?=base_url();?>/user/update_user',
+                            url: '<?= base_url(); ?>/user/update_user',
 
                             method: 'POST',
 
@@ -536,7 +539,7 @@
 
                                         title: 'สำเร็จ',
 
-                                        text : 'อัพเดตข้อมูลเรียบร้อยแล้ว',
+                                        text: 'อัพเดตข้อมูลเรียบร้อยแล้ว',
 
                                         showConfirmButton: false,
 
@@ -552,7 +555,7 @@
 
                                     $('#modalEditUser').modal('hide');
 
-                                    
+
 
                                 } else if (res.status == 'WARNING') {
 
@@ -605,5 +608,4 @@
 
 
     })
-
 </script>

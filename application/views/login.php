@@ -56,7 +56,7 @@
 
 				<div class="login-logo">
 
-					<img src="<?= base_url(); ?>/assets/img/logo.png" class="img-fluid" style="max-width: 300px;">
+					<img src="<?= base_url(); ?>/assets/img/favicon.png" class="img-fluid" style="max-width: 300px;">
 
 				</div>
 

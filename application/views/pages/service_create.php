@@ -48,13 +48,8 @@
 
                             Customer Information
 
-                            <div class="card-tools">
-
-                                <button type="button" class="btn btn-warning btn-sm rounded-0" data-toggle="modal" data-target="#modalSearchData"><i class="fas fa-search"></i> Search Vessel</button>
-
-                            </div>
-
                         </div>
+
 
                         <div class="card-body">
 
@@ -67,7 +62,26 @@
 
                                 <div class="col-md-2">
 
-                                    <select class="form-control select2 rouned-0" id="projects">
+                                    <select class="form-select" data-placeholder="Project Code" id="projects" multiple="multiple">
+
+                                        <option value="">Loading...</option>
+
+                                    </select>
+
+                                </div>
+
+                                <div class="col-md-4">
+
+                                </div>
+
+                                <div class="col-md-1 mb-2">
+
+                                    <h4><strong class="text-danger"></strong>Product :</h2>
+
+                                </div>
+
+                                <div class="col-md-2">
+                                    <select class="form-select" id="product" data-placeholder="Product" multiple="multiple">
 
                                         <option value="">Loading...</option>
 
@@ -79,16 +93,9 @@
 
                                 </div>
 
-                                <div class="col-md-2 mb-2">
-
-                                    <h3><strong class="text-danger"></strong>Select Files :</h3>
-
-                                </div>
-
-                                <div>
-                                    <input type="file" id="myfile" name="myfile" multiple>
-                                </div>
                             </div>
+
+
 
                             <div class="row mb-2">
 
@@ -106,7 +113,7 @@
 
                                     <label>Due Date :</label>
 
-                                    <input type="date" id="due_date" class="form-control rounded-0" placeholder="วันที่ส่งซ่อม" value="<?= date('Y-m-d'); ?>">
+                                    <input type="date" id="due_date" class="form-control rounded-0" placeholder="วันที่ซ่อมบำรุง" value="<?= date('Y-m-d'); ?>">
 
                                 </div>
 
@@ -116,7 +123,7 @@
 
                                     <label>End Date :</label>
 
-                                    <input type="date" id="end_date" class="form-control rounded-0" placeholder="วันที่ส่งซ่อม" value="<?= date('Y-m-d'); ?>">
+                                    <input type="date" id="end_date" class="form-control rounded-0" placeholder="วันที่ซ่อมบำรุงเสร็จ" value="<?= date('Y-m-d'); ?>">
 
                                 </div>
 
@@ -210,14 +217,12 @@
 
                                 </div>
 
-
-
                             </div>
 
 
                             <div class="row mb-2">
 
-                                <div class="col-md-3 mb-2">
+                                <div class="col-md-2 mb-2">
 
                                     <label><strong class="text-danger">*</strong>Fleet :</label>
 
@@ -229,11 +234,11 @@
 
                                 </div>
 
-                                <div class="col-md-3 mb-2">
+                                <div class="col-md-2 mb-2">
 
                                     <label><strong class="text-danger">*</strong>Name :</label>
 
-                                    <select class="form-control select2 rouned-0" id="ves_name">
+                                    <select class="form-select" id="ves_name" data-placeholder="Vessel Name" multiple="multiple">
 
                                         <option value="">Loading...</option>
 
@@ -250,6 +255,104 @@
                                         <option value="">Vessel Type</option>
 
                                     </select>
+
+                                </div>
+
+                                <div class="col-md-2 mb-2">
+
+                                    <label><strong class="text-danger">*</strong>Flag :</label>
+
+                                    <input type="text" id="ves_flag" class="form-control rounded-0" placeholder="Flag" list="flag-list">
+
+                                    <datalist id="flag-list">
+                                        <?php foreach ($service as $index) : ?>
+                                            <option><?= $index->ves_flag ?></option>
+                                        <?php endforeach ?>
+                                    </datalist>
+
+                                </div>
+
+                                <div class="col-md-2 mb-2">
+
+                                    <label><strong class="text-danger">*</strong>Home Port :</label>
+
+                                    <input type="text" id="ves_home_port" class="form-control rounded-0" placeholder="Home Port" list="home-list">
+
+                                    <datalist id="home-list">
+                                        <?php foreach ($service as $index) : ?>
+                                            <option><?= $index->ves_home_port ?></option>
+                                        <?php endforeach ?>
+                                    </datalist>
+
+                                </div>
+
+                                <div class="col-md-2 mb-2">
+
+                                    <label><strong class="text-danger">*</strong>Gross Tonnage :</label>
+
+                                    <input type="text" id="ves_gross_tonnage" class="form-control rounded-0" placeholder="Gross Tonnage" list="gross-list" maxlength="6" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
+
+                                    <datalist id="gross-list">
+                                        <?php foreach ($service as $index) : ?>
+                                            <option><?= $index->ves_gross_tonnage ?></option>
+                                        <?php endforeach ?>
+                                    </datalist>
+
+                                </div>
+
+                                <div class="col-md-2 mb-2">
+
+                                    <label><strong class="text-danger">*</strong>Call Sign :</label>
+
+                                    <input type="text" id="ves_callsign" class="form-control rounded-0" placeholder="Call Sign" list="call-list">
+
+                                    <datalist id="call-list">
+                                        <?php foreach ($service as $index) : ?>
+                                            <option><?= $index->ves_callsign ?></option>
+                                        <?php endforeach ?>
+                                    </datalist>
+
+                                </div>
+
+                                <div class="col-md-2 mb-2">
+
+                                    <label><strong class="text-danger">*</strong>IMO :</label>
+
+                                    <input type="text" maxlength="6" id="ves_imo" class="form-control rounded-0" placeholder="IMO" list="imo-list" maxlength="6" oninput="this.value=this.value.replace(/[^0-9\s]/g,'');">
+
+                                    <datalist id="imo-list">
+                                        <?php foreach ($service as $index) : ?>
+                                            <option><?= $index->ves_imo ?></option>
+                                        <?php endforeach ?>
+                                    </datalist>
+
+                                </div>
+
+                                <div class="col-md-2 mb-2">
+
+                                    <label><strong class="text-danger">*</strong>MMSI :</label>
+
+                                    <input type="text" id="ves_mmsi" class="form-control rounded-0" placeholder="MMSI" list="mmsi-list">
+
+                                    <datalist id="mmsi-list">
+                                        <?php foreach ($service as $index) : ?>
+                                            <option><?= $index->ves_mmsi ?></option>
+                                        <?php endforeach ?>
+                                    </datalist>
+
+                                </div>
+
+                                <div class="col-md-2 mb-2">
+
+                                    <label><strong class="text-danger">*</strong>Year Built :</label>
+
+                                    <input type="text" id="ves_year" class="form-control rounded-0" placeholder="Year Built" list="year-list" maxlength="4" oninput="this.value=this.value.replace(/[^0-9\s]/g,'');">
+
+                                    <datalist id="year-list">
+                                        <?php foreach ($service as $index) : ?>
+                                            <option><?= $index->ves_year ?></option>
+                                        <?php endforeach ?>
+                                    </datalist>
                                 </div>
 
                                 <div class="col-md-2 mb-2">
@@ -271,7 +374,7 @@
                                             <label><strong class="text-danger">*</strong>Survey :</label>
                                         </div>
                                         <div class="col-md-2">
-                                            <input type="checkbox" id="ves_survey" name="ves_survey" >
+                                            <input type="checkbox" id="ves_survey" name="ves_survey">
                                         </div>
                                     </div>
 
@@ -286,52 +389,25 @@
 
                                 </div>
 
-                                <div class="col-md-3 mb-2">
-
-                                    <label><strong class="text-danger">*</strong>Call Sign :</label>
-
-                                    <input type="text" id="ves_callsign" class="form-control rounded-0" placeholder="Call Sign">
-
-                                </div>
-
-                                <div class="col-md-3 mb-2">
-
-                                    <label><strong class="text-danger">*</strong>IMO :</label>
-
-                                    <input type="text" maxlength="6" id="ves_imo" class="form-control rounded-0" placeholder="IMO" maxlength="6" oninput="this.value=this.value.replace(/[^0-9\s]/g,'');">
-
-                                </div>
-
-                                <div class="col-md-2 mb-2">
-
-                                    <label><strong class="text-danger">*</strong>MMSI :</label>
-
-                                    <input type="text" id="ves_mmsi" class="form-control rounded-0" placeholder="MMSI">
-
-                                </div>
-
-                                <div class="col-md-2 mb-2">
-
-                                    <label><strong class="text-danger">*</strong>Year Built :</label>
-
-                                    <input type="text" id="ves_year" class="form-control rounded-0" placeholder="Year Built" maxlength="4" oninput="this.value=this.value.replace(/[^0-9\s]/g,'');">
-
-                                </div>
-
-
                             </div>
 
 
                             <div class="row">
                                 <div class="col-md-2 mb-2">
 
-                                    <p class="text-primary"><i class="fas fa-circle"></i> Contract Onboard</p>
+                                    <p class="text-primary"><i class="fas fa-circle"></i> Contact Onboard</p>
 
                                 </div>
 
                                 <div>
 
-                                    <button type="button" class="btn btn-primary rounded-0" data-toggle="modal" data-target="#modalAddContract"><i class="fas fa-plus"></i> Add Contract</button>
+                                    <button type="button" class="btn btn-primary rounded-0" data-toggle="modal" data-target="#modalAddContact"><i class="fas fa-plus"></i> Add Contact</button>
+
+                                </div>
+
+                                <div style="margin-left: 10px">
+
+                                    <button type="button" class="btn btn-primary rounded-0" data-toggle="modal" data-target="#modalAddPort"><i class="fas fa-plus"></i> Add Port</button>
 
                                 </div>
 
@@ -344,9 +420,9 @@
 
                                     <label><strong class="text-danger">*</strong>Name :</label>
 
-                                    <select class="form-control select2 rouned-0" id="con_name" onchange="optionContractphone(value),optionContractemail(value)">
+                                    <select class="form-control select2 rouned-0" id="con_name" onchange="optionContactphone(value),optionContactemail(value)">
 
-                                        <option value="">Contract Name</option>
+                                        <option value="">Contact Name</option>
 
                                     </select>
 
@@ -358,7 +434,45 @@
 
                                     <select class="form-control select2 rouned-0" id="con_tel">
 
-                                        <option value="">Contract Phone</option>
+                                        <option value="">Contact Phone</option>
+
+                                    </select>
+
+                                </div>
+
+                                <div class="col-md-3 mb-2">
+
+                                    <label><strong class="text-danger">*</strong>Email :</label>
+
+                                    <select class="form-control select2 rouned-0" id="con_email">
+
+                                        <option value="">Contact Email</option>
+
+                                    </select>
+
+                                </div>
+
+                                <div class="col-md-3"></div>
+
+                                <div class="col-md-3 mb-2">
+
+                                    <label><strong class="text-danger">*</strong>Port :</label>
+
+                                    <select class="form-control select2 rouned-0" id="port_name" onchange="optionProvince(value)">
+
+                                        <option value="">Port Name</option>
+
+                                    </select>
+
+                                </div>
+
+                                <div class="col-md-3 mb-2">
+
+                                    <label><strong class="text-danger">*</strong>Province :</label>
+
+                                    <select class="form-control select2 rouned-0" id="port_province">
+
+                                        <option value="">Province of Port</option>
 
                                     </select>
 
@@ -371,28 +485,6 @@
                                     <input type="datetime-local" id="ETA" class="form-control rounded-0" placeholder="วันที่ส่งซ่อม" value="<?= date('d-m-Y'); ?>">
 
 
-
-                                </div>
-
-                                <div class="col-md-3"></div>
-
-                                <div class="col-md-3 mb-2">
-
-                                    <label><strong class="text-danger">*</strong>Port :</label>
-
-                                    <input type="text" id="con_port" class="form-control rounded-0" placeholder="Port">
-
-                                </div>
-
-                                <div class="col-md-3 mb-2">
-
-                                    <label><strong class="text-danger">*</strong>Email :</label>
-
-                                    <select class="form-control select2 rouned-0" id="con_email">
-
-                                        <option value="">Contract Email</option>
-
-                                    </select>
 
                                 </div>
 
@@ -409,9 +501,16 @@
 
 
                             <div class="row">
+
                                 <div class="col-md-2 mb-2">
 
                                     <p class="text-primary"><i class="fas fa-circle"></i> Package</p>
+
+                                </div>
+
+                                <div>
+
+                                    <button type="button" class="btn btn-primary rounded-0" data-toggle="modal" data-target="#modalAddPackage"><i class="fas fa-plus"></i> Add Package</button>
 
                                 </div>
 
@@ -419,23 +518,21 @@
 
                             <div class="row mb-2">
 
-                                <div class="col-md-3 mb-2">
+                                <div class="col-md-6 mb-2">
 
                                     <label><strong class="text-danger">*</strong>Package Name :</label>
 
-                                    <select class="form-control select2 rouned-0" id="package" onchange="">
+                                    <select class="form-select" id="pack_name" name="pack_name[]" data-placeholder="Select Package" multiple="multiple" onchange="optionPackageInternet()">
 
-                                        <option value="">Package Name</option>
+                                        <option value="">Loading...</option>
 
                                     </select>
 
                                 </div>
 
-                                <div class="col-1"></div>
-
                                 <div class="col-md-3 mb-2">
 
-                                    <label><strong class="text-danger">*</strong>Start Date :</label>
+                                    <label><strong class="text-danger">*</strong>Start Contract :</label>
 
                                     <input type="date" id="contract_start" class="form-control rounded-0" placeholder="Start Contract" value="<?= date('Y-m-d'); ?>">
 
@@ -446,11 +543,22 @@
 
                             <div class="row mb-2">
 
-                                <div class="col-4"></div>
+                                <div class="col-md-6 mb-2">
+
+                                    <label><strong class="text-danger">*</strong>Package Internet :</label>
+
+
+                                    <select class="form-select" id="pack_internet" data-placeholder="Select Package Internet" multiple="multiple">
+
+                                        <option value="">Loading ..</option>
+
+                                    </select>
+
+                                </div>
 
                                 <div class="col-md-3 mb-2">
 
-                                    <label><strong class="text-danger">*</strong>End Date :</label>
+                                    <label><strong class="text-danger">*</strong>End Contract :</label>
 
                                     <input type="date" id="contract_end" class="form-control rounded-0" placeholder="End Contract" value="<?= date('Y-m-d'); ?>">
 
@@ -464,48 +572,32 @@
 
                             </div>
 
-                            <div class="col-md-8 mb-3">
+                            <div class="row mb-3">
 
-                                <div class="row mb-2">
+                                <div class="col-md-6">
 
-                                    <div class="col-md-2">
-                                        <label><strong class="text-danger">*</strong>Engineer :</label>
-                                    </div>
+                                    <label><strong class="text-danger">*</strong>Engineer :</label>
 
-                                    <div class="col-md-6">
+                                    <select class="form-select" id="admin_name" data-placeholder="Select Engineer" multiple="multiple">
 
-                                        <select class="form-control select2 rouned-0" id="admin_name" onchange="optionAdmins(value)">
+                                        <option value="">Loading...</option>
 
-                                            <option value="">Loading...</option>
+                                    </select>
 
-                                        </select>
-
-                                    </div>
-
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-2 ">
-                                        <label><strong class="text-danger">*</strong>Support :</label>
-                                    </div>
-
-                                    <div class="col-md-6">
-
-                                        <select class="form-control select2 rouned-0" id="admin_names">
-
-                                            <option value="">Select Support Engineer</option>
-
-                                        </select>
-
-                                    </div>
-                                    <!---
-                                    <div class="col-md-2">
-                                        <button type="button" class="btn btn-primary rounded-0" id=""><i class="fas fa-plus"></i> Add</button>
-                                    </div>
-                                    --->
                                 </div>
 
                             </div>
+
+                            <div class="row mb-2">
+                                <div class="col-md-6">
+                                    <p class="text-primary"><i class="fas fa-circle"></i> Remark</p>
+
+
+                                    <textarea id="remark_create" class="form-control rounded-0" placeholder="Remark" required></textarea>
+                                </div>
+                            </div>
+
+
 
 
 
@@ -532,78 +624,6 @@
         </div>
 
     </section>
-
-</div>
-
-
-
-
-
-<!-- Modal SearchData -->
-
-<div class="modal fade" id="modalSearchData" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-
-    <div class="modal-dialog" role="document">
-
-        <div class="modal-content rounded-0">
-
-            <div class="modal-header bg-dark rounded-0">
-
-                <h5 class="modal-title">ค้นหาทะเบียนรถ</h5>
-
-                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-
-                    <span aria-hidden="true">&times;</span>
-
-                </button>
-
-            </div>
-
-            <div class="modal-body">
-
-                <div class="row">
-
-                    <div class="col-md-12 mb-2">
-
-                        <div class="input-group">
-
-                            <input type="text" onkeyup="search_license_plate()" id="search_license_plate" class="form-control rounded-0" placeholder="กรอกเลขทะเบียนรถ ตัวอย่าง 1กด-2565 เป็นต้น">
-
-                            <span class="input-group-append">
-
-                                <button type="button" onclick="search_license_plate()" class="btn btn-warning btn-flat"><i class="fas fa-search"></i> ค้นหา</button>
-
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="row">
-
-                    <div class="col-md-12 mb-2" id="showSearch">
-
-                        <div class="row">
-
-                            <div class="col-md-12 mt-2 mb-2 text-center">
-
-                                <h5 class="text-info"><small>กรอกเลขทะเบียนรถที่ต้องการค้นหา</small></h5>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
 
 </div>
 
@@ -724,9 +744,9 @@
 </div>
 
 
-<!-- Modal Add Vessel -->
+<!-- Modal Add Port -->
 
-<div class="modal fade" id="modalAddVessel" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+<div class="modal fade" id="modalAddPort" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
 
     <div class="modal-dialog" role="document">
 
@@ -734,7 +754,7 @@
 
             <div class="modal-header bg-dark rounded-0">
 
-                <h5 class="modal-title">ข้อมูลเรือ</h5>
+                <h5 class="modal-title">ข้อมูลท่าเรือ</h5>
 
                 <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
 
@@ -752,79 +772,19 @@
 
                         <div class="row mb-2">
 
-                            <label class="col-md-3"><strong class="text-danger">*</strong>Fleet :</label>
+                            <label class="col-md-3"><strong class="text-danger">*</strong>Port :</label>
 
                             <div class="col-md-9">
-                                <input type="text" id="ves_fleets" class="form-control rounded-0" placeholder="Fleet Name">
+                                <input type="text" id="port_names" class="form-control rounded-0" placeholder="Port Name">
                             </div>
 
                         </div>
 
                         <div class="row mb-2">
 
-                            <label class="col-md-3"><strong class="text-danger">*</strong>Name :</label>
+                            <label class="col-md-3"><strong class="text-danger">*</strong>Province :</label>
                             <div class="col-md-9">
-                                <input type="text" id="ves_names" class="form-control rounded-0" placeholder="Vessel Name">
-                            </div>
-
-                        </div>
-
-                        <div class="row mb-2">
-
-                            <label class="col-md-3"><strong class="text-danger">*</strong>Type :</label>
-
-                            <div class="col-md-9">
-                                <input type="text" id="ves_types" class="form-control rounded-0" placeholder="Type Vessel">
-                            </div>
-
-                        </div>
-
-                        <div class="row mb-2">
-
-                            <label class="col-md-3"><strong class="text-danger">*</strong>MMSI :</label>
-
-                            <div class="col-md-9">
-                                <input type="text" id="ves_mmsis" class="form-control rounded-0" placeholder="MMSI">
-                            </div>
-
-                        </div>
-
-                        <div class="row mb-2">
-
-                            <label class="col-md-3"><strong class="text-danger">*</strong>IMO :</label>
-
-                            <div class="col-md-9">
-                                <input type="text" id="ves_imos" class="form-control rounded-0" placeholder="IMO" maxlength="10" oninput="this.value=this.value.replace(/[^0-9\\s]/g,'');">
-                            </div>
-
-                        </div>
-
-                        <div class="row mb-2">
-
-                            <label class="col-md-3"><strong class="text-danger">*</strong>Call Sign :</label>
-
-                            <div class="col-md-9">
-                                <input type="text" id="ves_callsigns" class="form-control rounded-0" placeholder="Call Sign">
-                            </div>
-
-                        </div>
-
-                        <div class="row mb-2">
-
-                            <label class="col-md-3"><strong class="text-danger">*</strong>Country :</label>
-
-                            <div class="col-md-9">
-                                <input type="text" id="ves_countrys" class="form-control rounded-0" placeholder="Country">
-                            </div>
-
-                        </div>
-
-                        <div class="row mb-2">
-
-                            <label class="col-md-3"><strong class="text-danger">*</strong>Year Built :</label>
-
-                            <div class="col-md-9">
-                                <input type="text" id="ves_years" class="form-control rounded-0" placeholder="Year" maxlength="4" oninput="this.value=this.value.replace(/[^0-9\\s]/g,'');">
+                                <input type="text" id="port_provinces" class="form-control rounded-0" placeholder="Province of Port">
                             </div>
 
                         </div>
@@ -834,7 +794,7 @@
 
                             <div class="col-md-4 mt-2">
 
-                                <button id="createVessel" class="btn btn-primary rounded-0">Create</button>
+                                <button id="createPort" class="btn btn-primary rounded-0">Create</button>
 
                             </div>
 
@@ -870,9 +830,10 @@
 
 </div>
 
-<!-- Modal Add Contract -->
 
-<div class="modal fade" id="modalAddContract" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+<!-- Modal Add Package -->
+
+<div class="modal fade" id="modalAddPackage" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
 
     <div class="modal-dialog" role="document">
 
@@ -880,7 +841,94 @@
 
             <div class="modal-header bg-dark rounded-0">
 
-                <h5 class="modal-title">ข้อมูลติดต่อคุมบนเรือ</h5>
+                <h5 class="modal-title">ข้อมูลแพ็คเกจ</h5>
+
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+
+                    <span aria-hidden="true">&times;</span>
+
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <div class="row">
+
+                    <div class="col-md-12 mb-2">
+
+                        <div class="row mb-2">
+
+                            <label class="col-md-4"><strong class="text-danger">*</strong>Package Name :</label>
+
+                            <div class="col-md-8">
+                                <input type="text" id="pack_names" class="form-control rounded-0" placeholder="Package Name">
+                            </div>
+
+                        </div>
+
+                        <div class="row mb-2">
+
+                            <label class="col-md-4"><strong class="text-danger">*</strong>Package Internet :</label>
+
+                            <div class="col-md-8">
+                                <input type="text" id="pack_internets" class="form-control rounded-0" placeholder="Package Internet">
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-5"></div>
+
+                            <div class="col-md-4 mt-2">
+
+                                <button id="createPackage" class="btn btn-primary rounded-0">Create</button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-12 mb-2" id="showSearch">
+
+                        <div class="row">
+
+                            <div class="col-md-12 mt-2 mb-2 text-center">
+
+                                <h5 class="text-info"><small>กรอกข้อมูลให้ครบทุกช่อง</small></h5>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Modal Add Contact -->
+
+<div class="modal fade" id="modalAddContact" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+
+        <div class="modal-content rounded-0">
+
+            <div class="modal-header bg-dark rounded-0">
+
+                <h5 class="modal-title">ข้อมูลติดต่อคนบนเรือ</h5>
 
                 <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
 
@@ -900,7 +948,7 @@
 
                             <label class="col-md-3"><strong class="text-danger">*</strong>Name :</label>
                             <div class="col-md-9">
-                                <input type="text" id="con_names" class="form-control rounded-0" placeholder="Contract Name">
+                                <input type="text" id="con_names" class="form-control rounded-0" placeholder="Contact Name">
                             </div>
 
                         </div>
@@ -910,7 +958,7 @@
                             <label class="col-md-3"><strong class="text-danger">*</strong>Email :</label>
 
                             <div class="col-md-9">
-                                <input type="email" id="con_emails" class="form-control rounded-0" placeholder="Contract Email">
+                                <input type="email" id="con_emails" class="form-control rounded-0" placeholder="Contact Email">
                             </div>
 
                         </div>
@@ -920,7 +968,7 @@
                             <label class="col-md-3"><strong class="text-danger">*</strong>Tel :</label>
 
                             <div class="col-md-9">
-                                <input type="text" id="con_tels" class="form-control rounded-0" placeholder="Contract Tel" maxlength="15" oninput="this.value=this.value.replace(/[^0-9\\-]/g,'');">
+                                <input type="text" id="con_tels" class="form-control rounded-0" placeholder="Contact Tel" maxlength="15" oninput="this.value=this.value.replace(/[^0-9\\-]/g,'');">
                             </div>
 
                         </div>
@@ -930,7 +978,7 @@
 
                             <div class="col-md-4 mt-2">
 
-                                <button id="createContract" class="btn btn-primary rounded-0">Create</button>
+                                <button id="createContact" class="btn btn-primary rounded-0">Create</button>
 
                             </div>
 
@@ -992,32 +1040,12 @@
 
             success: function(res) {
                 $('#admin_name').html(res);
-
-
-            }
-
-        })
-
-    }
-
-    //option admins
-
-    function optionAdmins($admin_name) {
-
-        $.ajax({
-
-            url: '<?= base_url(); ?>/user/option_admins',
-
-            method: 'POST',
-
-            data: {
-                admin_name: $admin_name
-            },
-
-            success: function(res) {
-
-                $('#admin_names').html(res);
-
+                $('#admin_name').select2({
+                    theme: "bootstrap-5",
+                    width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+                    placeholder: $(this).data('placeholder'),
+                    closeOnSelect: false,
+                });
 
             }
 
@@ -1148,18 +1176,78 @@
     }
     //-------------------------------------------------------------------------V E S S E L---------------------------------------------------------------------------------------
 
-
     //option package
     function optionPackage() {
+
         $.ajax({
 
-            url: '<?= base_url(); ?>/vessel/option_package',
+            url: '<?= base_url(); ?>package/option_package',
 
             method: 'POST',
 
             success: function(res) {
 
-                $('#package').html(res);
+                $('#pack_name').html(res);
+                $('#pack_name').select2({
+                    theme: "bootstrap-5",
+                    width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+                    placeholder: $(this).data('placeholder'),
+                    closeOnSelect: false,
+                });
+
+            }
+
+        })
+    }
+
+    //option package internet
+    function optionPackageInternet() {
+
+        let pack_name = $('#pack_name').val();
+
+        $.ajax({
+
+            url: '<?= base_url(); ?>package/option_package_internet',
+
+            method: 'POST',
+
+            data: {
+                package: pack_name
+            },
+
+            success: function(res) {
+
+                $('#pack_internet').html(res);
+                $('#pack_internet').select2({
+                    theme: "bootstrap-5",
+                    width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+                    placeholder: $(this).data('placeholder'),
+                    closeOnSelect: false,
+                });
+
+            }
+
+        })
+    }
+
+    //option product
+    function optionProduct() {
+        $.ajax({
+
+            url: '<?= base_url(); ?>vessel/option_product',
+
+            method: 'POST',
+
+            success: function(res) {
+
+                $('#product').html(res);
+                $('#product').select2({
+                    theme: "bootstrap-5",
+                    width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+                    placeholder: $(this).data('placeholder'),
+                    closeOnSelect: false,
+                });
+
 
             }
 
@@ -1170,14 +1258,19 @@
     function optionProject() {
         $.ajax({
 
-            url: '<?= base_url(); ?>/vessel/option_project',
+            url: '<?= base_url(); ?>vessel/option_project',
 
             method: 'POST',
 
             success: function(res) {
 
                 $('#projects').html(res);
-
+                $('#projects').select2({
+                    theme: "bootstrap-5",
+                    width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+                    placeholder: $(this).data('placeholder'),
+                    closeOnSelect: false,
+                });
             }
 
         })
@@ -1188,7 +1281,7 @@
 
         $.ajax({
 
-            url: '<?= base_url(); ?>/vessel/option_fleet',
+            url: '<?= base_url(); ?>vessel/option_fleet',
 
             method: 'POST',
 
@@ -1202,19 +1295,24 @@
 
     }
 
-
     //option Vessel
     function optionVessel() {
 
         $.ajax({
 
-            url: '<?= base_url(); ?>/vessel/option_vessel',
+            url: '<?= base_url(); ?>vessel/option_vessel',
 
             method: 'POST',
 
             success: function(res) {
 
                 $('#ves_name').html(res);
+                $('#ves_name').select2({
+                    theme: "bootstrap-5",
+                    width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+                    placeholder: $(this).data('placeholder'),
+                    closeOnSelect: false,
+                });
 
             }
 
@@ -1227,7 +1325,7 @@
 
         $.ajax({
 
-            url: '<?= base_url(); ?>/vessel/option_type_vessel',
+            url: '<?= base_url(); ?>vessel/option_type_vessel',
 
             method: 'POST',
 
@@ -1244,12 +1342,55 @@
 
     //-------------------------------------------------------------------------C O N T R A C T----------------------------------------------------------------------------------
 
-    //Option Contract Name
-    function optionContractname() {
+
+    //Option Port Name
+    function optionPort() {
 
         $.ajax({
 
-            url: '<?= base_url(); ?>/vessel/option_contract_name',
+            url: '<?= base_url(); ?>port/option_port',
+
+            method: 'POST',
+
+            success: function(res) {
+
+                $('#port_name').html(res);
+
+            }
+
+        })
+
+    }
+
+    //Option Province 
+    function optionProvince($port_name) {
+
+        $.ajax({
+
+            url: '<?= base_url(); ?>port/option_province',
+
+            method: 'POST',
+
+            data: {
+                port_name: $port_name
+            },
+
+            success: function(res) {
+
+                $('#port_province').html(res);
+
+            }
+
+        })
+
+    }
+
+    //Option Contact Name
+    function optionContactname() {
+
+        $.ajax({
+
+            url: '<?= base_url(); ?>contact/option_contact_name',
 
             method: 'POST',
 
@@ -1263,12 +1404,12 @@
 
     }
 
-    //Option Contract Name
-    function optionContractphone($con_name) {
+    //Option Contact Name
+    function optionContactphone($con_name) {
 
         $.ajax({
 
-            url: '<?= base_url(); ?>/vessel/option_contract_phone',
+            url: '<?= base_url(); ?>contact/option_contact_phone',
 
             method: 'POST',
 
@@ -1286,12 +1427,12 @@
 
     }
 
-    //Option Contract Email
-    function optionContractemail($con_name) {
+    //Option Contact Email
+    function optionContactemail($con_name) {
 
         $.ajax({
 
-            url: '<?= base_url(); ?>/vessel/option_contract_email',
+            url: '<?= base_url(); ?>contact/option_contact_email',
 
             method: 'POST',
 
@@ -1313,25 +1454,33 @@
 
     //clear form
 
-    function clearForm() {
+    function clearFormContact() {
 
-        $('#cus_name').val('');
+        $('#con_names').val('');
 
-        $('#cus_tel').val('');
+        $('#con_tels').val('');
 
-        $('#cus_tax').val('');
-
-        $('#cus_address').val('');
-
-        $('#license_plate').val('');
-
-        $('#car_brand').val('');
-
-        $('#car_model').val('');
-
-        $('#car_mile_number').val('');
+        $('#con_emails').val('');
 
     }
+
+    function clearFormPort() {
+
+        $('#port_names').val('');
+
+        $('#port_province').val('');
+
+    }
+
+    function clearFormPackage() {
+
+        $('#pack_names').val('');
+
+        $('#pack_internets').val('');
+
+    }
+
+    //clear form
 
 
     function search_license_plate() {
@@ -1363,14 +1512,19 @@
 
 
     $(document).ready(function() {
+        optionPackageInternet('');
+        optionPackage();
+        optionPort()
         optionAdmin();
         optionCustomer();
         optionFleet();
         optionProject();
+        optionProduct();
         optionVessel();
         optionTypeVessel();
-        optionContractname();
-        optionPackage();
+        optionContactname();
+
+
     });
 
 
@@ -1519,9 +1673,9 @@
 
     });
 
-    // Create Contract
+    // Create Contact
 
-    $(document).on('click', '#createContract', function() {
+    $(document).on('click', '#createContact', function() {
 
         let con_name = $('#con_names').val();
 
@@ -1583,7 +1737,7 @@
 
                         $.ajax({
 
-                            url: '<?= base_url(); ?>/vessel/create_Contract',
+                            url: '<?= base_url(); ?>contact/create_Contact',
 
                             method: 'POST',
 
@@ -1617,11 +1771,11 @@
 
                                     });
 
-                                    setTimeout(function() {
+                                    optionContactname();
 
-                                        window.location.assign('<?= base_url(); ?>/pages/service_create/');
+                                    clearFormContact();
 
-                                    }, 1500);
+                                    $('#modalAddContact').modal('hide');
 
                                 } else {
 
@@ -1657,28 +1811,15 @@
 
 
 
+    // Create Port
 
-    // Create Vessel
+    $(document).on('click', '#createPort', function() {
 
-    $(document).on('click', '#createVessel', function() {
+        let port_names = $('#port_names').val();
 
-        let ves_fleet = $('#ves_fleets').val();
+        let port_provinces = $('#port_provinces').val();
 
-        let ves_name = $('#ves_names').val();
-
-        let ves_type = $('#ves_types').val();
-
-        let ves_mmsi = $('#ves_mmsis').val();
-
-        let ves_imo = $('#ves_imos').val();
-
-        let ves_callsign = $('#ves_callsigns').val();
-
-        let ves_country = $('#ves_countrys').val();
-
-        let ves_year = $('#ves_years').val();
-
-        if (ves_fleet == '' || ves_name == '' || ves_type == '' || ves_mmsi == '' || ves_imo == '' || ves_callsign == '' || ves_country == '' || ves_year == '') {
+        if (port_names == '' || port_provinces == '') {
 
             Swal.fire({
 
@@ -1732,7 +1873,7 @@
 
                         $.ajax({
 
-                            url: '<?= base_url(); ?>/vessel/create_Vessel',
+                            url: '<?= base_url(); ?>port/create_Port',
 
                             method: 'POST',
 
@@ -1740,21 +1881,9 @@
 
                             data: {
 
-                                ves_fleet: ves_fleet,
+                                port_names: port_names,
 
-                                ves_name: ves_name,
-
-                                ves_type: ves_type,
-
-                                ves_mmsi: ves_mmsi,
-
-                                ves_imo: ves_imo,
-
-                                ves_callsign: ves_callsign,
-
-                                ves_country: ves_country,
-
-                                ves_year: ves_year,
+                                port_provinces: port_provinces,
 
                             },
 
@@ -1776,11 +1905,143 @@
 
                                     });
 
-                                    setTimeout(function() {
+                                    optionPort();
 
-                                        window.location.assign('<?= base_url(); ?>/pages/service_create/');
+                                    clearFormPort();
 
-                                    }, 1500);
+                                    $('#modalAddPort').modal('hide');
+
+                                } else {
+
+                                    Swal.fire({
+
+                                        icon: 'error',
+
+                                        title: 'ผิดพลาด!',
+
+                                        text: res.message,
+
+                                        confirmButtonText: 'ตกลง'
+
+                                    });
+
+                                    return false;
+
+                                }
+
+                            }
+
+                        })
+
+                    }
+
+                })
+
+            }
+
+        })
+
+    });
+
+    // Create Package
+
+    $(document).on('click', '#createPackage', function() {
+
+        let pack_names = $('#pack_names').val();
+
+        let pack_internets = $('#pack_internets').val();
+
+        if (pack_names == '' || pack_internets == '') {
+
+            Swal.fire({
+
+                icon: 'warning',
+
+                title: 'แจ้งเตือน',
+
+                text: 'กรุณากรอกข้อมูลให้ครบถ้วน',
+
+                confirmButtonText: 'ตกลง'
+
+            });
+
+            return false;
+
+        }
+
+        Swal.fire({
+
+            title: 'เพิ่มผู้ใช้บริการ',
+
+            text: "ต้องการสร้างรายการซ่อมนี้?",
+
+            icon: 'warning',
+
+            showCancelButton: true,
+
+            confirmButtonText: 'ตกลง',
+
+            cancelButtonText: 'ยกเลิก'
+
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+
+                Swal.fire({
+
+                    allowEnterKey: false,
+
+                    allowEscapeKey: false,
+
+                    allowOutsideClick: false,
+
+                    html: 'กำลังสร้างรายการ กรุณารอสักครู่...',
+
+                    timerProgressBar: true,
+
+                    didOpen: () => {
+
+                        Swal.showLoading();
+
+                        $.ajax({
+
+                            url: '<?= base_url(); ?>package/create_Package',
+
+                            method: 'POST',
+
+                            dataType: 'JSON',
+
+                            data: {
+
+                                pack_names: pack_names,
+
+                                pack_internets: pack_internets,
+
+                            },
+
+                            success: function(res) {
+
+                                if (res.status == 'SUCCESS') {
+
+                                    Swal.fire({
+
+                                        icon: 'success',
+
+                                        title: 'สำเร็จ',
+
+                                        text: 'สร้างรายการซ่อมสำเร็จ',
+
+                                        showConfirmButton: false,
+
+                                        timer: 1500
+
+                                    });
+
+                                    optionPackage();
+
+                                    clearFormPackage();
+
+                                    $('#modalAddPackage').modal('hide');
 
                                 } else {
 
@@ -1819,8 +2080,6 @@
 
     $(document).on('click', '#createService', function() {
 
-        let files = document.getElementById('myfile');
-
         let projects = $('#projects').val();
 
         let cus_name = $('#cus_name').val();
@@ -1847,6 +2106,12 @@
 
         let ves_year = $('#ves_year').val();
 
+        let ves_flag = $('#ves_flag').val();
+
+        let ves_home_port = $('#ves_home_port').val();
+
+        let ves_gross_tonnage = $('#ves_gross_tonnage').val();
+
         let ves_maintenance = $('#ves_maintenance').val();
 
         let ves_survey = document.getElementById('ves_survey').checked;
@@ -1859,11 +2124,19 @@
 
         let con_email = $('#con_email').val();
 
-        let con_port = $('#con_port').val();
+        let port_name = $('#port_name').val();
+
+        let port_province = $('#port_province').val();
 
         let admin_name = $('#admin_name').val();
 
-        let admin_names = $('#admin_names').val();
+        let product = $('#product').val();
+
+        let pack_name = $('#pack_name').val();
+
+        let pack_internet = $('#pack_internet').val();
+
+        let remark_create = $('#remark_create').val();
 
         let create_date = $('#create_date').val();
 
@@ -1880,8 +2153,9 @@
         let contract_end = $('#contract_end').val();
 
         if (projects == '' || cus_name == '' || cus_tel == '' || cus_address == '' || cus_email == '' || cus_zipcode == '' || ves_fleet == '' || ves_name == '' ||
-            ves_type == '' || ves_callsign == '' || ves_imo == '' || ves_mmsi == '' || ves_year == '' || ves_maintenance == '' || con_name == '' || con_tel == '' ||
-            con_port == '' || con_email == '' || admin_name == '' || admin_names == '' || create_date == '' || due_date == '' || end_date == '' || eta == '' || etd == '' ||
+            ves_type == '' || ves_callsign == '' || ves_imo == '' || ves_mmsi == '' || ves_year == '' || ves_maintenance == '' || ves_flag == '' || ves_home_port == '' ||
+            ves_gross_tonnage == '' || con_name == '' || con_tel == '' || con_email == '' || port_name == '' || port_province == '' || admin_name == '' ||
+            product == '' || pack_name == '' || pack_internet == '' || remark_create == '' || create_date == '' || due_date == '' || end_date == '' || eta == '' || etd == '' ||
             contract_start == '' || contract_end == '') {
 
             Swal.fire({
@@ -1899,6 +2173,7 @@
             return false;
 
         }
+
 
         Swal.fire({
 
@@ -1970,6 +2245,12 @@
 
                                 ves_year: ves_year,
 
+                                ves_flag: ves_flag,
+
+                                ves_home_port: ves_home_port,
+
+                                ves_gross_tonnage: ves_gross_tonnage,
+
                                 ves_maintenance: ves_maintenance,
 
                                 ves_survey: ves_survey,
@@ -1980,13 +2261,21 @@
 
                                 con_tel: con_tel,
 
-                                con_port: con_port,
+                                port_name: port_name,
+
+                                port_province: port_province,
 
                                 con_email: con_email,
 
                                 admin_name: admin_name,
 
-                                admin_names: admin_names,
+                                product: product,
+
+                                pack_name: pack_name,
+
+                                pack_internet: pack_internet,
+
+                                remark_create: remark_create,
 
                                 create_date: create_date,
 

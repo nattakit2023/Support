@@ -61,6 +61,7 @@ $route['logout'] = 'pages/logout';
 // เปลี่ยนรหัสผ่าน
 $route['change_password'] = 'pages/change_password';
 $route['pages/(:any)'] = 'pages/index/$1';
+$route['pages/contact'] = 'pages/contact';
 $route['pages/service_detail/(:num)'] = 'pages/service_detail/$1';
 $route['pages/service_edit_detail'] = 'pages/service_edit_detail';
 $route['pages/customer_detail/(:num)'] ='pages/customer_detail/$1';

@@ -28,17 +28,22 @@
 
                 <td class="text-center">
 
-                    <?php if ($item->admin_position == 'admin') : ?>
+                    <?php if ($item->admin_position == 'Super admin') : ?>
 
-                        <span class="badge badge-primary">ผู้ดูแล</span>
+                        <span class="badge badge-warning">ผู้ดูแล</span>
 
-                    <?php elseif ($item->admin_position == 'employee') : ?>
+                    <?php elseif ($item->admin_position == 'Management') : ?>
 
-                        <span class="badge badge-dark">พนักงาน</span>
+                        <span class="badge badge-info">ผู้จัดการ</span>
+
+
+                    <?php elseif ($item->admin_position == 'Admin') : ?>
+
+                        <span class="badge badge-primary">แอดมิน</span>
 
                     <?php else : ?>
 
-                        <span class="badge badge-danger">ซัพพอร์ต</span>
+                        <span class="badge badge-danger">วิศวกร</span>
 
                     <?php endif; ?>
 
@@ -48,13 +53,13 @@
 
                     <?php if ($this->session->userdata('admin_id') != $item->admin_id) : ?>
 
-                        <button onclick="edit('<?=$item->admin_id;?>')" admin_id="<?=$item->admin_id;?>" type="button" class="btn btn-success btn-sm rounded-0" data-toggle="modal" data-target="#modalEditUser"><i class="fas fa-edit"></i></button>
+                        <button onclick="edit('<?= $item->admin_id; ?>')" admin_id="<?= $item->admin_id; ?>" type="button" class="btn btn-success btn-sm rounded-0" data-toggle="modal" data-target="#modalEditUser"><i class="fas fa-edit"></i></button>
 
                         <button onclick="del('<?= $item->admin_id; ?>')" type="button" class="btn btn-danger btn-sm rounded-0"><i class="fas fa-trash"></i></button>
 
                         <button id="btnChangePassword" admin_id="<?= $item->admin_id; ?>" type="button" class="btn btn-outline-primary btn-sm rounded-0" title="เปลี่ยนรหัสผ่าน" data-toggle="modal" data-target="#modalChangePassword"><i class="fas fa-key"></i></button>
 
-                        <?php else : ?>
+                    <?php else : ?>
 
                         <em class="text-muted">บัญชีปัจจุบัน</em>
 
@@ -133,7 +138,6 @@
 </div>
 
 <script>
-
     function clearPasswordForm() {
 
         $('#edit_admin_password').val('');
@@ -182,7 +186,7 @@
 
                         $.ajax({
 
-                            url: '<?=base_url();?>user/del_user',
+                            url: '<?= base_url(); ?>user/del_user',
 
                             method: 'POST',
 
@@ -202,7 +206,7 @@
 
                                         icon: 'success',
 
-                                        title : 'สำเร็จ',
+                                        title: 'สำเร็จ',
 
                                         text: 'ลบข้อมูลผู้ใช้เรียบร้อยแล้ว',
 
@@ -212,7 +216,7 @@
 
                                     });
 
-                                    $('#row'+admin_id).hide();
+                                    $('#row' + admin_id).hide();
 
                                 } else {
 
@@ -222,7 +226,7 @@
 
                                         title: 'ผิดพลาด',
 
-                                        text : res.mesage,
+                                        text: res.mesage,
 
                                         confirmButtonText: 'ตกลง'
 
@@ -248,21 +252,23 @@
 
 
 
-    function edit(admin_id){
+    function edit(admin_id) {
 
         $.ajax({
 
-            url : '<?=base_url();?>user/get_user', 
+            url: '<?= base_url(); ?>user/get_user',
 
-            method : 'POST',
+            method: 'POST',
 
-            dataType : 'JSON',
+            dataType: 'JSON',
 
-            data : {admin_id : admin_id},
+            data: {
+                admin_id: admin_id
+            },
 
-            success : function(res){
+            success: function(res) {
 
-                if(res.status === 'SUCCESS'){
+                if (res.status === 'SUCCESS') {
 
                     $('#edit_admin_id').val(admin_id);
 
@@ -501,5 +507,4 @@
         },
 
     });
-
 </script>

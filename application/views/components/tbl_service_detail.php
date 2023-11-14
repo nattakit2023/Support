@@ -6,11 +6,13 @@
 
             <th style="width: 5%" class="text-center">#</th>
 
-            <th>ชื่อรายการ</th>
+            <th style="width: 45%">Equipment</th>
 
-            <th style="width: 5%">จำนวน</th>
+            <th style="width: 45%">Detail</th>
+
+            <th style="width: 5%">Amount</th>
             <?php if ($service->service_status == 'created') : ?>
-                <th style="width: 10%">ตัวเลือก</th>
+                <th style="width: 10%">Option</th>
             <?php endif; ?>
         </tr>
 
@@ -30,6 +32,9 @@
 
                     <small class="text-muted"><?= $item->detail; ?></small>
 
+                </td>
+                <td>
+                    <?= $item->service_detail ?>
                 </td>
 
                 <td class="text-center"><?= $item->amount; ?></td>

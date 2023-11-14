@@ -116,7 +116,7 @@
 
                             <a href="<?= base_url(); ?>pages/service_status?status=verify" class="nav-link <?= ($this->input->get('status') == 'verify' ? 'active' : ''); ?>">
 
-                                <i class="fas fa-circle nav-icon text-info"></i>
+                                <i class="fas fa-circle nav-icon text-success"></i>
 
                                 <p>Verify</p>
 
@@ -130,7 +130,7 @@
 
                             <a href="<?= base_url(); ?>pages/service_status?status=approve" class="nav-link <?= ($this->input->get('status') == 'approve' ? 'active' : ''); ?>">
 
-                                <i class="fas fa-circle nav-icon text-primary"></i>
+                                <i class="fas fa-circle nav-icon text-info"></i>
 
                                 <p>Approve</p>
 
@@ -171,9 +171,23 @@
 
                         <li class="nav-item">
 
+                            <a href="<?= base_url(); ?>pages/service_status?status=uninstall" class="nav-link <?= ($this->input->get('status') == 'uninstall' ? 'active' : ''); ?>">
+
+                                <i class="fas fa-circle nav-icon text-primary"></i>
+
+                                <p>Uninstall</p>
+
+                                <span class="badge badge-info right" id="alertUninstall"></span>
+
+                            </a>
+
+                        </li>
+
+                        <li class="nav-item">
+
                             <a href="<?= base_url(); ?>pages/service_status?status=done" class="nav-link <?= ($this->input->get('status') == 'done' ? 'active' : ''); ?>">
 
-                                <i class="fas fa-circle nav-icon text-success"></i>
+                                <i class="fas fa-circle nav-icon text-default"></i>
 
                                 <p>Closed</p>
 
@@ -222,11 +236,28 @@
                 </li>
 
                 <!-- จัดการสินค้าและบริการ -->
-                <?php if ($this->session->userdata('admin_position') == 'admin') : ?>
 
-                    <li class="nav-header text-info">Management</li>
+                <li class="nav-header text-info">Management</li>
 
-                    <!---
+                <li class="nav-item" id="sidebarService">
+
+                    <a href="#" class="nav-link">
+
+                        <i class="nav-icon fas fa-user-check"></i>
+
+                        <p>
+
+                            Management
+
+                            <i class="right fas fa-angle-left"></i>
+
+                        </p>
+
+                    </a>
+
+                    <ul class="nav nav-treeview">
+
+                        <!---
 
                 <li class="nav-item">
 
@@ -240,22 +271,53 @@
 
                 </li>
                 --->
+                        <li class="nav-item">
 
+                            <a href="<?= base_url(); ?>pages/port" class="nav-link <?= ($active == 'port') ? 'active' : ''; ?>">
 
+                                <i class="fas fa-anchor	 nav-icon text-danger"></i>
 
-                    <li class="nav-item">
+                                <p>Port Management</p>
 
-                        <a href="<?= base_url(); ?>pages/user" class="nav-link <?= ($active == 'user') ? 'active' : ''; ?>">
+                            </a>
 
-                            <i class="nav-icon fas fa-user"></i>
+                        </li>
+                        <li class="nav-item">
 
-                            <p>User Management</p>
+                            <a href="<?= base_url(); ?>pages/package" class="nav-link <?= ($active == 'package') ? 'active' : ''; ?>">
 
-                        </a>
+                                <i class="fas fa-satellite-dish	 nav-icon text-warning"></i>
 
-                    </li>
+                                <p>Package Management</p>
 
-                <?php endif; ?>
+                            </a>
+
+                        </li>
+                        <li class="nav-item">
+
+                            <a href="<?= base_url(); ?>pages/contact" class="nav-link <?= ($active == 'contact') ? 'active' : ''; ?>">
+
+                                <i class="fas fa-phone nav-icon text-success"></i>
+
+                                <p>Contact Management</p>
+
+                            </a>
+
+                        </li>
+                        <li class="nav-item">
+
+                            <a href="<?= base_url(); ?>pages/user" class="nav-link <?= ($active == 'user') ? 'active' : ''; ?>">
+
+                                <i class="fas fa-user nav-icon text-info"></i>
+
+                                <p>User Management</p>
+
+                            </a>
+
+                        </li>
+                    </ul>
+                </li>
+
 
 
 
@@ -359,6 +421,14 @@
                 if (res.service_fixed > 0) {
 
                     $('#alertFixed').html(res.service_fixed);
+
+                }
+
+                //uninstall
+
+                if (res.service_uninstall > 0) {
+
+                    $('#alertUninstall').html(res.service_uninstall);
 
                 }
 

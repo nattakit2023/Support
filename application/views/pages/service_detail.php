@@ -2,7 +2,10 @@
 
     redirect('/pages/service_create');
 }
-
+$count_ves = count($vessel);
+$count_project = count($service_project);
+$count_product = count($service_product);
+$count_engineer = count($engineer);
 ?>
 
 <!-- Content Wrapper. Contains page content -->
@@ -17,21 +20,15 @@
 
             <div class="row">
 
-                <div class="col-sm-6">
+                <div class="col-sm-10">
 
-                    <h3><i class="fas fa-tools"></i> Job Order <strong><?= $service->service_invoice ?></strong></h3>
+                    <h3><i class="fas fa-tools"></i> Job Order <strong><?= $service->service_invoice ?></strong> </h3>
 
-                    <p class="text-muted">Installation Date :
-                        <?= date_format(date_create($service->due_date), 'd/m/Y'); ?>
-                    </p>
-
-                    <p class="text-muted">Completed Date :
-                        <?= date_format(date_create($service->end_date), 'd/m/Y'); ?>
-                    </p>
+                    <?= $service->ves_maintenance ?> ( <?= date_format(date_create($service->due_date), 'd/m/Y'); ?> - <?= date_format(date_create($service->end_date), 'd/m/Y'); ?> )
 
                 </div>
 
-                <div class="col-sm-6">
+                <div class="col-sm-2">
 
                     <ol class="breadcrumb float-sm-right">
 
@@ -73,9 +70,48 @@
 
                             Customer Information
 
+                            <button style="margin-left:20px" type="button" class="btn btn-primary rounded-0" data-toggle="modal" data-target="#modalRemark">Remark <i class="fas fa-exclamation"></i> </button>
                         </div>
 
+
+
+
+
+
                         <div class="card-body">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h5>
+                                        <p style="padding:0px; margin :0px;" class="text-muted"><strong>Project Code :</strong>
+                                            <?php $i = 1;
+                                            foreach ($service_project as $item) : ?>
+                                                <em><?= $item->projects ?>
+                                                    <?php if ($i < $count_project) : ?>
+                                                        /
+                                                    <?php $i++;
+                                                    endif; ?>
+                                                </em>
+                                            <?php endforeach; ?>
+                                        </p>
+                                    </h5>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <h5>
+                                        <p style="padding:0px; margin :0px;" class="text-muted"><strong>Product :</strong>
+                                            <?php $i = 1;
+                                            foreach ($service_product as $item) : ?>
+                                                <em><?= $item->product ?>
+                                                    <?php if ($i < $count_product) : ?>
+                                                        /
+                                                    <?php $i++;
+                                                    endif; ?></em>
+                                            <?php endforeach; ?>
+                                        </p>
+                                    </h5>
+                                </div>
+                            </div>
 
                             <p style="margin:0px;" class="text-info"><i class="fas fa-circle"></i> Customer</p>
 
@@ -88,14 +124,14 @@
 
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="col-md-2">
 
                                     <p style="padding:0px; margin :0px;" class="text-muted"><strong>Telephone :
                                         </strong><em><?= $service->cus_tel; ?></em></p>
 
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="col-md-3">
 
                                     <p style="padding:0px; margin :0px;" class="text-muted"><strong>E-mail :
                                         </strong><em><?= ($service->cus_email != null ? $service->cus_email : '-'); ?></em>
@@ -121,7 +157,7 @@
 
                             <p style="margin:0px;" class="text-info mt-2"><i class="fas fa-circle"></i> Vessel</p>
 
-                            <div class="row mb-2">
+                            <div class="row">
 
                                 <div class="col-md-2">
 
@@ -132,8 +168,19 @@
 
                                 <div class="col-md-2">
 
-                                    <p style="padding:0px; margin :0px;" class="text-muted"><strong>Vessel :
-                                        </strong><em><?= $service->ves_name; ?></em></p>
+                                    <p style="padding:0px; margin :0px;" class="text-muted"><strong>Vessel :</strong>
+                                        <?php $i = 1;
+                                        foreach ($vessel as $item) : ?>
+                                            <em><?= $item->ves_name;
+                                                if ($i < $count_ves) : ?>
+                                                    /
+                                                <?php $i++;
+                                                endif; ?>
+                                            </em>
+
+                                        <?php endforeach; ?>
+
+                                    </p>
 
                                 </div>
 
@@ -194,40 +241,65 @@
 
                                 <div class="col-md-2">
 
-                                    <p style="padding:0px; margin :0px;" class="text-muted"><strong>Maintenance :
-                                        </strong><em> <?= $service->ves_maintenance ?> </em></p>
+                                    <p style="padding:0px; margin :0px;" class="text-muted"><strong>Flag :
+                                        </strong><em> <?= $service->ves_flag ?> </em></p>
+
+                                </div>
+
+                                <div class="col-md-2">
+
+                                    <p style="padding:0px; margin :0px;" class="text-muted"><strong>Home Port :
+                                        </strong><em> <?= $service->ves_home_port ?> </em></p>
+
+                                </div>
+
+                                <div class="col-md-2">
+
+                                    <p style="padding:0px; margin :0px;" class="text-muted"><strong>Gross Tonnage :
+                                        </strong><em> <?= $service->ves_gross_tonnage ?> </em></p>
 
                                 </div>
 
                             </div>
 
-                            <p style="margin:0px;" class="text-info mt-2"><i class="fas fa-circle"></i> Contract Onboard</p>
+                            <p style="margin:0px;" class="text-info mt-2"><i class="fas fa-circle"></i> Contact Onboard</p>
 
-                            <div class="row">
-                                <div class="col-md-2 mb-2">
+                            <div class="row ">
+                                <div class="col-md-4 ">
 
                                     <p style="padding:0px; margin :0px;" class="text-muted"><strong>Name :
                                         </strong><em> <?= $service->con_name; ?></em></p>
 
                                 </div>
-                                <div class="col-md-2 mb-2">
+                                <div class="col-md-2 ">
 
                                     <p style="padding:0px; margin :0px;" class="text-muted"><strong>Tel :
                                         </strong><em> <?= $service->con_tel; ?></em></p>
 
                                 </div>
-                                <div class="col-md-2 mb-2">
+                                <div class="col-md-2 ">
+
+                                    <p style="padding:0px; margin :0px;" class="text-muted"><strong>Port :
+                                        </strong><em> <?= $service->port_name; ?></em></p>
+
+                                </div>
+                                <div class="col-md-2 ">
+
+                                    <p style="padding:0px; margin :0px;" class="text-muted"><strong>Province :
+                                        </strong><em> <?= $service->port_province; ?></em></p>
+
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4 ">
 
                                     <p style="padding:0px; margin :0px;" class="text-muted"><strong>Email :
                                         </strong><em> <?= $service->con_email; ?></em></p>
 
                                 </div>
-                                <div class="col-md-2 mb-2">
-
-                                    <p style="padding:0px; margin :0px;" class="text-muted"><strong>Port :
-                                        </strong><em> <?= $service->con_port; ?></em></p>
-
-                                </div>
+                                <div class="col-md-2"></div>
                                 <div class="col-md-2">
 
                                     <p style="padding:0px; margin :0px;" class="text-muted"><strong>ETA :
@@ -241,6 +313,38 @@
                                         </strong><em> <?= date_format(date_create($service->ETD), ' d/m/Y  H:i:s'); ?> </em></p>
 
                                 </div>
+                            </div>
+                            <p style="margin:0px;" class="text-info mt-2"><i class="fas fa-circle"></i> Package</p>
+
+                            <div class="row">
+                                <?php foreach ($service_package as $item) : ?>
+                                    <div class="row col-md-12">
+                                        <div class="col-md-4">
+
+                                            <p style="padding:0px; margin :0px;" class="text-muted"><strong>Package Name :
+                                                </strong><em> <?= $item->pack_name; ?></em></p>
+
+                                        </div>
+
+                                        <div class="col-md-4">
+
+                                            <p style="padding:0px; margin :0px;" class="text-muted"><strong>Package Internet :
+                                                </strong><em> <?= $item->pack_internet; ?></em></p>
+
+                                        </div>
+                                        <div class="col-md-4">
+
+                                            <p style="padding:0px; margin :0px;" class="text-muted"><strong>Contract :
+                                                </strong><em> <?= date_format(date_create($service->contract_start), ' d/m/Y'); ?></em>
+                                                -
+                                                </strong><em> <?= date_format(date_create($service->contract_end), ' d/m/Y'); ?></em>
+                                            </p>
+
+                                        </div>
+                                    </div>
+
+                                <?php endforeach; ?>
+
 
                             </div>
 
@@ -250,24 +354,61 @@
 
                                 <div class="col-md-4">
 
-                                    <p style="padding:0px; margin :0px;" class="text-muted"><strong>Engineer :
-                                        </strong><em> <?= $service->engineer; ?></em></p>
+                                    <p style="padding:0px; margin :0px;" class="text-muted"><strong>Engineer :</strong>
+                                        <?php $i = 1;
+                                        foreach ($engineer as $item) : ?>
+                                            <em><?= $item->engineer ?>
+                                                <?php if ($i < $count_engineer) : ?>
+                                                    /
+                                                <?php $i++;
+                                                endif; ?>
+                                            </em>
+                                        <?php endforeach; ?></em>
+                                    </p>
 
                                 </div>
 
                             </div>
 
-                            <div class="row">
 
-                                <div class="col-md-4">
 
-                                    <p style="padding:0px; margin :0px;" class="text-muted"><strong>Support :
-                                        </strong><em> <?= $service->support_1; ?></em></p>
+                            <?php if ($image != null) : $i = 1; ?>
+                                <p style="margin:0px;" class="text-info mt-2"><i class="fas fa-circle"></i> File</p>
+                                <?php foreach ($image as $item) : ?>
+                                    <div class="row">
+                                        <div class="col-md-3 mb-2">
 
-                                </div>
+                                            <p style="padding:0px; margin :0px;" class="text-muted"><strong>File<?= $i++; ?> :
+                                                </strong><a href="<?= base_url() ?>/uploads/<?= $service->service_invoice; ?>/<?= $item->uploads_name; ?>" download=""><em> <?= $item->uploads_name; ?></em></a></p>
 
-                            </div>
+                                        </div>
+                                        <?php if ($service->service_status == 'created') : ?>
+                                            <div class="col-md-1 mb-2">
+                                                <button onclick="del('<?= $item->uploads_name; ?>','created')" type="button" class="btn btn-danger btn-sm rounded-0"><i class="fas fa-trash"></i></button>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
 
+                            <?php if ($image_back != null) : $i = 1; ?>
+                                <p style="margin:0px;" class="text-info mt-2"><i class="fas fa-circle"></i> File Back</p>
+                                <?php foreach ($image_back as $item) : ?>
+                                    <div class="row">
+                                        <div class="col-md-3 mb-2">
+
+                                            <p style="padding:0px; margin :0px;" class="text-muted"><strong>File<?= $i++; ?> :
+                                                </strong><a href="<?= base_url() ?>/uploads/<?= $service->service_invoice; ?>/<?= $item->uploads_name; ?>" download=""><em> <?= $item->uploads_name; ?></em></a></p>
+
+                                        </div>
+                                        <?php if ($service->service_status == 'fixed') : ?>
+                                            <div class="col-md-1 mb-2">
+                                                <button onclick="del('<?= $item->uploads_name; ?>','fixed')" type="button" class="btn btn-danger btn-sm rounded-0"><i class="fas fa-trash"></i></button>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
 
 
                         </div>
@@ -282,7 +423,7 @@
 
                 <div class="row">
 
-                    <div class="col-md-12">
+                    <div class="col-md-8">
 
                         <div class="card rounded-0">
 
@@ -300,7 +441,7 @@
 
                                         <div class="row">
 
-                                            <div class="col-md-7 mb-2">
+                                            <div class="col-md-10 mb-2">
 
                                                 <select class="form-control select2 rounded-0" id="service_name" onchange="optionQuantity(value)">
 
@@ -332,7 +473,7 @@
 
                                         <div class="row">
 
-                                            <div class="col-md-9 mb-2">
+                                            <div class="col-md-12 mb-2">
 
                                                 <input type="text" id="detail" class="form-control rounded-0" placeholder="More Detail (ถ้ามี)">
 
@@ -353,19 +494,13 @@
                             </div>
 
                         </div>
-
-
-
                     </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-4">
                         <div class="card rounded-0">
 
                             <div class="card-header bg-dark rounded-0">
 
-                                Remark
+                                Add Files
 
                             </div>
 
@@ -375,13 +510,13 @@
 
                                     <div class="col-md-8 mb-2 ">
 
-                                        <textarea id="remark" class="form-control rounded-0" placeholder="Remark" required></textarea>
+                                        <input type="file" name="files" id="files" multiple>
+
 
                                     </div>
-                                    <div class="col-md-2"></div>
-                                    <div class="col-md-2 mb-2">
+                                    <div class="col-md-4 mb-2">
 
-                                        <button id="updateRemark" class="btn btn-block btn-primary rounded-0"><i class="fas fa-plus"></i> Add</button>
+                                        <button id="addFiles" class="btn btn-block btn-primary rounded-0"><i class="fas fa-plus"></i> Add</button>
 
                                     </div>
 
@@ -395,27 +530,107 @@
 
             <?php endif; ?>
 
+            <?php if ($service->service_status == 'fixed') : ?>
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card rounded-0">
+
+                            <div class="card-header bg-dark rounded-0">
+
+                                Remark Customer Report
+
+                            </div>
+
+                            <div class="card-body">
+
+                                <div class="row">
+
+                                    <div class="col-md-8 mb-2 ">
+
+                                        <textarea id="remark_add" class="form-control rounded-0" placeholder="Remark" required></textarea>
+
+                                    </div>
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-2 mb-2">
+
+                                        <button id="updateRemarkAdd" class="btn btn-block btn-primary rounded-0"><i class="fas fa-plus"></i> Add</button>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="card rounded-0">
+
+                            <div class="card-header bg-dark rounded-0">
+
+                                Add Files Customer Report
+
+                            </div>
+
+                            <div class="card-body">
+
+                                <div class="row">
+
+                                    <div class="col-md-8 mb-2 ">
+
+                                        <strong style="font-size: 24px;">Select Files :</strong>
+                                        <input type="file" name="files" id="files" multiple>
 
 
-            <div class="row">
+                                    </div>
 
-                <div class="col-md-8 mb-2">
+                                    <div class="col-md-4 mb-2">
 
+                                        <button id="addFilesBack" class="btn btn-block btn-primary rounded-0"><i class="fas fa-plus"></i> Add</button>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            <?php endif; ?>
+
+            <?php if ($service->service_status == 'uninstall') : ?>
+
+                <div class="col-md-12">
                     <div class="card rounded-0">
 
                         <div class="card-header bg-dark rounded-0">
 
-                            Service Order
+                            Add Files ATP Report
 
                         </div>
 
-                        <div class="card-body" id="showServiceDetail">
+                        <div class="card-body">
 
                             <div class="row">
 
-                                <div class="col-md-12 mb-2 text-center">
+                                <div class="col-md-8 mb-2 ">
 
-                                    <p class="text-muted"><em>--Loading..--</em></p>
+                                    <strong style="font-size: 24px;">Select Files :</strong>
+                                    <input type="file" name="files" id="files" multiple>
+
+
+                                </div>
+
+                                <div class="col-md-2">
+
+                                </div>
+                                <div class="col-md-2 mb-2">
+
+                                    <button id="addFilesATP" class="btn btn-block btn-primary rounded-0"><i class="fas fa-plus"></i> Add</button>
 
                                 </div>
 
@@ -424,14 +639,46 @@
                         </div>
 
                     </div>
+                </div>
+        </div>
+
+    <?php endif; ?>
+
+    <div class="row">
+
+        <div class="col-md-8 mb-2">
+
+            <div class="card rounded-0">
+
+                <div class="card-header bg-dark rounded-0">
+
+                    Service Order
 
                 </div>
 
-                <div class="col-md-4 mb-2">
+                <div class="card-body" id="showServiceDetail">
 
-                    <div class="card rounded-0">
+                    <div class="row">
 
-                        <!--<div class="card-header bg-warning rounded-0 text-center">
+                        <div class="col-md-12 mb-2 text-center">
+
+                            <p class="text-muted"><em>--Loading..--</em></p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4 mb-2">
+
+            <div class="card rounded-0">
+
+                <!--<div class="card-header bg-warning rounded-0 text-center">
 
                             <strong>Conclude</strong>
 
@@ -507,7 +754,7 @@
 
                             </div>
             -->
-                        <!-- ส่วนลด 
+                <!-- ส่วนลด 
 
                             <?php if ($service->service_status == 'wait') : ?>
 
@@ -524,196 +771,265 @@
                             <?php endif; ?>
                             -->
 
-                        <!-- ใบกำกับภาษี ใบเสร็จ -->
+                <!-- ใบกำกับภาษี ใบเสร็จ -->
 
-                        <?php if ($service->service_status != 'created' && $service->service_status != 'approve' && $service->service_status != 'verify') : ?>
+                <?php if ($service->service_status != 'created' && $service->service_status != 'verify') : ?>
 
-                            <div class="row">
+                    <div class="row">
 
-                                <div class="col-md-6 mt-2">
+                        <div class="col-md-4 mt-2">
 
-                                    <a id="paper_receipt" class="btn btn-default btn-block rounded-0" target="_blank" href="<?= base_url(); ?>/service/print_receipt?invoice=<?= $service->service_invoice; ?>">Job
-                                        Order<a>
+                            <a id="paper_receipt" class="btn btn-default btn-block rounded-0" target="_blank" href="<?= base_url(); ?>service/print_job?invoice=<?= $service->service_invoice; ?>">Job
+                                Order</a>
 
-                                </div>
+                        </div>
 
-                                <div class="col-md-6 mt-2">
+                        <div class="col-md-4 mt-2">
 
-                                    <a id="paper_receipt" class="btn btn-default btn-block rounded-0" target="_blank" href="<?= base_url(); ?>/service/print_tax?invoice=<?= $service->service_invoice; ?>">ATP
-                                        Report<a>
+                            <a id="paper_receipt" class="btn btn-default btn-block rounded-0" target="_blank" href="<?= base_url(); ?>service/print_customer?invoice=<?= $service->service_invoice; ?>">Customer
+                                Report</a>
 
-                                </div>
+                        </div>
 
-                            </div>
-
-                        <?php endif; ?>
-
-
-
-                        <!-- สร้างงานรับซ่อม -->
-
-                        <?php if ($service->service_status == 'created') : ?>
-
-                            <div class="row">
-
-                                <div class="col-md-12 mt-2">
-
-                                    <button id="btnVerify" class="btn btn-primary btn-block rounded-0"><i class="fas fa-save"></i> Save</button>
-
-                                </div>
-
-                            </div>
-
-                            <div class="row">
-
-                                <div class="col-md-12 mt-2">
-
-                                    <button id="btnCancelService" class="btn btn-default btn-block rounded-0">Cancle</button>
-
-                                </div>
-
-                            </div>
-
-                        <?php endif; ?>
-
-
-                        <!-- รอการเช็คของ -->
-                        <?php if ($this->session->userdata('admin_position') == 'support' || $this->session->userdata('admin_position') == 'admin') : ?>
-                            <?php if ($service->service_status == 'verify') : ?>
-
-                                <div class="row">
-
-                                    <div class="col-md-12 mt-2">
-
-                                        <button id="btnCheck" class="btn btn-success btn-block rounded-0"><i class="fas fa-check"></i> Verify</button>
-
-                                    </div>
-
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-12 mt-2">
-
-                                        <button type="button" class="btn btn-danger btn-block rounded-0" data-toggle="modal" data-target="#modalAddContract">Back Order</button>
-
-                                    </div>
-                                </div>
-
-                                <div class="row">
-
-                                    <div class="col-md-12 mt-2">
-
-                                        <button id="btnCancelService" class="btn btn-default btn-block rounded-0">Cancel Order</button>
-
-                                    </div>
-
-                                </div>
-
+                        <div class="col-md-4 mt-2">
+                            <?php if ($service->atp_create == 'created') : ?>
+                                <a id="paper_receipt" class="btn btn-default btn-block rounded-0" target="_blank" href="<?= base_url(); ?>service/print_atp?invoice=<?= $service->service_invoice; ?>">
+                                    ATP Report
+                                </a>
                             <?php endif; ?>
-                        <?php endif; ?>
-
-                        <!-- รอการอนุมัติการซ่อม -->
-                        <?php if ($this->session->userdata('admin_position') == 'admin') : ?>
-                            <?php if ($service->service_status == 'approve') : ?>
-
-                                <div class="row">
-
-                                    <div class="col-md-12 mt-2">
-
-                                        <button id="btnConfirm" class="btn btn-primary btn-block rounded-0"><i class="fas fa-check"></i> Approve</button>
-
-                                    </div>
-
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-12 mt-2">
-
-                                        <button type="button" class="btn btn-danger btn-block rounded-0" data-toggle="modal" data-target="#modalAddContract">Back Order</button>
-
-                                    </div>
-                                </div>
-
-                                <div class="row">
-
-                                    <div class="col-md-12 mt-2">
-
-                                        <button id="btnCancelService" class="btn btn-default btn-block rounded-0">Cancel Order</button>
-
-                                    </div>
-
-                                </div>
-
+                            <?php if ($service->atp_create == '') : ?>
+                                <a id="paper_receipt" class="btn btn-default btn-block rounded-0" target="_blank" href="<?= base_url(); ?>pages/atp_report/<?= $service->service_invoice; ?>">
+                                    Create ATP
+                                </a>
                             <?php endif; ?>
-                        <?php endif; ?>
+                        </div>
+                    </div>
+
+                <?php endif; ?>
 
 
-                        <!-- ซ่อมเสร็จแล้ว -->
-                        <?php if (($this->session->userdata('admin_position') == 'support') || ($this->session->userdata('admin_position') == 'admin')) : ?>
-                            <?php if ($service->service_status == 'wait') : ?>
 
-                                <div class="row">
+                <!-- สร้างงานรับซ่อม -->
 
-                                    <div class="col-md-12 mt-2">
+                <?php if ($service->service_status == 'created') : ?>
 
-                                        <button id="btnConfirmFixed" class="btn btn-warning btn-block rounded-0"><i class="fas fa-check"></i> Completed Job</button>
+                    <div class="row">
 
-                                    </div>
+                        <div class="col-md-12 mt-2">
 
-                                </div>
+                            <button id="btnVerify" class="btn btn-primary btn-block rounded-0"><i class="fas fa-save"></i> Save</button>
 
-                                <div class="row">
-                                    <div class="col-md-12 mt-2">
-
-                                        <button type="button" class="btn btn-danger btn-block rounded-0" data-toggle="modal" data-target="#modalAddContract">Back Order</button>
-
-                                    </div>
-                                </div>
-
-                                <div class="row">
-
-                                    <div class="col-md-12 mt-2">
-
-                                        <button id="btnCancelService" class="btn btn-default btn-block rounded-0">Cancel Order</button>
-
-                                    </div>
-
-                                </div>
-
-                            <?php endif; ?>
-                        <?php endif; ?>
-
-
-                        <!-- รับรถ  -->
-                        <?php if (($this->session->userdata('admin_position') == 'support') || ($this->session->userdata('admin_position') == 'admin')) : ?>
-                            <?php if ($service->service_status == 'fixed') : ?>
-
-                                <div class="row">
-
-                                    <div class="col-md-12 mt-2">
-
-                                        <button id="btnConfirmPickCar" class="btn btn-success btn-block rounded-0"><i class="fas fa-check"></i> Success Job Order</button>
-
-                                    </div>
-
-                                    <div class="col-md-12 mt-2">
-
-                                        <button type="button" class="btn btn-danger btn-block rounded-0" data-toggle="modal" data-target="#modalAddContract">Back Order</button>
-
-                                    </div>
-
-                                </div>
-
-                            <?php endif; ?>
-                        <?php endif; ?>
+                        </div>
 
                     </div>
 
-                </div>
+                    <div class="row">
+
+                        <div class="col-md-12 mt-2">
+
+                            <button id="btnCancelService" class="btn btn-default btn-block rounded-0">Cancle</button>
+
+                        </div>
+
+                    </div>
+
+                <?php endif; ?>
+
+
+                <!-- รอการเช็คของ -->
+                <?php if ($this->session->userdata('admin_position') == 'Engineer' || $this->session->userdata('admin_position') == 'Super admin') : ?>
+                    <?php if ($service->service_status == 'verify') : ?>
+
+                        <div class="row">
+
+                            <div class="col-md-12 mt-2">
+
+                                <button id="btnCheck" class="btn btn-success btn-block rounded-0"><i class="fas fa-check"></i> Verify</button>
+
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 mt-2">
+
+                                <button type="button" class="btn btn-danger btn-block rounded-0" data-toggle="modal" data-target="#modalAddHistory">Back Order</button>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-12 mt-2">
+
+                                <button id="btnCancelService" class="btn btn-default btn-block rounded-0">Cancel Order</button>
+
+                            </div>
+
+                        </div>
+
+                    <?php endif; ?>
+                <?php endif; ?>
+
+                <!-- รอการอนุมัติการซ่อม -->
+                <?php if ($this->session->userdata('admin_position') == 'Management' || $this->session->userdata('admin_position') == 'Super admin') : ?>
+                    <?php if ($service->service_status == 'approve') : ?>
+
+                        <div class="row">
+
+                            <div class="col-md-12 mt-2">
+
+                                <button id="btnConfirm" class="btn btn-primary btn-block rounded-0"><i class="fas fa-check"></i> Approve</button>
+
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 mt-2">
+
+                                <button type="button" class="btn btn-danger btn-block rounded-0" data-toggle="modal" data-target="#modalAddHistory">Back Order</button>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-12 mt-2">
+
+                                <button id="btnCancelService" class="btn btn-default btn-block rounded-0">Cancel Order</button>
+
+                            </div>
+
+                        </div>
+
+                    <?php endif; ?>
+                <?php endif; ?>
+
+
+                <!-- ซ่อมเสร็จแล้ว -->
+                <?php if (($this->session->userdata('admin_position') == 'Engineer') || ($this->session->userdata('admin_position') == 'Super admin')) : ?>
+                    <?php if ($service->service_status == 'wait') : ?>
+
+                        <div class="row">
+
+                            <div class="col-md-12 mt-2">
+
+                                <button id="btnConfirmFixed" class="btn btn-warning btn-block rounded-0"><i class="fas fa-check"></i> Completed Job</button>
+
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 mt-2">
+
+                                <button type="button" class="btn btn-danger btn-block rounded-0" data-toggle="modal" data-target="#modalAddHistory">Back Order</button>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-12 mt-2">
+
+                                <button id="btnCancelService" class="btn btn-default btn-block rounded-0">Cancel Order</button>
+
+                            </div>
+
+                        </div>
+
+                    <?php endif; ?>
+                <?php endif; ?>
+
+
+                <!-- รับรถ  -->
+                <?php if (($this->session->userdata('admin_position') == 'Engineer') || ($this->session->userdata('admin_position') == 'Super admin')) : ?>
+                    <?php if ($service->service_status == 'fixed') : ?>
+
+                        <div class="row">
+
+                            <div class="col-md-12 mt-2">
+
+                                <button id="btnUninstall" class="btn btn-success btn-block rounded-0"><i class="fas fa-check"></i> Success Job Order</button>
+
+                            </div>
+
+                            <div class="col-md-12 mt-2">
+
+                                <button type="button" class="btn btn-danger btn-block rounded-0" data-toggle="modal" data-target="#modalAddHistory">Back Order</button>
+
+                            </div>
+
+                            <div class="col-md-12 mt-2">
+
+                                <button id="btnCancelService" class="btn btn-default btn-block rounded-0">Cancel Order</button>
+
+                            </div>
+
+                        </div>
+
+                    <?php endif; ?>
+                <?php endif; ?>
+
+
+                <!-- ซ่อมเสร็จแล้ว -->
+                <?php if (($this->session->userdata('admin_position') == 'Engineer') || ($this->session->userdata('admin_position') == 'Super admin')) : ?>
+                    <?php if ($service->service_status == 'uninstall') : ?>
+
+                        <div class="row">
+
+                            <div class="col-md-12 mt-2">
+
+                                <button id="btnConfirmPickCar" class="btn btn-warning btn-block rounded-0"><i class="fas fa-check"></i> Uninstall</button>
+
+                            </div>
+
+                            <div class="col-md-12 mt-2">
+
+                                <button type="button" class="btn btn-danger btn-block rounded-0" data-toggle="modal" data-target="#modalAddHistory">Back Order</button>
+
+                            </div>
+
+                            <div class="col-md-12 mt-2">
+
+                                <button id="btnCancelService" class="btn btn-default btn-block rounded-0">Cancel Order</button>
+
+                            </div>
+
+                        </div>
+
+
+
+                    <?php endif; ?>
+                <?php endif; ?>
+
+                <!-- ซ่อมเสร็จแล้ว -->
+                <?php if (($this->session->userdata('admin_position') == 'Engineer') || ($this->session->userdata('admin_position') == 'Super admin')) : ?>
+                    <?php if ($service->service_status == 'done') : ?>
+
+                        <div class="row">
+
+                            <div class="col-md-12 mt-2">
+
+                                <button id="btnCancelService" class="btn btn-default btn-block rounded-0">Cancel Order</button>
+
+                            </div>
+
+                        </div>
+
+
+
+                    <?php endif; ?>
+                <?php endif; ?>
 
             </div>
 
         </div>
+
+    </div>
+
+</div>
 
 </div>
 
@@ -723,7 +1039,7 @@
 
 <!-- Modal Add History -->
 
-<div class="modal fade" id="modalAddContract" tabindex="-1" role="dialog" aria-labelledby="modelBackOrder" aria-hidden="true">
+<div class="modal fade" id="modalAddHistory" tabindex="-1" role="dialog" aria-labelledby="modelBackOrder" aria-hidden="true">
 
     <div class="modal-dialog" role="document">
 
@@ -810,8 +1126,53 @@
 
 </div>
 
+<!-- Modal Remark -->
 
+<div class="modal fade" id="modalRemark" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
 
+    <div class="modal-dialog" role="document">
+
+        <div class="modal-content rounded-0">
+
+            <div class="modal-header bg-dark rounded-0">
+
+                <h5 class="modal-title">Remark</h5>
+
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+
+                    <span aria-hidden="true">&times;</span>
+
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <div class="row">
+
+                    <div class="col-md-12 mb-2">
+
+                        <div class="row mb-3">
+
+                            <label class="col-md-3"><strong class="text-danger">*</strong>Remark :</label>
+
+                            <div class="col-md-9">
+                                <textarea class="form-control rounded-0" disabled><?= $service->remark_create ?> </textarea>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
 
 <!-- Modal เพิ่มส่วนลด -->
@@ -866,13 +1227,126 @@
 <script>
     var service_invoice = '<?= $service->service_invoice; ?>'
 
+    function del(filename, check) {
+        Swal.fire({
+
+            title: 'ลบไฟล์',
+
+            text: "ต้องการลบไฟล์?",
+
+            icon: 'warning',
+
+            showCancelButton: true,
+
+            confirmButtonText: 'ตกลง',
+
+            cancelButtonText: 'ยกเลิก'
+
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+
+                Swal.fire({
+
+                    html: 'กำลังลบไฟล์ กรุณารอสักครู่',
+
+                    allowEnterKey: false,
+
+                    allowEscapeKey: false,
+
+                    allowOutsideClick: false,
+
+                    timerProgressBar: true,
+
+                    didOpen: () => {
+
+                        Swal.showLoading();
+
+                        $.ajax({
+
+                            url: '<?= base_url(); ?>service/del_file',
+
+                            method: 'POST',
+
+                            dataType: 'JSON',
+
+                            data: {
+
+                                service_invoice: service_invoice,
+
+                                filename: filename,
+
+                                check: check
+
+                            },
+
+                            success: function(res) {
+
+                                if (res.status === 'SUCCESS') {
+
+                                    Swal.fire({
+
+                                        icon: 'success',
+
+                                        title: 'สำเร็จ',
+
+                                        text: 'ลบไฟล์เรียบร้อยแล้ว',
+
+                                        showConfirmButton: false
+
+                                    });
+
+                                    setTimeout(function() {
+
+                                        window.location.assign('<?= base_url(); ?>/pages/service_detail/<?= $service->service_invoice ?>');
+
+                                    }, 1500);
+
+                                } else {
+
+                                    Swal.fire({
+
+                                        icon: 'error',
+
+                                        title: 'ผิดพลาด',
+
+                                        text: res.mesage,
+
+                                        confirmButtonText: 'ตกลง'
+
+                                    });
+
+                                    return false;
+
+                                }
+
+                            }
+
+                        })
+
+                    }
+
+                })
+
+            }
+
+        })
+
+    }
+
     function clearFormService() {
+
+        $('#service_name').val('');
 
         $('#amount').val('');
 
         $('#price').val('');
 
         $('#detail').val('');
+
+        $('#remark_add').val('');
+
+        $('#files').val('');
 
     }
 
@@ -1361,9 +1835,9 @@
 
     });
 
-    // Create Contract
+    // Create Contact
 
-    $(document).on('click', '#createContract', function() {
+    $(document).on('click', '#createContact', function() {
 
         let con_name = $('#con_names').val();
 
@@ -1425,7 +1899,7 @@
 
                         $.ajax({
 
-                            url: '<?= base_url(); ?>/vessel/create_Contract',
+                            url: '<?= base_url(); ?>contact/create_Contact',
 
                             method: 'POST',
 
@@ -1497,15 +1971,13 @@
 
     });
 
-    //Update Service Remark
+    //Update Service Remark Add
 
-    $(document).on('click', '#updateRemark', function() {
+    $(document).on('click', '#updateRemarkAdd', function() {
 
-        let service_name = $('#service_name').val();
+        let remark_add = $('#remark_add').val();
 
-        let remark = $('#remark').val();
-
-        if (service_invoice == '' || remark == '') {
+        if (service_invoice == '' || remark_add == '') {
 
             Swal.fire({
 
@@ -1525,7 +1997,7 @@
 
         $.ajax({
 
-            url: '<?= base_url(); ?>/service/updateRemark',
+            url: '<?= base_url(); ?>/service/updateRemarkAdd',
 
             method: 'POST',
 
@@ -1535,7 +2007,7 @@
 
                 service_invoice: service_invoice,
 
-                remark: remark
+                remark_add: remark_add
 
             },
 
@@ -1617,30 +2089,6 @@
 
         }
 
-        if (service_name == 'other') {
-
-            if (detail == '') {
-
-                Swal.fire({
-
-                    icon: 'warning',
-
-                    title: 'แจ้งเตือน',
-
-                    text: 'กรุณากรอกรายละเอียดเพิ่มเติม',
-
-                    confirmButtonText: 'ตกลง'
-
-                });
-
-                return false;
-
-            }
-
-            service_name = 'อื่นๆ';
-
-        }
-
         $.ajax({
 
             url: '<?= base_url(); ?>/service/add_service_detail',
@@ -1710,6 +2158,319 @@
         })
 
     });
+
+    //Add Files
+
+    $(document).on('click', '#addFilesATP', function() {
+
+        let files = $('#files')[0].files;
+
+        var formdata = new FormData();
+
+        formdata.append('service_invoice', service_invoice);
+
+        for (var index = 0; index < files.length; index++) {
+            formdata.append('files[]', files[index]);
+        }
+
+
+
+        if (service_invoice == '') {
+
+            Swal.fire({
+
+                icon: 'warning',
+
+                title: 'แจ้งเตือน',
+
+                text: 'กรุณากรอกข้อมูลให้ครบถ้วน',
+
+                confirmButtonText: 'ตกลง'
+
+            });
+
+            return false;
+
+        }
+
+        $.ajax({
+
+            url: '<?= base_url(); ?>/service/upload_atp_back',
+
+            method: 'POST',
+
+            dataType: 'JSON',
+
+            data: formdata,
+
+            processData: false,
+
+            contentType: false,
+
+            success: function(res) {
+
+                if (res.status == 'SUCCESS') {
+
+                    Swal.fire({
+
+                        icon: 'success',
+
+                        title: 'สำเร็จ',
+
+                        text: 'เพิ่มไฟล์สำเร็จ',
+
+                        showConfirmButton: false,
+
+                        timer: 1500
+
+                    });
+
+                    getInvoice();
+
+                    clearFormService();
+
+                    optionProduct();
+
+                    getServiceDetail();
+
+                    setTimeout(function() {
+
+                        window.location.assign('<?= base_url(); ?>/pages/service_detail/<?= $service->service_invoice ?>');
+
+                    }, 1500);
+
+                } else {
+
+                    Swal.fire({
+
+                        icon: 'warning',
+
+                        title: 'แจ้งเตือน',
+
+                        text: res.message,
+
+                        confirmButtonText: 'ตกลง'
+
+                    });
+
+                    return false;
+
+                }
+
+            }
+
+        })
+
+    });
+
+    //Add Files
+
+    $(document).on('click', '#addFiles', function() {
+
+        let files = $('#files')[0].files;
+
+        var formdata = new FormData();
+
+        formdata.append('service_invoice', service_invoice);
+
+        for (var index = 0; index < files.length; index++) {
+            formdata.append('files[]', files[index]);
+        }
+
+
+
+        if (service_invoice == '') {
+
+            Swal.fire({
+
+                icon: 'warning',
+
+                title: 'แจ้งเตือน',
+
+                text: 'กรุณากรอกข้อมูลให้ครบถ้วน',
+
+                confirmButtonText: 'ตกลง'
+
+            });
+
+            return false;
+
+        }
+
+        $.ajax({
+
+            url: '<?= base_url(); ?>/service/uploads',
+
+            method: 'POST',
+
+            dataType: 'JSON',
+
+            data: formdata,
+
+            processData: false,
+
+            contentType: false,
+
+            success: function(res) {
+
+                if (res.status == 'SUCCESS') {
+
+                    Swal.fire({
+
+                        icon: 'success',
+
+                        title: 'สำเร็จ',
+
+                        text: 'เพิ่มไฟล์สำเร็จ',
+
+                        showConfirmButton: false,
+
+                        timer: 1500
+
+                    });
+
+                    getInvoice();
+
+                    clearFormService();
+
+                    optionProduct();
+
+                    getServiceDetail();
+
+                    setTimeout(function() {
+
+                        window.location.assign('<?= base_url(); ?>/pages/service_detail/<?= $service->service_invoice ?>');
+
+                    }, 1500);
+
+                } else {
+
+                    Swal.fire({
+
+                        icon: 'warning',
+
+                        title: 'แจ้งเตือน',
+
+                        text: res.message,
+
+                        confirmButtonText: 'ตกลง'
+
+                    });
+
+                    return false;
+
+                }
+
+            }
+
+        })
+
+    });
+
+    //Add Files
+
+    $(document).on('click', '#addFilesBack', function() {
+
+        let files = $('#files')[0].files;
+
+        var formdata = new FormData();
+
+        formdata.append('service_invoice', service_invoice);
+
+        for (var index = 0; index < files.length; index++) {
+            formdata.append('files[]', files[index]);
+        }
+
+
+
+        if (service_invoice == '') {
+
+            Swal.fire({
+
+                icon: 'warning',
+
+                title: 'แจ้งเตือน',
+
+                text: 'กรุณากรอกข้อมูลให้ครบถ้วน',
+
+                confirmButtonText: 'ตกลง'
+
+            });
+
+            return false;
+
+        }
+
+        $.ajax({
+
+            url: '<?= base_url(); ?>/service/uploads_back',
+
+            method: 'POST',
+
+            dataType: 'JSON',
+
+            data: formdata,
+
+            processData: false,
+
+            contentType: false,
+
+            success: function(res) {
+
+                if (res.status == 'SUCCESS') {
+
+                    Swal.fire({
+
+                        icon: 'success',
+
+                        title: 'สำเร็จ',
+
+                        text: 'เพิ่มไฟล์สำเร็จ',
+
+                        showConfirmButton: false,
+
+                        timer: 1500
+
+                    });
+
+                    getInvoice();
+
+                    clearFormService();
+
+                    optionProduct();
+
+                    getServiceDetail();
+
+                    setTimeout(function() {
+
+                        window.location.assign('<?= base_url(); ?>/pages/service_detail/<?= $service->service_invoice ?>');
+
+                    }, 1500);
+
+                } else {
+
+                    Swal.fire({
+
+                        icon: 'warning',
+
+                        title: 'แจ้งเตือน',
+
+                        text: res.message,
+
+                        confirmButtonText: 'ตกลง'
+
+                    });
+
+                    return false;
+
+                }
+
+            }
+
+        })
+
+    });
+
 
     //btnBacktoOrder
 
@@ -2077,7 +2838,6 @@
     })
 
 
-
     //ยืนยันงานซ่อม
 
     $(document).on('click', '#btnConfirm', function() {
@@ -2192,7 +2952,119 @@
 
     })
 
+    //ยืนยันงานซ่อม
 
+    $(document).on('click', '#btnUninstall', function() {
+
+        Swal.fire({
+
+            title: 'ส่งงานซ่อม',
+
+            text: "ยืนยันการส่งงาน",
+
+            icon: 'warning',
+
+            showCancelButton: true,
+
+            confirmButtonText: 'ตกลง',
+
+            cancelButtonText: 'ยกเลิก'
+
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+
+                Swal.fire({
+
+                    allowEnterKey: false,
+
+                    allowOutsideClick: false,
+
+                    allowEscapeKey: false,
+
+                    html: 'กำลังบันทึกข้อมูล กรุณารอสักครู่...',
+
+                    timerProgressBar: true,
+
+                    didOpen: () => {
+
+                        Swal.showLoading();
+
+                        $.ajax({
+
+                            url: '<?= base_url(); ?>/service/uninstall',
+
+                            method: 'POST',
+
+                            dataType: 'JSON',
+
+                            data: {
+
+                                service_invoice: service_invoice
+
+                            },
+
+                            success: function(res) {
+
+                                if (res.status == 'SUCCESS') {
+
+                                    Swal.fire({
+
+                                        allowEnterKey: false,
+
+                                        allowOutsideClick: false,
+
+                                        allowEscapeKey: false,
+
+                                        icon: 'success',
+
+                                        title: 'สำเร็จ',
+
+                                        text: 'รับงานเรียบร้อย',
+
+                                        showConfirmButton: false,
+
+                                        timer: 1400
+
+                                    });
+
+                                    setTimeout(function() {
+
+                                        window.location.reload();
+
+                                    }, 1500);
+
+                                } else {
+
+                                    Swal.fire({
+
+                                        icon: 'error',
+
+                                        title: 'ผิดพลาด',
+
+                                        text: res.message,
+
+                                        confirmButtonText: 'ตกลง'
+
+                                    });
+
+                                    return false;
+
+                                }
+
+                            }
+
+                        })
+
+                    }
+
+                })
+
+            }
+
+        })
+
+    })
 
     //ซ่อมเรียบเสร็จแล้ว
 
@@ -2500,7 +3372,7 @@
 
                                     setTimeout(function() {
 
-                                        window.history.back();
+                                        window.location.assign('<?= base_url(); ?>pages/service');
 
                                     }, 1400);
 
