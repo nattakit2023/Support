@@ -420,9 +420,11 @@
 
                     <th style="width: 5%; color:white;">No.</th>
 
-                    <th style="width: 45%; color:white;">Equipment</th>
+                    <th style="width: 15%;color:white;">Code</th>
 
-                    <th style="width: 40%; color:white;">Detail</th>
+                    <th style="width: 40%; color:white;">Equipment</th>
+
+                    <th style="width: 30%; color:white;">Detail</th>
 
                     <th style="width: 10%; color:white;">Quantity</th>
 
@@ -439,6 +441,8 @@
                     <tr>
 
                         <td style="text-align: center; padding:0px;"><?= ++$i; ?></td>
+
+                        <td style="text-align: center; padding:0px;"><?= $item->code ?></td>
 
                         <td>
 
