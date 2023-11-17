@@ -21,7 +21,6 @@ class Service extends CI_Controller
     }
 
     public function index()
-
     {
 
         redirect('/');
@@ -29,7 +28,7 @@ class Service extends CI_Controller
 
     //del_file
 
-    function del_file()
+    function del_file()     
     {
         if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
@@ -865,7 +864,7 @@ class Service extends CI_Controller
 
             $this->Function_model->insertData('tbl_notify', ['service_invoice' => $service_invoice, 'status' => 'created']);
 
-            $token = "aOQ43KJ6pn623siACkh3zbCtRtxrGB32mVe4WeLLCke"; // LINE Token Wq0HPXFx0ou0TIVDHCX0KztKNRq5daZeSejEmZ0YqXQ
+            $token = "Wq0HPXFx0ou0TIVDHCX0KztKNRq5daZeSejEmZ0YqXQ"; // LINE Token Wq0HPXFx0ou0TIVDHCX0KztKNRq5daZeSejEmZ0YqXQ
             //Message
             $mymessage = "Job Order : $service_invoice \n"; //Set new line with '\n'
             $mymessage .= "กรุณาเพิ่มEquipment  \n";
@@ -1211,6 +1210,8 @@ class Service extends CI_Controller
         $data_arr = [
 
             'service_invoice' => $service_invoice,
+
+            'code' => $service_detail->code,
 
             'service_name' => $service_name,
 
@@ -1725,7 +1726,7 @@ class Service extends CI_Controller
 
         if ($res == TRUE) {
 
-            $token = "aOQ43KJ6pn623siACkh3zbCtRtxrGB32mVe4WeLLCke"; // LINE Token Wq0HPXFx0ou0TIVDHCX0KztKNRq5daZeSejEmZ0YqXQ
+            $token = "Wq0HPXFx0ou0TIVDHCX0KztKNRq5daZeSejEmZ0YqXQ"; // LINE Token Wq0HPXFx0ou0TIVDHCX0KztKNRq5daZeSejEmZ0YqXQ
             //Message
             $mymessage = "Job Order : $service_invoice \n"; //Set new line with '\n'
             $mymessage .= "มีการแก้ไขข้อมูล กรุณาตรวจสอบ \n";
@@ -1847,7 +1848,7 @@ class Service extends CI_Controller
 
         if ($res == TRUE) {
 
-            $token = "aOQ43KJ6pn623siACkh3zbCtRtxrGB32mVe4WeLLCke"; // LINE Token Wq0HPXFx0ou0TIVDHCX0KztKNRq5daZeSejEmZ0YqXQ
+            $token = "Wq0HPXFx0ou0TIVDHCX0KztKNRq5daZeSejEmZ0YqXQ"; // LINE Token Wq0HPXFx0ou0TIVDHCX0KztKNRq5daZeSejEmZ0YqXQ
             //Message
             $mymessage = "Job Order : $service_invoice \n"; //Set new line with '\n'
             $mymessage .= "กรุณาตรวจสอบข้อมูลและยืนยัน \n";
@@ -1965,7 +1966,7 @@ class Service extends CI_Controller
 
         if ($res == TRUE) {
 
-            $token = "aOQ43KJ6pn623siACkh3zbCtRtxrGB32mVe4WeLLCke"; // LINE Token Wq0HPXFx0ou0TIVDHCX0KztKNRq5daZeSejEmZ0YqXQ
+            $token = "Wq0HPXFx0ou0TIVDHCX0KztKNRq5daZeSejEmZ0YqXQ"; // LINE Token Wq0HPXFx0ou0TIVDHCX0KztKNRq5daZeSejEmZ0YqXQ
             //Message
             $mymessage = "Job Order : $service_invoice \n"; //Set new line with '\n'
             $mymessage .= "ต้องการ การApprove Order \n";
@@ -2062,7 +2063,9 @@ class Service extends CI_Controller
 
         $data_arr = [
 
-            'service_status' => 'wait'
+            'service_status' => 'wait',
+
+            'approve_date' => date("Y-m-d h:i:sa")
 
         ];
 
@@ -2078,7 +2081,7 @@ class Service extends CI_Controller
 
         if ($res == TRUE) {
 
-            $token = "aOQ43KJ6pn623siACkh3zbCtRtxrGB32mVe4WeLLCke"; // LINE Token Wq0HPXFx0ou0TIVDHCX0KztKNRq5daZeSejEmZ0YqXQ
+            $token = "Wq0HPXFx0ou0TIVDHCX0KztKNRq5daZeSejEmZ0YqXQ"; // LINE Token Wq0HPXFx0ou0TIVDHCX0KztKNRq5daZeSejEmZ0YqXQ
             //Message
             $mymessage = "Job Order : $service_invoice \n"; //Set new line with '\n'
             $mymessage .= "กำลังดำเนินการติดตั้ง \n";
@@ -2171,7 +2174,7 @@ class Service extends CI_Controller
 
         if ($res == TRUE) {
 
-            $token = "aOQ43KJ6pn623siACkh3zbCtRtxrGB32mVe4WeLLCke"; // LINE Token Wq0HPXFx0ou0TIVDHCX0KztKNRq5daZeSejEmZ0YqXQ
+            $token = "Wq0HPXFx0ou0TIVDHCX0KztKNRq5daZeSejEmZ0YqXQ"; // LINE Token Wq0HPXFx0ou0TIVDHCX0KztKNRq5daZeSejEmZ0YqXQ
             //Message
             $mymessage = "Job Order : $service_invoice \n"; //Set new line with '\n'
             $mymessage .= "ติดตั้งเสร็จเรียบร้อย \n";
@@ -2289,7 +2292,7 @@ class Service extends CI_Controller
 
         if ($res == TRUE) {
 
-            $token = "aOQ43KJ6pn623siACkh3zbCtRtxrGB32mVe4WeLLCke"; // LINE Token Wq0HPXFx0ou0TIVDHCX0KztKNRq5daZeSejEmZ0YqXQ
+            $token = "Wq0HPXFx0ou0TIVDHCX0KztKNRq5daZeSejEmZ0YqXQ"; // LINE Token Wq0HPXFx0ou0TIVDHCX0KztKNRq5daZeSejEmZ0YqXQ
             //Message 
             $mymessage = "Job Order : $service_invoice \n"; //Set new line with '\n'
             $mymessage .= "รอการอนุมัติ ถอนการติดตั้ง \n";
@@ -2391,7 +2394,7 @@ class Service extends CI_Controller
 
         if ($res == TRUE) {
 
-            $token = "aOQ43KJ6pn623siACkh3zbCtRtxrGB32mVe4WeLLCke"; // LINE Token aOQ43KJ6pn623siACkh3zbCtRtxrGB32mVe4WeLLCke
+            $token = "Wq0HPXFx0ou0TIVDHCX0KztKNRq5daZeSejEmZ0YqXQ"; // LINE Token aOQ43KJ6pn623siACkh3zbCtRtxrGB32mVe4WeLLCke
             //Message
             $mymessage = "Job Order : $service_invoice \n"; //Set new line with '\n'
             $mymessage .= "กำลังถอนการติดตั้ง \n";
@@ -2447,8 +2450,6 @@ class Service extends CI_Controller
             exit();
         }
     }
-
-
 
     //ยกเลิกรับงานซ่อม
 
@@ -2669,7 +2670,7 @@ class Service extends CI_Controller
 
             $this->Function_model->insertData('tbl_notify', ['service_invoice' => $service_invoice, 'status' => 'created']);
 
-            $token = "aOQ43KJ6pn623siACkh3zbCtRtxrGB32mVe4WeLLCke"; // LINE Token Wq0HPXFx0ou0TIVDHCX0KztKNRq5daZeSejEmZ0YqXQ
+            $token = "Wq0HPXFx0ou0TIVDHCX0KztKNRq5daZeSejEmZ0YqXQ"; // LINE Token  aOQ43KJ6pn623siACkh3zbCtRtxrGB32mVe4WeLLCke
             //Message
             $mymessage = "Job Order : $service_invoice \n"; //Set new line with '\n'
             $mymessage .= "ถูกลบออกจากระบบ  \n";
@@ -3067,7 +3068,6 @@ class Service extends CI_Controller
 
         $mpdf->Output($data['title'] . '.pdf', 'I');
     }
-
 
 
     //ปริ้นใบแจ้งซ่อม ใบเสร็จ

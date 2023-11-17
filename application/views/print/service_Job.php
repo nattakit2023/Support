@@ -44,7 +44,7 @@
         }
 
         .tableheader td {
-            border: 1px solid #333;  
+            border: 1px solid #333;
         }
 
         /*---------------------------------------------------------------------- Header Service Detail ---------------------------------------------------------------------- */
@@ -465,6 +465,14 @@
 
     </div>
 
+    <table>
+        <tr>
+            <th>
+                <strong>Approve Date : </strong><?= date_format(date_create($service->approve_date), ' d/m/' . $startYear . ' H:i:s');; ?>
+            </th>
+        </tr>
+    </table>
+
     <br><br><br><br>
 
 
@@ -475,7 +483,7 @@
         <table class="tablesign" style="width: 100%">
 
             <tr>
-                
+
             </tr>
 
             <tr>

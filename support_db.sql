@@ -434,6 +434,7 @@ INSERT INTO `tbl_product` (`id`, `product`) VALUES (17, 'Enterprise (S.E.E.)');
 INSERT INTO `tbl_product` (`id`, `product`) VALUES (18, 'F-R-I-D-A-Y');
 INSERT INTO `tbl_product` (`id`, `product`) VALUES (19, 'Installation');
 INSERT INTO `tbl_product` (`id`, `product`) VALUES (20, 'Termination');
+INSERT INTO `tbl_product` (`id`, `product`) VALUES (21, 'Stellar Express');
 
 --
 -- --------------------------------------------------------
@@ -517,6 +518,7 @@ CREATE TABLE `tbl_service` (
   `ETD` datetime NOT NULL COMMENT 'เรือออกท่า',
   `contract_start` date NOT NULL COMMENT 'เริ่มสัญญา',
   `contract_end` date NOT NULL COMMENT 'สิ้นสุดสัญญา',
+  `approve_date` datetime NOT NULL COMMENT 'วันที่อนุมัติ',
   `service_status` varchar(10) NOT NULL DEFAULT 'created' COMMENT 'สถานะ\r\n-created สร้างใบแจ้งซ่อม\r\n-wait รับซ่อม/ระหว่างซ่อม\r\n- fixed รอรับ\r\n- done รับรถเรียบร้อย',
   `his_count` varchar(20) NOT NULL COMMENT 'จำนวนการตีกลับ',
   `atp_create` varchar(20) COMMENT 'สร้างATP',
@@ -533,6 +535,7 @@ CREATE TABLE `tbl_service` (
 CREATE TABLE `tbl_service_detail` (
   `id` int(11) NOT NULL,
   `service_invoice` varchar(13) NOT NULL COMMENT 'เลขใบสั่งซื้อ',
+  `code` varchar(100) NOT NULL COMMENT 'โค้ดของอุปกรณ์',
   `service_name` varchar(100) NOT NULL COMMENT 'ชื่อสินค้าและบริการ',
   `amount` int(10) NOT NULL COMMENT 'จำนวนสินค้า',  
   `service_detail` varchar(100) COMMENT 'รายละเอียด',
