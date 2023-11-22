@@ -131,6 +131,20 @@
 
     $startYear = date('Y', strtotime($service->create_date)) + 543;
 
+    $due_date = date('Y', strtotime($service->due_date)) + 543;
+
+    $end_date = date('Y', strtotime($service->end_date)) + 543;
+
+    $appYear = date('Y', strtotime($service->approve_date))+543;
+
+    $ETA = date('Y', strtotime($service->ETA)) + 543;
+
+    $ETD = date('Y', strtotime($service->ETD)) + 543;
+
+    $contract_start = date('Y', strtotime($service->contract_start)) + 543;
+
+    $contract_end = date('Y', strtotime($service->contract_end))+543;
+
 
 
 
@@ -143,9 +157,9 @@
     <div style="font-size:14px;margin-top: 5px;width:100%;">
         <p>
             <strong>Requerted Installation & Activation date (DD/MM/YYYY) : </strong>
-            <?= date_format(date_create($service->due_date), 'd/m/' . $startYear); ?>
+            <?= date_format(date_create($service->due_date), 'd/m/' . $due_date); ?>
             -
-            <?= date_format(date_create($service->end_date), 'd/m/' . $startYear); ?>
+            <?= date_format(date_create($service->end_date), 'd/m/' . $end_date); ?>
             &nbsp;
             &nbsp;
             &nbsp;
@@ -307,7 +321,7 @@
                 <strong>Email : </strong><?= $service->con_email; ?>
             </td>
             <td>
-                <strong>ETA : </strong><?= date_format(date_create($service->ETA), ' d/m/' . $startYear . ' H:i:s');; ?>
+                <strong>ETA : </strong><?= date_format(date_create($service->ETA), ' d/m/' . $ETA . ' H:i:s');; ?>
             </td>
         </tr>
 
@@ -319,7 +333,7 @@
                 <strong>Province : </strong><?= $service->port_province; ?>
             </td>
             <td>
-                <strong>ETD : </strong><?= date_format(date_create($service->ETD), ' d/m/' . $startYear . ' H:i:s');; ?>
+                <strong>ETD : </strong><?= date_format(date_create($service->ETD), ' d/m/' . $ETD . ' H:i:s');; ?>
             </td>
         </tr>
     </table>
@@ -344,9 +358,9 @@
                 </td>
                 <td>
                     <strong>Contract Strat :
-                        <?= date_format(date_create($service->contract_start), ' d/m/' . $startYear . ''); ?>
+                        <?= date_format(date_create($service->contract_start), ' d/m/' . $contract_start . ''); ?>
                         -
-                        <?= date_format(date_create($service->contract_end), ' d/m/' . $startYear . ''); ?>
+                        <?= date_format(date_create($service->contract_end), ' d/m/' . $contract_end . ''); ?>
                     </strong>
                 </td>
             </tr>
@@ -472,7 +486,7 @@
     <table>
         <tr>
             <th>
-                <strong>Approve Date : </strong><?= date_format(date_create($service->approve_date), ' d/m/' . $startYear . ' H:i:s');; ?>
+                <strong>Approve Date : </strong><?= date_format(date_create($service->approve_date), ' d/m/' . $appYear . ' H:i:s');; ?>
             </th>
         </tr>
     </table>

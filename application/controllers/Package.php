@@ -1,6 +1,5 @@
 <?php
 
-use Mpdf\Language\ScriptToLanguage;
 
 defined('BASEPATH') or exit('No direct script access allowed');
 

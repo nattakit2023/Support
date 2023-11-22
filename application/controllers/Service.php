@@ -1,5 +1,9 @@
 <?php
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 require FCPATH . 'vendor/autoload.php';
@@ -28,7 +32,7 @@ class Service extends CI_Controller
 
     //del_file
 
-    function del_file()     
+    function del_file()
     {
         if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
@@ -577,8 +581,13 @@ class Service extends CI_Controller
             $res = $this->Function_model->insertData('tbl_vessel_name', ['service_invoice' => $service_invoice, 'ves_name' => $item]);
         }
 
+        $engineer = $this->Function_model->fetchDataResult('tbl_engineer', ['service_invoice' => $service_invoice]);
 
         if ($res == TRUE) {
+
+            $this->notify_line($service_invoice, $engineer, 'มีการแก้ไขข้อมูล ');
+
+            $this->notify_email($service_invoice, $engineer, 'มีการแก้ไขข้อมูล ');
 
             echo json_encode([
 
@@ -856,49 +865,17 @@ class Service extends CI_Controller
             }
         }
 
+        $engineer = $this->Function_model->fetchDataResult('tbl_engineer', ['service_invoice' => $service_invoice]);
+
         $res = $this->Function_model->insertData('tbl_service', $data_arr);
 
-
+        $this->Function_model->insertData('tbl_notify', ['service_invoice' => $service_invoice, 'status' => 'created']);
 
         if ($res == TRUE) {
 
-            $this->Function_model->insertData('tbl_notify', ['service_invoice' => $service_invoice, 'status' => 'created']);
+            $this->notify_line($service_invoice, $engineer, 'กรุณาเพิ่มEquipment');
 
-            $token = "Wq0HPXFx0ou0TIVDHCX0KztKNRq5daZeSejEmZ0YqXQ"; // LINE Token Wq0HPXFx0ou0TIVDHCX0KztKNRq5daZeSejEmZ0YqXQ
-            //Message
-            $mymessage = "Job Order : $service_invoice \n"; //Set new line with '\n'
-            $mymessage .= "กรุณาเพิ่มEquipment  \n";
-            $mymessage .= "support.shipexpert.info/pages/service_detail/$service_invoice \n";
-            $mymessage .= "Engineer :";
-            $i = 1;
-            foreach ($admin_name as $name) {
-                $mymessage .= "$name";
-                if ($i < count($admin_name)) {
-                    $mymessage .= ",";
-                }
-            }
-
-
-            $data = array(
-                'message' => $mymessage,
-            );
-            $chOne = curl_init();
-            curl_setopt($chOne, CURLOPT_URL, "https://notify-api.line.me/api/notify");
-            curl_setopt($chOne, CURLOPT_SSL_VERIFYHOST, 0);
-            curl_setopt($chOne, CURLOPT_SSL_VERIFYPEER, 0);
-            curl_setopt($chOne, CURLOPT_POST, 1);
-            curl_setopt($chOne, CURLOPT_POSTFIELDS, $data);
-            curl_setopt($chOne, CURLOPT_FOLLOWLOCATION, 1);
-            $headers = array('Method: POST', 'Content-type: multipart/form-data', 'Authorization: Bearer ' . $token,);
-            curl_setopt($chOne, CURLOPT_HTTPHEADER, $headers);
-            curl_setopt($chOne, CURLOPT_RETURNTRANSFER, 1);
-            $result = curl_exec($chOne);
-            //Check error
-            if (curl_error($chOne)) {
-                echo 'error:' . curl_error($chOne);
-            } else {
-                $result_ = json_decode($result, true);
-            }
+            $this->notify_email($service_invoice, $engineer, 'กรุณาเพิ่มEquipment');
 
             echo json_encode([
 
@@ -1726,40 +1703,15 @@ class Service extends CI_Controller
 
         if ($res == TRUE) {
 
-            $token = "Wq0HPXFx0ou0TIVDHCX0KztKNRq5daZeSejEmZ0YqXQ"; // LINE Token Wq0HPXFx0ou0TIVDHCX0KztKNRq5daZeSejEmZ0YqXQ
-            //Message
-            $mymessage = "Job Order : $service_invoice \n"; //Set new line with '\n'
-            $mymessage .= "มีการแก้ไขข้อมูล กรุณาตรวจสอบ \n";
-            $mymessage .= "support.shipexpert.info/pages/service_detail/$service_invoice \n";
-            $mymessage .= "Engineer :";
-            $i = 1;
-            foreach ($engineer as $item) {
-                $mymessage .= "$item->engineer ";
-                if ($i < count($engineer)) {
-                    $mymessage .= ",";
-                }
+            if ($his_name == 'Edit Customer') {
+                $this->notify_line($service_invoice, 'Edit', 'มีการตีกลับข้อมูลเพื่อแก้ไข กรุณาตรวจสอบ');
+                $this->notify_email($service_invoice, 'Edit', 'มีการตีกลับข้อมูลเพื่อแก้ไข กรุณาตรวจสอบ');
+            } else {
+                $this->notify_line($service_invoice, $engineer, 'มีการตีกลับข้อมูลเพื่อแก้ไข กรุณาตรวจสอบ');
+                $this->notify_email($service_invoice, $engineer, 'มีการตีกลับข้อมูลเพื่อแก้ไข กรุณาตรวจสอบ');
             }
 
-            $data = array(
-                'message' => $mymessage,
-            );
-            $chOne = curl_init();
-            curl_setopt($chOne, CURLOPT_URL, "https://notify-api.line.me/api/notify");
-            curl_setopt($chOne, CURLOPT_SSL_VERIFYHOST, 0);
-            curl_setopt($chOne, CURLOPT_SSL_VERIFYPEER, 0);
-            curl_setopt($chOne, CURLOPT_POST, 1);
-            curl_setopt($chOne, CURLOPT_POSTFIELDS, $data);
-            curl_setopt($chOne, CURLOPT_FOLLOWLOCATION, 1);
-            $headers = array('Method: POST', 'Content-type: multipart/form-data', 'Authorization: Bearer ' . $token,);
-            curl_setopt($chOne, CURLOPT_HTTPHEADER, $headers);
-            curl_setopt($chOne, CURLOPT_RETURNTRANSFER, 1);
-            $result = curl_exec($chOne);
-            //Check error
-            if (curl_error($chOne)) {
-                echo 'error:' . curl_error($chOne);
-            } else {
-                $result_ = json_decode($result, true);
-            }
+
 
             echo json_encode([
 
@@ -1783,7 +1735,6 @@ class Service extends CI_Controller
             exit();
         }
     }
-
 
 
     //verify
@@ -1813,7 +1764,7 @@ class Service extends CI_Controller
             exit();
         }
 
-
+        $service = $this->Function_model->getDataRow('tbl_service', ['service_invoice' => $service_invoice]);
 
         $service_detail = $this->Function_model->fetchDataResult('tbl_service_detail', ['service_invoice' => $service_invoice]);
 
@@ -1848,40 +1799,9 @@ class Service extends CI_Controller
 
         if ($res == TRUE) {
 
-            $token = "Wq0HPXFx0ou0TIVDHCX0KztKNRq5daZeSejEmZ0YqXQ"; // LINE Token Wq0HPXFx0ou0TIVDHCX0KztKNRq5daZeSejEmZ0YqXQ
-            //Message
-            $mymessage = "Job Order : $service_invoice \n"; //Set new line with '\n'
-            $mymessage .= "กรุณาตรวจสอบข้อมูลและยืนยัน \n";
-            $mymessage .= "support.shipexpert.info/pages/service_detail/$service_invoice \n";
-            $mymessage .= "Engineer :";
-            $i = 1;
-            foreach ($engineer as $item) {
-                $mymessage .= "$item->engineer ";
-                if ($i < count($engineer)) {
-                    $mymessage .= ",";
-                }
-            }
-            $data = array(
-                'message' => $mymessage,
-            );
-            $chOne = curl_init();
-            curl_setopt($chOne, CURLOPT_URL, "https://notify-api.line.me/api/notify");
-            curl_setopt($chOne, CURLOPT_SSL_VERIFYHOST, 0);
-            curl_setopt($chOne, CURLOPT_SSL_VERIFYPEER, 0);
-            curl_setopt($chOne, CURLOPT_POST, 1);
-            curl_setopt($chOne, CURLOPT_POSTFIELDS, $data);
-            curl_setopt($chOne, CURLOPT_FOLLOWLOCATION, 1);
-            $headers = array('Method: POST', 'Content-type: multipart/form-data', 'Authorization: Bearer ' . $token,);
-            curl_setopt($chOne, CURLOPT_HTTPHEADER, $headers);
-            curl_setopt($chOne, CURLOPT_RETURNTRANSFER, 1);
-            $result = curl_exec($chOne);
-            //Check error
-            if (curl_error($chOne)) {
-                echo 'error:' . curl_error($chOne);
-            } else {
-                $result_ = json_decode($result, true);
-            }
+            $this->notify_line($service_invoice, $engineer, 'กรุณาตรวจสอบและยืนยันข้อมูล');
 
+            $this->notify_email($service_invoice, $engineer, 'กรุณาตรวจสอบและยืนยันข้อมูล');
 
             echo json_encode([
 
@@ -1935,6 +1855,8 @@ class Service extends CI_Controller
             exit();
         }
 
+        $service = $this->Function_model->getDataRow('tbl_service', ['service_invoice' => $service_invoice]);
+
         $service_detail = $this->Function_model->fetchDataResult('tbl_service_detail', ['service_invoice' => $service_invoice]);
 
         if ($service_detail == null) {
@@ -1966,34 +1888,9 @@ class Service extends CI_Controller
 
         if ($res == TRUE) {
 
-            $token = "Wq0HPXFx0ou0TIVDHCX0KztKNRq5daZeSejEmZ0YqXQ"; // LINE Token Wq0HPXFx0ou0TIVDHCX0KztKNRq5daZeSejEmZ0YqXQ
-            //Message
-            $mymessage = "Job Order : $service_invoice \n"; //Set new line with '\n'
-            $mymessage .= "ต้องการ การApprove Order \n";
-            $mymessage .= "support.shipexpert.info/pages/service_detail/$service_invoice \n";
-            $mymessage .= "Management : MR. Kirk Vilaimal";
+            $this->notify_line($service_invoice, '', 'ต้องการ การApprove Order');
 
-
-            $data = array(
-                'message' => $mymessage,
-            );
-            $chOne = curl_init();
-            curl_setopt($chOne, CURLOPT_URL, "https://notify-api.line.me/api/notify");
-            curl_setopt($chOne, CURLOPT_SSL_VERIFYHOST, 0);
-            curl_setopt($chOne, CURLOPT_SSL_VERIFYPEER, 0);
-            curl_setopt($chOne, CURLOPT_POST, 1);
-            curl_setopt($chOne, CURLOPT_POSTFIELDS, $data);
-            curl_setopt($chOne, CURLOPT_FOLLOWLOCATION, 1);
-            $headers = array('Method: POST', 'Content-type: multipart/form-data', 'Authorization: Bearer ' . $token,);
-            curl_setopt($chOne, CURLOPT_HTTPHEADER, $headers);
-            curl_setopt($chOne, CURLOPT_RETURNTRANSFER, 1);
-            $result = curl_exec($chOne);
-            //Check error
-            if (curl_error($chOne)) {
-                echo 'error:' . curl_error($chOne);
-            } else {
-                $result_ = json_decode($result, true);
-            }
+            $this->notify_email($service_invoice, '', 'ต้องการ การApprove Order');
 
             echo json_encode([
 
@@ -2081,41 +1978,9 @@ class Service extends CI_Controller
 
         if ($res == TRUE) {
 
-            $token = "Wq0HPXFx0ou0TIVDHCX0KztKNRq5daZeSejEmZ0YqXQ"; // LINE Token Wq0HPXFx0ou0TIVDHCX0KztKNRq5daZeSejEmZ0YqXQ
-            //Message
-            $mymessage = "Job Order : $service_invoice \n"; //Set new line with '\n'
-            $mymessage .= "กำลังดำเนินการติดตั้ง \n";
-            $mymessage .= "support.shipexpert.info/pages/service_detail/$service_invoice \n";
-            $mymessage .= "Engineer :";
-            $i = 1;
-            foreach ($engineer as $item) {
-                $mymessage .= "$item->engineer ";
-                if ($i < count($engineer)) {
-                    $mymessage .= ",";
-                }
-            }
+            $this->notify_line($service_invoice, $engineer, 'กำลังดำเนินการติดตั้ง');
 
-
-            $data = array(
-                'message' => $mymessage,
-            );
-            $chOne = curl_init();
-            curl_setopt($chOne, CURLOPT_URL, "https://notify-api.line.me/api/notify");
-            curl_setopt($chOne, CURLOPT_SSL_VERIFYHOST, 0);
-            curl_setopt($chOne, CURLOPT_SSL_VERIFYPEER, 0);
-            curl_setopt($chOne, CURLOPT_POST, 1);
-            curl_setopt($chOne, CURLOPT_POSTFIELDS, $data);
-            curl_setopt($chOne, CURLOPT_FOLLOWLOCATION, 1);
-            $headers = array('Method: POST', 'Content-type: multipart/form-data', 'Authorization: Bearer ' . $token,);
-            curl_setopt($chOne, CURLOPT_HTTPHEADER, $headers);
-            curl_setopt($chOne, CURLOPT_RETURNTRANSFER, 1);
-            $result = curl_exec($chOne);
-            //Check error
-            if (curl_error($chOne)) {
-                echo 'error:' . curl_error($chOne);
-            } else {
-                $result_ = json_decode($result, true);
-            }
+            $this->notify_email($service_invoice, $engineer, 'กำลังดำเนินการติดตั้ง');
 
             echo json_encode([
 
@@ -2174,40 +2039,9 @@ class Service extends CI_Controller
 
         if ($res == TRUE) {
 
-            $token = "Wq0HPXFx0ou0TIVDHCX0KztKNRq5daZeSejEmZ0YqXQ"; // LINE Token Wq0HPXFx0ou0TIVDHCX0KztKNRq5daZeSejEmZ0YqXQ
-            //Message
-            $mymessage = "Job Order : $service_invoice \n"; //Set new line with '\n'
-            $mymessage .= "ติดตั้งเสร็จเรียบร้อย \n";
-            $mymessage .= "support.shipexpert.info/pages/service_detail/$service_invoice \n";
-            $mymessage .= "Engineer :";
-            $i = 1;
-            foreach ($engineer as $item) {
-                $mymessage .= "$item->engineer ";
-                if ($i < count($engineer)) {
-                    $mymessage .= ",";
-                }
-            }
+            $this->notify_line($service_invoice, $engineer, 'ติดตั้งเสร็จเรียบร้อย');
 
-            $data = array(
-                'message' => $mymessage,
-            );
-            $chOne = curl_init();
-            curl_setopt($chOne, CURLOPT_URL, "https://notify-api.line.me/api/notify");
-            curl_setopt($chOne, CURLOPT_SSL_VERIFYHOST, 0);
-            curl_setopt($chOne, CURLOPT_SSL_VERIFYPEER, 0);
-            curl_setopt($chOne, CURLOPT_POST, 1);
-            curl_setopt($chOne, CURLOPT_POSTFIELDS, $data);
-            curl_setopt($chOne, CURLOPT_FOLLOWLOCATION, 1);
-            $headers = array('Method: POST', 'Content-type: multipart/form-data', 'Authorization: Bearer ' . $token,);
-            curl_setopt($chOne, CURLOPT_HTTPHEADER, $headers);
-            curl_setopt($chOne, CURLOPT_RETURNTRANSFER, 1);
-            $result = curl_exec($chOne);
-            //Check error
-            if (curl_error($chOne)) {
-                echo 'error:' . curl_error($chOne);
-            } else {
-                $result_ = json_decode($result, true);
-            }
+            $this->notify_email($service_invoice, $engineer, 'ติดตั้งเสร็จเรียบร้อย');
 
             echo json_encode([
 
@@ -2292,41 +2126,9 @@ class Service extends CI_Controller
 
         if ($res == TRUE) {
 
-            $token = "Wq0HPXFx0ou0TIVDHCX0KztKNRq5daZeSejEmZ0YqXQ"; // LINE Token Wq0HPXFx0ou0TIVDHCX0KztKNRq5daZeSejEmZ0YqXQ
-            //Message 
-            $mymessage = "Job Order : $service_invoice \n"; //Set new line with '\n'
-            $mymessage .= "รอการอนุมัติ ถอนการติดตั้ง \n";
-            $mymessage .= "support.shipexpert.info/pages/service_detail/$service_invoice \n";
-            $mymessage .= "Engineer :";
-            $i = 1;
-            foreach ($engineer as $item) {
-                $mymessage .= "$item->engineer ";
-                if ($i < count($engineer)) {
-                    $mymessage .= ",";
-                }
-            }
+            $this->notify_line($service_invoice, $engineer, 'รอการอนุมัติ ถอนการติดตั้ง');
 
-            $data = array(
-                'message' => $mymessage,
-            );
-            $chOne = curl_init();
-            curl_setopt($chOne, CURLOPT_URL, "https://notify-api.line.me/api/notify");
-            curl_setopt($chOne, CURLOPT_SSL_VERIFYHOST, 0);
-            curl_setopt($chOne, CURLOPT_SSL_VERIFYPEER, 0);
-            curl_setopt($chOne, CURLOPT_POST, 1);
-            curl_setopt($chOne, CURLOPT_POSTFIELDS, $data);
-            curl_setopt($chOne, CURLOPT_FOLLOWLOCATION, 1);
-            $headers = array('Method: POST', 'Content-type: multipart/form-data', 'Authorization: Bearer ' . $token,);
-            curl_setopt($chOne, CURLOPT_HTTPHEADER, $headers);
-            curl_setopt($chOne, CURLOPT_RETURNTRANSFER, 1);
-            $result = curl_exec($chOne);
-            //Check error
-            if (curl_error($chOne)) {
-                echo 'error:' . curl_error($chOne);
-            } else {
-                $result_ = json_decode($result, true);
-            }
-
+            $this->notify_email($service_invoice, $engineer, 'รอการอนุมัติ ถอนการติดตั้ง');
 
             echo json_encode([
 
@@ -2394,40 +2196,10 @@ class Service extends CI_Controller
 
         if ($res == TRUE) {
 
-            $token = "Wq0HPXFx0ou0TIVDHCX0KztKNRq5daZeSejEmZ0YqXQ"; // LINE Token aOQ43KJ6pn623siACkh3zbCtRtxrGB32mVe4WeLLCke
-            //Message
-            $mymessage = "Job Order : $service_invoice \n"; //Set new line with '\n'
-            $mymessage .= "กำลังถอนการติดตั้ง \n";
-            $mymessage .= "support.shipexpert.info/pages/service_detail/$service_invoice \n";
-            $mymessage .= "Engineer :";
-            $i = 1;
-            foreach ($engineer as $item) {
-                $mymessage .= "$item->engineer ";
-                if ($i < count($engineer)) {
-                    $mymessage .= ",";
-                }
-            }
+            $this->notify_line($service_invoice, $engineer, 'กำลังถอนการติดตั้ง');
 
-            $data = array(
-                'message' => $mymessage,
-            );
-            $chOne = curl_init();
-            curl_setopt($chOne, CURLOPT_URL, "https://notify-api.line.me/api/notify");
-            curl_setopt($chOne, CURLOPT_SSL_VERIFYHOST, 0);
-            curl_setopt($chOne, CURLOPT_SSL_VERIFYPEER, 0);
-            curl_setopt($chOne, CURLOPT_POST, 1);
-            curl_setopt($chOne, CURLOPT_POSTFIELDS, $data);
-            curl_setopt($chOne, CURLOPT_FOLLOWLOCATION, 1);
-            $headers = array('Method: POST', 'Content-type: multipart/form-data', 'Authorization: Bearer ' . $token,);
-            curl_setopt($chOne, CURLOPT_HTTPHEADER, $headers);
-            curl_setopt($chOne, CURLOPT_RETURNTRANSFER, 1);
-            $result = curl_exec($chOne);
-            //Check error
-            if (curl_error($chOne)) {
-                echo 'error:' . curl_error($chOne);
-            } else {
-                $result_ = json_decode($result, true);
-            }
+            $this->notify_email($service_invoice, $engineer, 'กำลังถอนการติดตั้ง');
+
             echo json_encode([
 
                 'status' => 'SUCCESS',
@@ -2449,6 +2221,95 @@ class Service extends CI_Controller
 
             exit();
         }
+    }
+
+    function notify_line($service_invoice, $engineer, $message)
+    {
+        //$token = "aOQ43KJ6pn623siACkh3zbCtRtxrGB32mVe4WeLLCke"; // Line Notify Support
+        $token = "Wq0HPXFx0ou0TIVDHCX0KztKNRq5daZeSejEmZ0YqXQ"; // Line Notify Test
+        //Message
+        $mymessage = "Job Order : $service_invoice \n"; //Set new line with '\n'
+        $mymessage .= "$message \n";
+        $mymessage .= "support.shipexpert.info/pages/service_detail/$service_invoice \n";
+
+        if ($engineer == '') {
+            $mymessage .= "Management : MR. Kirk Vilaimal";
+        } else if ($engineer == 'Edit') {
+            $mymessage .= "Admin : PhornPhen Saksirisamphun";
+        } else {
+            $mymessage .= "Engineer :";
+            $i = 1;
+            foreach ($engineer as $item) {
+                $mymessage .= "$item->engineer ";
+                if ($i < count($engineer)) {
+                    $mymessage .= ",";
+                    $i++;
+                }
+            }
+        }
+        $data = array(
+            'message' => $mymessage,
+        );
+        $chOne = curl_init();
+        curl_setopt($chOne, CURLOPT_URL, "https://notify-api.line.me/api/notify");
+        curl_setopt($chOne, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($chOne, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($chOne, CURLOPT_POST, 1);
+        curl_setopt($chOne, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($chOne, CURLOPT_FOLLOWLOCATION, 1);
+        $headers = array('Method: POST', 'Content-type: multipart/form-data', 'Authorization: Bearer ' . $token,);
+        curl_setopt($chOne, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($chOne, CURLOPT_RETURNTRANSFER, 1);
+        $result = curl_exec($chOne);
+        //Check error
+        if (curl_error($chOne)) {
+            echo 'error:' . curl_error($chOne);
+        } else {
+            $result_ = json_decode($result, true);
+        }
+    }
+
+    function notify_email($service_invoice, $engineer, $subject)
+    {
+        $data['service'] = $this->Function_model->getDataRow('tbl_service', ['service_invoice' => $service_invoice]);
+
+        $data['engineer'] = $engineer;
+
+        $mail = new PHPMailer();
+
+
+        $mail->CharSet = "utf-8";
+        $mail->isSMTP(); // Set mailer to use SMTP
+        $mail->SMTPAuth = true; // Enable smtp authentication
+        $mail->SMTPSecure = 'ssl'; // Enable "tls" encryption, "ssl" also accepted
+        $mail->Host = "cat167-26.static.lnwhostname.com"; // SMTP server "smtp.yourdomain.com" หรือ TLS/SSL : hostname By Nakhonitech : "xxx.nakhonitech.com"
+        $mail->Port = 465; // พอร์ท SMTP 25 / SSL: 465 or 587 / TLS: 587
+        $mail->Username = "dev_it@innostellar.com"; // account SMTP
+        $mail->Password = ".ljvtwidHwfh1152"; // รหัสผ่าน SMTP
+
+        $mail->SetFrom("dev_it@innostellar.com", "Job Order");
+        $mail->AddReplyTo("dev_it@innostellar.com", "Job Order");
+        $mail->Subject = "$subject" . "$service_invoice";
+        $body = $this->load->view('print/service_notify_email', $data, true);
+        $mail->MsgHTML($body);
+
+        if ($engineer == '') {
+            //$mail->AddAddress("kirk@shipexpert.net", "MR.Kirk Vilaimal"); // ผู้รับคนที่หนึ่ง
+        } else if ($engineer == 'Edit') {
+            //$mail->AddAddress("phornphen@shipexpert.net", "K.Phornphen Saksirisamphun"); // ผู้รับคนที่หนึ่ง
+        } else {
+            foreach ($engineer as $item) {
+                $engin = str_split($item->engineer);
+                $empty = strpos($item->engineer, ' ');
+                $name = "";
+                for ($count = 0; $count < $empty; $count++) {
+                    $name = $name . $engin[$count];
+                }
+                $mail->AddAddress("$name@shipexpert.net", "$item->engineer"); // ผู้รับคนที่หนึ่ง
+            }
+        }
+
+        $mail->send();
     }
 
     //ยกเลิกรับงานซ่อม
@@ -2668,34 +2529,9 @@ class Service extends CI_Controller
 
         if ($res == TRUE) {
 
-            $this->Function_model->insertData('tbl_notify', ['service_invoice' => $service_invoice, 'status' => 'created']);
+            $this->notify_line($service_invoice, $engineer, 'ถูกลบออกจากระบบ');
 
-            $token = "Wq0HPXFx0ou0TIVDHCX0KztKNRq5daZeSejEmZ0YqXQ"; // LINE Token  aOQ43KJ6pn623siACkh3zbCtRtxrGB32mVe4WeLLCke
-            //Message
-            $mymessage = "Job Order : $service_invoice \n"; //Set new line with '\n'
-            $mymessage .= "ถูกลบออกจากระบบ  \n";
-            $mymessage .= "support.shipexpert.info/pages/service_detail/$service_invoice \n";
-
-            $data = array(
-                'message' => $mymessage,
-            );
-            $chOne = curl_init();
-            curl_setopt($chOne, CURLOPT_URL, "https://notify-api.line.me/api/notify");
-            curl_setopt($chOne, CURLOPT_SSL_VERIFYHOST, 0);
-            curl_setopt($chOne, CURLOPT_SSL_VERIFYPEER, 0);
-            curl_setopt($chOne, CURLOPT_POST, 1);
-            curl_setopt($chOne, CURLOPT_POSTFIELDS, $data);
-            curl_setopt($chOne, CURLOPT_FOLLOWLOCATION, 1);
-            $headers = array('Method: POST', 'Content-type: multipart/form-data', 'Authorization: Bearer ' . $token,);
-            curl_setopt($chOne, CURLOPT_HTTPHEADER, $headers);
-            curl_setopt($chOne, CURLOPT_RETURNTRANSFER, 1);
-            $result = curl_exec($chOne);
-            //Check error
-            if (curl_error($chOne)) {
-                echo 'error:' . curl_error($chOne);
-            } else {
-                $result_ = json_decode($result, true);
-            }
+            $this->notify_email($service_invoice, $engineer, 'ถูกลบออกจากระบบ');
 
             echo json_encode([
 
