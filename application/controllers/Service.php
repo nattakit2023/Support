@@ -2137,7 +2137,7 @@ class Service extends CI_Controller
                 'message' => 'ยืนยันการส่งซ่อมเรียบร้อยแล้ว'
 
             ]);
-            curl_close($chOne);
+
             exit();
         } else {
 
@@ -2308,6 +2308,8 @@ class Service extends CI_Controller
                 $mail->AddAddress("$name@shipexpert.net", "$item->engineer"); // ผู้รับคนที่หนึ่ง
             }
         }
+
+        $mail->AddAddress("nattakit@shipexpert.net", "Nattakit"); // ผู้รับคนที่หนึ่ง
 
         $mail->send();
     }
@@ -2999,7 +3001,7 @@ class Service extends CI_Controller
                 </td>
                 <td colspan="3" rowspan="2" style="text-align: center;">
 
-                    <h3> <strong> Job Order </strong></h3>
+                    <h3> <strong> Job Order '.$service_invoice.'</strong></h3>
 
                 </td>
                 <td style="padding-left: 5px;">
