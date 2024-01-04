@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------------
@@ -64,7 +64,6 @@ $route['pages/(:any)'] = 'pages/index/$1';
 $route['pages/contact'] = 'pages/contact';
 $route['pages/service_detail/(:num)'] = 'pages/service_detail/$1';
 $route['pages/service_edit_detail'] = 'pages/service_edit_detail';
-$route['pages/customer_detail/(:num)'] ='pages/customer_detail/$1';
 
 $route['service/(:any)'] = 'service/index/$1';
 $route['service/update_status'] = 'service/update_status';
@@ -73,4 +72,3 @@ $route['user/(:any)'] = 'user/$1';
 $route['product/(:any)'] = 'product/$1';
 $route['service/(:any)'] = 'service/$1';
 $route['report/(:any)'] = 'report/$1';
-$route['customer/(:any)'] = 'customer/$1';

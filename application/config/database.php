@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------
@@ -117,7 +117,7 @@ $db['default'] = array(
 	'save_queries' => TRUE
 );*/
 
-//store
+//store->inno
 $db['store'] = array(
 	'dsn'	=> '',
 	'hostname' => '103.253.73.230:3306',
@@ -140,7 +140,7 @@ $db['store'] = array(
 	'save_queries' => TRUE
 );
 
-//borrow
+/* borrow -> ship
 $db['borrow'] = array(
 	'dsn'	=> '',
 	'hostname' => '103.253.73.230:3306',
@@ -162,7 +162,29 @@ $db['borrow'] = array(
 	'failover' => array(),
 	'save_queries' => TRUE
 );
-
+*/
+//borrow->Inno
+$db['borrow'] = array(
+	'dsn'	=> '',
+	'hostname' => '103.253.73.230:3306',
+	'username' => 'expensedata',
+	'password' => 'Peu754*8e',
+	'database' => 'expense',
+	'dbdriver' => 'mysqli',
+	'dbprefix' => '',
+	'pconnect' => FALSE,
+	'db_debug' => (ENVIRONMENT !== 'production'),
+	'cache_on' => FALSE,
+	'cachedir' => '',
+	'char_set' => 'utf8',
+	'dbcollat' => 'utf8_general_ci',
+	'swap_pre' => '',
+	'encrypt' => FALSE,
+	'compress' => FALSE,
+	'stricton' => FALSE,
+	'failover' => array(),
+	'save_queries' => TRUE
+);
 //helpdesk
 $db['helpdesk'] = array(
 	'dsn'	=> '',
@@ -185,4 +207,3 @@ $db['helpdesk'] = array(
 	'failover' => array(),
 	'save_queries' => TRUE
 );
-

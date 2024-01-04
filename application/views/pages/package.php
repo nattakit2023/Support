@@ -8,7 +8,7 @@
 
                 <div class="col-sm-6">
 
-                    <h3><strong>จัดการPackage</strong></h3>
+                    <h3><strong><?=$title?></strong></h3>
 
                 </div>
 
@@ -18,7 +18,7 @@
 
                         <li class="breadcrumb-item"><a href="<?= base_url(); ?>/pages">หน้าหลัก</a></li>
 
-                        <li class="breadcrumb-item active">จัดการPackage</li>
+                        <li class="breadcrumb-item active"><?=$title?></li>
 
                     </ol>
 

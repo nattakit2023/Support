@@ -345,10 +345,14 @@ class Service extends CI_Controller
                 'service_status' => $service_status
 
             ];
+
+            $data['service'] = $this->Function_model->fetchDataResult('tbl_service', $where_arr, 'service_invoice', 'ASC');
+        } else {
+            $data['service'] = $this->Function_model->fetchDataResult('tbl_service', '', 'service_invoice', 'ASC');
         }
 
 
-        $data['service'] = $this->Function_model->fetchDataResult('tbl_service', $where_arr, '', 'ASC');
+
 
         $data['service_vessel'] = $this->Function_model->fetchDataResult('tbl_vessel_name', '', 'id', 'ASC');
 
@@ -524,6 +528,20 @@ class Service extends CI_Controller
 
         ];
 
+        $data = [
+            'service_invoice' => $service_invoice,
+
+            'due_date' =>  $due_date,
+
+            'end_date' => $end_date,
+
+            'title' => $service_invoice,
+
+            'descript' => $remark_create,
+
+            'color' => '#ffcca0'
+        ];
+
 
 
         $where = [
@@ -532,14 +550,37 @@ class Service extends CI_Controller
 
         //service
 
+        $res = $this->Function_model->insertData('tbl_calendar', $data);
+
         $res = $this->Function_model->updateData('tbl_service', $where, $data_arr);
+
+        $pms = $this->Function_model->getDataRow('tbl_pms_job', ['from_invoice' => $service_invoice]);
+
+        if ($pms != NULL) {
+            switch ($pms->product) {
+                case 'cctv':
+                    $this->Function_model->updateData('tbl_service', $where, ['cctv' => 1]);
+                    break;
+                case 'vsat':
+                    $this->Function_model->updateData('tbl_service', $where, ['vsat' => 1]);
+                    break;
+                case 'voip':
+                    $this->Function_model->updateData('tbl_service', $where, ['voip' => 1]);
+                    break;
+                case 'tvro':
+                    $this->Function_model->updateData('tbl_service', $where, ['tvro' => 1]);
+                    break;
+            }
+        }
+
 
         //product
 
         $res = $this->Function_model->deleteData('tbl_service_product', $where);
 
-        foreach ($product as $item) {
-            $res = $this->Function_model->insertData('tbl_service_product', ['service_invoice' => $service_invoice, 'product' => $item]);
+        foreach ($product as $name) {
+
+            $res = $this->Function_model->insertData('tbl_service_product', ['service_invoice' => $service_invoice, 'product' => $name]);
         }
 
         //package
@@ -625,278 +666,592 @@ class Service extends CI_Controller
             exit();
         }
 
-        $service_invoice = $this->Function_model->genInvoice();
+        $id = $this->input->get('id');
 
-        $projects = $this->input->post('projects');
+        $id_calendar = $this->input->get('id_calendar');
 
-        $cus_name = $this->input->post('cus_name');
+        if ($id != NULL && $id_calendar != NULL) {
 
-        $cus_tel = $this->input->post('cus_tel');
+            $get_id = $this->Function_model->getDataRow('tbl_pms_job', ['id' => $id]);
 
-        $cus_email = $this->input->post('cus_email');
+            $get_invoice = $this->Function_model->getDataRow('tbl_service', ['service_invoice' => $get_id->from_invoice]);
 
-        $cus_address = $this->input->post('cus_address');
+            $service_invoice = $this->Function_model->genInvoice();
 
-        $cus_zipcode = $this->input->post('cus_zipcode');
+            $projects = $get_id->project;
 
-        $ves_fleet = $this->input->post('ves_fleet');
+            $cus_name = $get_id->cus_name;
 
-        $ves_name = $this->input->post('ves_name');
+            $cus_tel = $get_id->cus_tel;
 
-        $ves_type = $this->input->post('ves_type');
+            $cus_email = $get_id->cus_email;
 
-        $ves_callsign = $this->input->post('ves_callsign');
+            $cus_address = $get_id->cus_address;
 
-        $ves_imo = $this->input->post('ves_imo');
+            $cus_zipcode = $get_id->cus_zipcode;
 
-        $ves_mmsi = $this->input->post('ves_mmsi');
+            $ves_fleet = $get_id->ves_fleet;
 
-        $ves_year = $this->input->post('ves_year');
+            $ves_name = $get_id->ves_name;
 
-        $ves_flag = $this->input->post('ves_flag');
+            $ves_type = $get_invoice->ves_type;
 
-        $ves_home_port = $this->input->post('ves_home_port');
+            $ves_callsign = $get_invoice->ves_callsign;
 
-        $ves_gross_tonnage = $this->input->post('ves_gross_tonnage');
+            $ves_imo = $get_invoice->ves_imo;
 
-        $ves_maintenance = $this->input->post('ves_maintenance');
+            $ves_mmsi = $get_invoice->ves_mmsi;
 
-        $ves_survey = $this->input->post('ves_survey');
+            $ves_year = $get_invoice->ves_year;
 
-        $ves_installation = $this->input->post('ves_installation');
+            $ves_flag = $get_invoice->ves_flag;
 
-        $con_name = $this->input->post('con_name');
+            $ves_home_port = $get_invoice->ves_home_port;
 
-        $con_tel = $this->input->post('con_tel');
+            $ves_gross_tonnage = $get_invoice->ves_gross_tonnage;
 
-        $port_name = $this->input->post('port_name');
+            $ves_maintenance = $get_invoice->ves_maintenance;
 
-        $port_province = $this->input->post('port_province');
+            $ves_survey = 'false';
 
-        $con_email = $this->input->post('con_email');
+            $ves_installation = 'false';
 
-        $admin_name = $this->input->post('admin_name');
+            $con_name = $get_invoice->con_name;
 
-        $product = $this->input->post('product');
+            $con_tel = $get_invoice->con_tel;
 
-        $pack_name = $this->input->post('pack_name');
+            $port_name = $get_invoice->port_name;
 
-        $pack_internet = $this->input->post('pack_internet');
+            $port_province = $get_invoice->port_province;
 
-        $remark_create = $this->input->post('remark_create');
+            $con_email = $get_invoice->con_email;
 
-        $create_date = $this->input->post('create_date');
+            $admin_name = $this->Function_model->fetchDataResult('tbl_engineer', ['service_invoice' => $get_id->from_invoice]);
 
-        $due_date = $this->input->post('due_date');
+            $product = $get_id->product;
 
-        $end_date = $this->input->post('end_date');
+            $package = $this->Function_model->fetchDataResult('tbl_service_package', ['service_invoice' => $get_id->from_invoice]);
 
-        $eta = $this->input->post('eta');
+            $remark_create = $get_invoice->remark_create;
 
-        $etd = $this->input->post('etd');
+            $create_date = $get_id->create_date;
 
-        $contract_start = $this->input->post('contract_start');
+            $due_date = $get_id->due_date;
 
-        $contract_end = $this->input->post('contract_end');
+            $end_date = $get_id->end_date;
 
-        if (
-            $service_invoice == null || $projects == null || $cus_name == null || $cus_tel == null ||  $cus_email == null || $cus_address == null || $cus_zipcode == null ||
-            $ves_fleet == null || $ves_name == null || $ves_type == null || $ves_callsign == null || $ves_imo == null || $ves_mmsi == null || $ves_year == null ||
-            $ves_flag == null || $ves_home_port == null || $ves_gross_tonnage == null || $ves_maintenance == null || $con_name == null || $con_tel == null || $port_name == null ||
-            $port_province == null || $con_email == null || $admin_name == null || $product == null || $pack_name == null || $pack_internet == null ||
-            $remark_create == null || $create_date == null || $due_date == null || $end_date == null || $eta == null || $etd == null || $contract_start == null || $contract_end == null
-        ) {
+            $eta = $get_invoice->ETA;
 
-            echo json_encode([
+            $etd = $get_invoice->ETD;
 
-                'status' => 'ERROR',
+            $contract_start = $get_invoice->contract_start;
 
-                'message' => 'No data input'
+            $contract_end = $get_invoice->contract_end;
 
-            ]);
+            $service_status = 'verify';
 
-            exit();
-        }
+            if (
+                $service_invoice == null || $projects == null || $cus_name == null || $cus_tel == null ||  $cus_email == null || $cus_address == null || $cus_zipcode == null ||
+                $ves_fleet == null || $ves_name == null || $ves_type == null || $ves_callsign == null || $ves_imo == null || $ves_mmsi == null || $ves_year == null ||
+                $ves_flag == null || $ves_home_port == null || $ves_gross_tonnage == null || $ves_maintenance == null || $con_name == null || $con_tel == null || $port_name == null ||
+                $port_province == null || $con_email == null || $product == null || $remark_create == null || $create_date == null ||
+                $due_date == null || $end_date == null || $eta == null || $etd == null || $contract_start == null || $contract_end == null
+            ) {
 
-        if ($ves_survey == null && $ves_installation == null) {
-            $ves_survey = '';
-            $ves_installation = '';
-        } elseif ($ves_survey == null) {
-            $ves_survey = '';
-        } elseif ($ves_installation == null) {
-            $ves_installation = '';
-        }
+                echo json_encode([
 
-        $data_arr = [
+                    'status' => 'ERROR',
 
-            'service_invoice' => $service_invoice,
+                    'message' => 'Data Not Found'
 
-            'cus_name' => $cus_name,
+                ]);
 
-            'cus_address' => $cus_address,
-
-            'cus_tel' => $cus_tel,
-
-            'cus_email' => $cus_email,
-
-            'cus_zipcode' => $cus_zipcode,
-
-            'ves_fleet' => $ves_fleet,
-
-            'ves_type' => $ves_type,
-
-            'ves_callsign' => $ves_callsign,
-
-            'ves_imo' => $ves_imo,
-
-            'ves_mmsi' => $ves_mmsi,
-
-            'ves_year' => $ves_year,
-
-            'ves_flag' => $ves_flag,
-
-            'ves_home_port' => $ves_home_port,
-
-            'ves_gross_tonnage' => $ves_gross_tonnage,
-
-            'ves_maintenance' => $ves_maintenance,
-
-            'ves_survey' => $ves_survey,
-
-            'ves_installation' => $ves_installation,
-
-            'con_name' => $con_name,
-
-            'con_tel' => $con_tel,
-
-            'con_email' => $con_email,
-
-            'port_name' => $port_name,
-
-            'port_province' => $port_province,
-
-            'remark_create' => $remark_create,
-
-            'create_date' => $create_date,
-
-            'due_date' => $due_date,
-
-            'end_date' => $end_date,
-
-            'ETA' => $eta,
-
-            'ETD' => $etd,
-
-            'contract_start' => $contract_start,
-
-            'contract_end' => $contract_end,
-
-        ];
-
-
-        $target = "uploads/" . $service_invoice . "/";
-
-        $target_back = "uploads_back/" . $service_invoice . "/";
-
-        $target_atp_back =  "upload_atp_back/" . $service_invoice . "/";
-
-        $target_atp = "upload_atp/" . $service_invoice . "/";
-
-        $target_atp_network = "upload_atp/" . $service_invoice . "/network//";
-
-        $target_atp_A = "upload_atp/" . $service_invoice . "/app_a";
-
-        $target_atp_B = "upload_atp/" . $service_invoice . "/app_b";
-
-        $target_atp_C = "upload_atp/" . $service_invoice . "/app_c";
-
-
-        mkdir("$target");
-        chmod("$target", 0755);
-
-        mkdir("$target_back");
-        chmod("$target_back", 0755);
-
-        mkdir("$target_atp_back");
-        chmod("$target_atp_back", 0755);
-
-        mkdir("$target_atp");
-        chmod("$target_atp", 0755);
-
-        mkdir("$target_atp_network");
-        chmod("$target_atp_network", 0755);
-
-        mkdir("$target_atp_A");
-        chmod("$target_atp_A", 0755);
-
-        mkdir("$target_atp_B");
-        chmod("$target_atp_B", 0755);
-
-        mkdir("$target_atp_C");
-        chmod("$target_atp_C", 0755);
-
-
-
-
-        foreach ($product as $name) {
-            $res = $this->Function_model->insertData('tbl_service_product', ['service_invoice' => $service_invoice, 'product' => $name]);
-        }
-
-        foreach ($projects as $name) {
-            $res = $this->Function_model->insertData('tbl_service_project', ['service_invoice' => $service_invoice, 'projects' => $name]);
-        }
-
-        foreach ($ves_name as $name) {
-            $res = $this->Function_model->insertData('tbl_vessel_name', ['service_invoice' => $service_invoice, 'ves_name' => $name]);
-        }
-
-        foreach ($admin_name as $name) {
-            $res = $this->Function_model->insertData('tbl_engineer', ['service_invoice' => $service_invoice, 'engineer' => $name]);
-        }
-
-        foreach ($pack_name as $item1) {
-            foreach ($pack_internet as $item2) {
-
-                $check = $this->Function_model->getDataRow('tbl_package', ['pack_name' => $item1, 'pack_internet' => $item2]);
-
-                if ($check != null) {
-                    $res = $this->Function_model->insertData('tbl_service_package', ['service_invoice' => $service_invoice, 'pack_name' => $item1, 'pack_internet' => $item2]);
-                }
+                exit();
             }
-        }
 
-        $engineer = $this->Function_model->fetchDataResult('tbl_engineer', ['service_invoice' => $service_invoice]);
+            $this->Function_model->updateData('tbl_pms_job', ['id' => $id], ['pms_status' => 'success']);
 
-        $res = $this->Function_model->insertData('tbl_service', $data_arr);
+            $this->Function_model->updateData('tbl_calendar', ['id' => $id_calendar], ['color' => '#82ff6c']);
 
-        $this->Function_model->insertData('tbl_notify', ['service_invoice' => $service_invoice, 'status' => 'created']);
+            $data_arr = [
 
-        if ($res == TRUE) {
+                'service_invoice' => $service_invoice,
 
-            $this->notify_line($service_invoice, $engineer, 'กรุณาเพิ่มEquipment');
+                'cus_name' => $cus_name,
 
-            $this->notify_email($service_invoice, $engineer, 'กรุณาเพิ่มEquipment');
+                'cus_address' => $cus_address,
 
-            echo json_encode([
+                'cus_tel' => $cus_tel,
 
-                'status' => 'SUCCESS',
+                'cus_email' => $cus_email,
 
-                'service_invoice' => $service_invoice
+                'cus_zipcode' => $cus_zipcode,
 
-            ]);
+                'ves_fleet' => $ves_fleet,
 
-            exit();
+                'ves_type' => $ves_type,
+
+                'ves_callsign' => $ves_callsign,
+
+                'ves_imo' => $ves_imo,
+
+                'ves_mmsi' => $ves_mmsi,
+
+                'ves_year' => $ves_year,
+
+                'ves_flag' => $ves_flag,
+
+                'ves_home_port' => $ves_home_port,
+
+                'ves_gross_tonnage' => $ves_gross_tonnage,
+
+                'ves_maintenance' => $ves_maintenance,
+
+                'ves_survey' => $ves_survey,
+
+                'ves_installation' => $ves_installation,
+
+                'con_name' => $con_name,
+
+                'con_tel' => $con_tel,
+
+                'con_email' => $con_email,
+
+                'port_name' => $port_name,
+
+                'port_province' => $port_province,
+
+                'remark_create' => $remark_create,
+
+                'create_date' => $create_date,
+
+                'due_date' => $due_date,
+
+                'end_date' => $end_date,
+
+                'ETA' => $eta,
+
+                'ETD' => $etd,
+
+                'contract_start' => $contract_start,
+
+                'contract_end' => $contract_end,
+
+                'service_status' => $service_status
+
+            ];
+
+            $data = [
+                'service_invoice' => $service_invoice,
+
+                'due_date' =>  $due_date,
+
+                'end_date' => $end_date,
+
+                'title' => $service_invoice,
+
+                'descript' => $ves_name,
+
+                'color' => '#ffcca0'
+            ];
+
+
+            $target = "uploads/" . $service_invoice . "/";
+
+            $target_back = "uploads_back/" . $service_invoice . "/";
+
+            $target_atp_back =  "upload_atp_back/" . $service_invoice . "/";
+
+            $target_atp = "upload_atp/" . $service_invoice . "/";
+
+            $target_atp_network = "upload_atp/" . $service_invoice . "/network//";
+
+            $target_atp_A = "upload_atp/" . $service_invoice . "/app_a";
+
+            $target_atp_B = "upload_atp/" . $service_invoice . "/app_b";
+
+            $target_atp_C = "upload_atp/" . $service_invoice . "/app_c";
+
+
+            mkdir("$target");
+            chmod("$target", 0755);
+
+            mkdir("$target_back");
+            chmod("$target_back", 0755);
+
+            mkdir("$target_atp_back");
+            chmod("$target_atp_back", 0755);
+
+            mkdir("$target_atp");
+            chmod("$target_atp", 0755);
+
+            mkdir("$target_atp_network");
+            chmod("$target_atp_network", 0755);
+
+            mkdir("$target_atp_A");
+            chmod("$target_atp_A", 0755);
+
+            mkdir("$target_atp_B");
+            chmod("$target_atp_B", 0755);
+
+            mkdir("$target_atp_C");
+            chmod("$target_atp_C", 0755);
+
+
+            $res = $this->Function_model->insertData('tbl_calendar', $data);
+
+            $res = $this->Function_model->insertData('tbl_service', $data_arr);
+
+            $where_arr = ['service_invoice' => $service_invoice];
+
+            $this->Function_model->insertData('tbl_service_product', ['service_invoice' => $service_invoice, 'product' => $product]);
+
+            $this->Function_model->updateData('tbl_service', $where_arr, ['pms' => '1']);
+
+            if ($product == 'CCTV') {
+                $this->Function_model->updateData('tbl_service', $where_arr, ['cctv' => '1']);
+            } else if ($product == 'KU BAND IO3') {
+                $this->Function_model->updateData('tbl_service', $where_arr, ['vsat' => '1']);
+            } else if ($product == 'TVRO') {
+                $this->Function_model->updateData('tbl_service', $where_arr, ['tvro' => '1']);
+            } else if ($product == 'VOIP') {
+                $this->Function_model->updateData('tbl_service', $where_arr, ['voip' => '1']);
+            }
+
+            $this->Function_model->insertData('tbl_service_project', ['service_invoice' => $service_invoice, 'projects' => $projects]);
+
+            $this->Function_model->insertData('tbl_vessel_name', ['service_invoice' => $service_invoice, 'ves_name' => $ves_name]);
+
+
+            foreach ($admin_name as $name) {
+                $res = $this->Function_model->insertData('tbl_engineer', ['service_invoice' => $service_invoice, 'engineer' => $name->engineer]);
+            }
+
+            foreach ($package as $pack) {
+                $this->Function_model->insertData('tbl_service_package', ['service_invoice' => $service_invoice, 'pack_name' => $pack->pack_name, 'pack_internet' => $pack->pack_internet]);
+            }
+
+            $engineer = $this->Function_model->fetchDataResult('tbl_engineer', ['service_invoice' => $service_invoice]);
+
+            $this->Function_model->insertData('tbl_notify', ['service_invoice' => $service_invoice, 'status' => 'created']);
+
+            if ($res == TRUE) {
+
+                $this->notify_line($service_invoice, $engineer, 'กรุณาตรวจสอบและยืนยันข้อมูล');
+
+                $this->notify_email($service_invoice, $engineer, 'กรุณาตรวจสอบและยืนยันข้อมูล');
+
+                echo json_encode([
+
+                    'status' => 'SUCCESS',
+
+                    'service_invoice' => $service_invoice
+
+                ]);
+
+                exit();
+            } else {
+
+                echo json_encode([
+
+                    'status' => 'ERROR',
+
+                    'message' => 'Create Service Fail!'
+
+                ]);
+
+                exit();
+            }
         } else {
 
-            echo json_encode([
+            $service_invoice = $this->Function_model->genInvoice();
 
-                'status' => 'ERROR',
+            $projects = $this->input->post('projects');
 
-                'message' => 'Create Service Fail!'
+            $cus_name = $this->input->post('cus_name');
 
-            ]);
+            $cus_tel = $this->input->post('cus_tel');
 
-            exit();
+            $cus_email = $this->input->post('cus_email');
+
+            $cus_address = $this->input->post('cus_address');
+
+            $cus_zipcode = $this->input->post('cus_zipcode');
+
+            $ves_fleet = $this->input->post('ves_fleet');
+
+            $ves_name = $this->input->post('ves_name');
+
+            $ves_type = $this->input->post('ves_type');
+
+            $ves_callsign = $this->input->post('ves_callsign');
+
+            $ves_imo = $this->input->post('ves_imo');
+
+            $ves_mmsi = $this->input->post('ves_mmsi');
+
+            $ves_year = $this->input->post('ves_year');
+
+            $ves_flag = $this->input->post('ves_flag');
+
+            $ves_home_port = $this->input->post('ves_home_port');
+
+            $ves_gross_tonnage = $this->input->post('ves_gross_tonnage');
+
+            $ves_maintenance = $this->input->post('ves_maintenance');
+
+            $ves_survey = $this->input->post('ves_survey');
+
+            $ves_installation = $this->input->post('ves_installation');
+
+            $con_name = $this->input->post('con_name');
+
+            $con_tel = $this->input->post('con_tel');
+
+            $port_name = $this->input->post('port_name');
+
+            $port_province = $this->input->post('port_province');
+
+            $con_email = $this->input->post('con_email');
+
+            $admin_name = $this->input->post('admin_name');
+
+            $product = $this->input->post('product');
+
+            $pack_name = $this->input->post('pack_name');
+
+            $pack_internet = $this->input->post('pack_internet');
+
+            $remark_create = $this->input->post('remark_create');
+
+            $create_date = $this->input->post('create_date');
+
+            $due_date = $this->input->post('due_date');
+
+            $end_date = $this->input->post('end_date');
+
+            $eta = $this->input->post('eta');
+
+            $etd = $this->input->post('etd');
+
+            $contract_start = $this->input->post('contract_start');
+
+            $contract_end = $this->input->post('contract_end');
+
+            if (
+                $service_invoice == null || $projects == null || $cus_name == null || $cus_tel == null ||  $cus_email == null || $cus_address == null || $cus_zipcode == null ||
+                $ves_fleet == null || $ves_name == null || $ves_type == null || $ves_callsign == null || $ves_imo == null || $ves_mmsi == null || $ves_year == null ||
+                $ves_flag == null || $ves_home_port == null || $ves_gross_tonnage == null || $ves_maintenance == null || $con_name == null || $con_tel == null || $port_name == null ||
+                $port_province == null || $con_email == null || $product == null || $remark_create == null || $create_date == null ||
+                $due_date == null || $end_date == null || $eta == null || $etd == null || $contract_start == null || $contract_end == null
+            ) {
+
+                echo json_encode([
+
+                    'status' => 'ERROR',
+
+                    'message' => 'No data input'
+
+                ]);
+
+                exit();
+            }
+
+            $data_arr = [
+
+                'service_invoice' => $service_invoice,
+
+                'cus_name' => $cus_name,
+
+                'cus_address' => $cus_address,
+
+                'cus_tel' => $cus_tel,
+
+                'cus_email' => $cus_email,
+
+                'cus_zipcode' => $cus_zipcode,
+
+                'ves_fleet' => $ves_fleet,
+
+                'ves_type' => $ves_type,
+
+                'ves_callsign' => $ves_callsign,
+
+                'ves_imo' => $ves_imo,
+
+                'ves_mmsi' => $ves_mmsi,
+
+                'ves_year' => $ves_year,
+
+                'ves_flag' => $ves_flag,
+
+                'ves_home_port' => $ves_home_port,
+
+                'ves_gross_tonnage' => $ves_gross_tonnage,
+
+                'ves_maintenance' => $ves_maintenance,
+
+                'ves_survey' => $ves_survey,
+
+                'ves_installation' => $ves_installation,
+
+                'con_name' => $con_name,
+
+                'con_tel' => $con_tel,
+
+                'con_email' => $con_email,
+
+                'port_name' => $port_name,
+
+                'port_province' => $port_province,
+
+                'remark_create' => $remark_create,
+
+                'create_date' => $create_date,
+
+                'due_date' => $due_date,
+
+                'end_date' => $end_date,
+
+                'ETA' => $eta,
+
+                'ETD' => $etd,
+
+                'contract_start' => $contract_start,
+
+                'contract_end' => $contract_end,
+
+            ];
+
+            $data = [
+                'service_invoice' => $service_invoice,
+
+                'due_date' =>  $due_date,
+
+                'end_date' => $end_date,
+
+                'title' => $service_invoice,
+
+                'descript' => $remark_create,
+
+                'color' => '#70c0ff'
+            ];
+
+
+            $target = "uploads/" . $service_invoice . "/";
+
+            $target_back = "uploads_back/" . $service_invoice . "/";
+
+            $target_atp_back =  "upload_atp_back/" . $service_invoice . "/";
+
+            $target_atp = "upload_atp/" . $service_invoice . "/";
+
+            $target_atp_network = "upload_atp/" . $service_invoice . "/network//";
+
+            $target_atp_A = "upload_atp/" . $service_invoice . "/app_a";
+
+            $target_atp_B = "upload_atp/" . $service_invoice . "/app_b";
+
+            $target_atp_C = "upload_atp/" . $service_invoice . "/app_c";
+
+
+            mkdir("$target");
+            chmod("$target", 0755);
+
+            mkdir("$target_back");
+            chmod("$target_back", 0755);
+
+            mkdir("$target_atp_back");
+            chmod("$target_atp_back", 0755);
+
+            mkdir("$target_atp");
+            chmod("$target_atp", 0755);
+
+            mkdir("$target_atp_network");
+            chmod("$target_atp_network", 0755);
+
+            mkdir("$target_atp_A");
+            chmod("$target_atp_A", 0755);
+
+            mkdir("$target_atp_B");
+            chmod("$target_atp_B", 0755);
+
+            mkdir("$target_atp_C");
+            chmod("$target_atp_C", 0755);
+
+
+            $res = $this->Function_model->insertData('tbl_calendar', $data);
+
+            $res = $this->Function_model->insertData('tbl_service', $data_arr);
+
+            $where_arr = ['service_invoice' => $service_invoice];
+
+            if ($ves_maintenance == 'Preventive Maintenance' && $ves_installation != true) {
+                $this->Function_model->updateData('tbl_service', $where_arr, ['pms' => '1']);
+            } else {
+                $this->Function_model->updateData('tbl_service', $where_arr, ['pms' => NULL]);
+            }
+
+            foreach ($product as $name) {
+                $res = $this->Function_model->insertData('tbl_service_product', ['service_invoice' => $service_invoice, 'product' => $name]);
+            }
+
+            foreach ($projects as $name) {
+                $res = $this->Function_model->insertData('tbl_service_project', ['service_invoice' => $service_invoice, 'projects' => $name]);
+            }
+
+            foreach ($ves_name as $name) {
+                $res = $this->Function_model->insertData('tbl_vessel_name', ['service_invoice' => $service_invoice, 'ves_name' => $name]);
+            }
+
+            foreach ($admin_name as $name) {
+                $res = $this->Function_model->insertData('tbl_engineer', ['service_invoice' => $service_invoice, 'engineer' => $name]);
+            }
+
+            foreach ($pack_name as $item1) {
+                foreach ($pack_internet as $item2) {
+
+                    $check = $this->Function_model->getDataRow('tbl_package', ['pack_name' => $item1, 'pack_internet' => $item2]);
+
+                    if ($check != null) {
+                        $res = $this->Function_model->insertData('tbl_service_package', ['service_invoice' => $service_invoice, 'pack_name' => $item1, 'pack_internet' => $item2]);
+                    }
+                }
+            }
+
+            $engineer = $this->Function_model->fetchDataResult('tbl_engineer', ['service_invoice' => $service_invoice]);
+
+
+
+            $this->Function_model->insertData('tbl_notify', ['service_invoice' => $service_invoice, 'status' => 'created']);
+
+            if ($res == TRUE) {
+
+                $this->notify_line($service_invoice, $engineer, 'กรุณาเพิ่มEquipment');
+
+                $this->notify_email($service_invoice, $engineer, 'กรุณาเพิ่มEquipment');
+
+                echo json_encode([
+
+                    'status' => 'SUCCESS',
+
+                    'service_invoice' => $service_invoice
+
+                ]);
+
+                exit();
+            } else {
+
+                echo json_encode([
+
+                    'status' => 'ERROR',
+
+                    'message' => 'Create Service Fail!'
+
+                ]);
+
+                exit();
+            }
         }
     }
 
@@ -911,7 +1266,7 @@ class Service extends CI_Controller
         }
 
         $data_arr = [
-            'service_status' => 'uninstall'
+            'service_status' => ''
         ];
 
         $where = [
@@ -920,31 +1275,7 @@ class Service extends CI_Controller
 
         $res = $this->Function_model->updateData('tbl_service', $where, $data_arr);
 
-        if ($res == TRUE) {
-
-            echo json_encode([
-
-                'status' => 'SUCCESS',
-
-                'service_invoice' => $invoice
-
-            ]);
-
-            exit();
-        } else {
-
-            echo json_encode([
-
-                'status' => 'ERROR',
-
-                'message' => 'Create Service Fail!'
-
-            ]);
-
-            exit();
-        }
-
-        $this->load->view('pages/');
+        $this->load->view('pages/report_service');
     }
 
 
@@ -1161,7 +1492,7 @@ class Service extends CI_Controller
 
         $service = $this->Function_model->getDataRow('tbl_service', ['service_invoice' => $service_invoice]);
 
-        $service_detail = $this->Function_model2->getDataRow('sma_products', ['name' => $service_name]);
+        $service_detail = $this->Function_model2->getDataRow('sma_products', ['code' => $service_name]);
 
 
         if ($service_invoice == null || $service_name == null || $amount == null || $service_detail == NULL) {
@@ -1190,7 +1521,7 @@ class Service extends CI_Controller
 
             'code' => $service_detail->code,
 
-            'service_name' => $service_name,
+            'service_name' => $service_detail->name,
 
             'amount' => $amount,
 
@@ -2298,7 +2629,7 @@ class Service extends CI_Controller
         } else if ($engineer == 'Edit') {
             //$mail->AddAddress("phornphen@shipexpert.net", "K.Phornphen Saksirisamphun"); // ผู้รับคนที่หนึ่ง
         } else {
-            foreach ($engineer as $item) {
+            /* foreach ($engineer as $item) {
                 $engin = str_split($item->engineer);
                 $empty = strpos($item->engineer, ' ');
                 $name = "";
@@ -2306,7 +2637,7 @@ class Service extends CI_Controller
                     $name = $name . $engin[$count];
                 }
                 $mail->AddAddress("$name@shipexpert.net", "$item->engineer"); // ผู้รับคนที่หนึ่ง
-            }
+            }*/
         }
 
         $mail->AddAddress("nattakit@shipexpert.net", "Nattakit"); // ผู้รับคนที่หนึ่ง
@@ -2910,6 +3241,94 @@ class Service extends CI_Controller
 
     //ปริ้นใบแจ้งซ่อม ใบเสร็จ
 
+    function Store()
+    {
+
+        $service_invoice = $this->input->get('invoice');
+
+        $where_arr = ['service_invoice' => $service_invoice];
+
+        $service = $this->Function_model->getDataRow('tbl_service', $where_arr);
+
+
+        if ($service == null) {
+
+            echo 'ไม่มีรายการนี้อยู่ในระบบ';
+
+            exit();
+        }
+
+
+
+        $data['title'] = 'Job Order ' . $service_invoice;
+
+        $data['service'] = $service;
+
+        $data['vessel'] = $this->Function_model->fetchDataResult('tbl_vessel_name', $where_arr);
+
+        $data['engineer'] = $this->Function_model->fetchDataResult('tbl_engineer', $where_arr);
+
+        $data['history'] = $this->Function_model->fetchDataResult('tbl_atp_history', $where_arr);
+
+        $data['service_package'] = $this->Function_model->fetchDataResult('tbl_service_package', $where_arr);
+
+        $data['service_project'] = $this->Function_model->fetchDataResult('tbl_service_project', $where_arr);
+
+        $data['service_product'] = $this->Function_model->fetchDataResult('tbl_service_product', $where_arr);
+
+        $data['uploads'] = $this->Function_model->fetchDataResult('tbl_atp_upload', $where_arr);
+
+        $data['service_detail'] = $this->Function_model->fetchDataResult('tbl_service_detail', $where_arr);
+
+        $html = $this->load->view('print/report/service_tvro', $data, true);
+
+
+
+        $mpdf = new \Mpdf\Mpdf([
+
+            'setAutoTopMargin' => 'stretch',
+
+            'mode' => '',
+
+            'format' => 'A4',
+
+            'margin_left' => 10,
+
+            'margin_right' => 10,
+
+            'margin_top' => 5,
+
+            'margin_bottom' => 5,
+
+            'margin_header' => 0,
+
+            'margin_footer' => 0,
+
+            'orientation' => 'P',
+
+            'mode' => 'utf-8',
+
+            'default_font_size' => 14,
+
+            'default_font' => 'sarabun'
+
+        ]);
+
+        $mpdf->useFixedNormalLineHeight = false;
+
+        $mpdf->useFixedTextBaseline = false;
+
+        $mpdf->adjustFontDescLineheight = 1;
+
+
+        $mpdf->WriteHTML($html);
+
+        $mpdf->Output($data['title'] . '.pdf', 'I');
+    }
+
+
+    //ปริ้นใบแจ้งซ่อม ใบเสร็จ
+
     function print_job()
     {
 
@@ -2950,8 +3369,6 @@ class Service extends CI_Controller
         $data['service_detail'] = $this->Function_model->fetchDataResult('tbl_service_detail', $where_arr);
 
         $html = $this->load->view('print/service_job', $data, true);
-
-
 
         $mpdf = new \Mpdf\Mpdf([
 
@@ -3001,7 +3418,7 @@ class Service extends CI_Controller
                 </td>
                 <td colspan="3" rowspan="2" style="text-align: center;">
 
-                    <h3> <strong> Job Order '.$service_invoice.'</strong></h3>
+                    <h3> <strong> Job Order ' . $service_invoice . '</strong></h3>
 
                 </td>
                 <td style="padding-left: 5px;">
@@ -3032,6 +3449,187 @@ class Service extends CI_Controller
         </tbody>
         </table>'
         );
+
+        $mpdf->SetFooter('Job Order : ' . $service_invoice . '     ');
+
+        $mpdf->WriteHTML($html);
+
+        $mpdf->Output($data['title'] . '.pdf', 'I');
+    }
+
+    function print_pms()
+    {
+
+        $id = $this->input->get('id');
+
+        $rec = $this->input->get('pms');
+
+        $where_arr = ['id' => $id];
+
+        $service = $this->Function_model->getDataRow('tbl_pms_job', $where_arr);
+
+        if ($service == null) {
+
+            echo 'ไม่มีรายการนี้อยู่ในระบบ';
+
+            exit();
+        }
+
+        $data['title'] = $rec . 'Report';
+
+        $data['service'] = $service;
+
+        $html = $this->load->view('print/report/service_' . $rec, $data, true);
+
+        $mpdf = new \Mpdf\Mpdf([
+
+            'setAutoTopMargin' => 'stretch',
+
+            'mode' => '',
+
+            'format' => 'A4',
+
+            'margin_left' => 10,
+
+            'margin_right' => 10,
+
+            'margin_top' => 5,
+
+            'margin_bottom' => 5,
+
+            'margin_header' => 0,
+
+            'margin_footer' => 0,
+
+            'orientation' => 'P',
+
+            'mode' => 'utf-8',
+
+            'default_font_size' => 14,
+
+            'default_font' => 'sarabun'
+
+        ]);
+
+        $mpdf->SetHeader(
+            '<div>{PAGENO}</div> 
+        <table class="tableheader" >
+        <tbody>
+            <tr>
+                <td rowspan="3" style="width:150px;">
+
+                    <img src="https://support.shipexpert.info/assets/img/logo.png" alt="" style="max-width: 150px;">
+
+                </td>
+                <td colspan="3" rowspan="2" style="text-align: center;">
+
+                    <h3> <strong> Preventive Maintenance Report </strong></h3>
+
+                </td>
+                <td style="padding-left: 5px;">
+
+                    from
+
+                </td>
+            </tr>
+            <tr>
+                <td style="height: 50px;width:150px;">
+
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: center;width:20%;">
+                <h4> ' . $service->pms_invoice . '</h4>
+                </td>
+                <td style="text-align: center;width:20%;">
+
+                </td>
+                <td style="text-align: center;width:20%;">
+                Page {PAGENO} of {nb}
+                </td>
+                <td style="padding-left: 5px;">
+                    Filling no.
+                </td>
+            </tr>
+        </tbody>
+        </table>'
+        );
+
+
+        $mpdf->useFixedNormalLineHeight = false;
+
+        $mpdf->useFixedTextBaseline = false;
+
+        $mpdf->adjustFontDescLineheight = 1;
+
+        $mpdf->WriteHTML($html);
+
+        $mpdf->Output($data['title'] . '.pdf', 'I');
+    }
+
+    function print_report()
+    {
+
+        $service_invoice = $this->input->get('invoice');
+
+        $rec = $this->input->get('pms');
+
+        $where_arr = ['service_invoice' => $service_invoice];
+
+        $service = $this->Function_model->getDataRow('tbl_service', $where_arr);
+
+        if ($service == null) {
+
+            echo 'ไม่มีรายการนี้อยู่ในระบบ';
+
+            exit();
+        }
+
+        $data['title'] = $rec . $service_invoice;
+
+        $data['service'] = $service;
+
+        $data['vessel'] = $this->Function_model->fetchDataResult('tbl_vessel_name', $where_arr, 'id', 'ASC');
+
+        $data['report'] = $this->Function_model->getDataRow('tbl_report_' . $rec, $where_arr);
+
+        $html = $this->load->view('print/report/service_' . $rec, $data, true);
+
+        $mpdf = new \Mpdf\Mpdf([
+
+            'setAutoTopMargin' => 'stretch',
+
+            'mode' => '',
+
+            'format' => 'A4',
+
+            'margin_left' => 10,
+
+            'margin_right' => 10,
+
+            'margin_top' => 5,
+
+            'margin_bottom' => 5,
+
+            'margin_header' => 0,
+
+            'margin_footer' => 0,
+
+            'orientation' => 'P',
+
+            'mode' => 'utf-8',
+
+            'default_font_size' => 14,
+
+            'default_font' => 'sarabun'
+
+        ]);
+
+        $mpdf->useFixedNormalLineHeight = false;
+
+        $mpdf->useFixedTextBaseline = false;
+
+        $mpdf->adjustFontDescLineheight = 1;
 
         $mpdf->SetFooter('Job Order : ' . $service_invoice . '     ');
 
@@ -3286,9 +3884,9 @@ class Service extends CI_Controller
             exit();
         }
 
-
-
         echo json_encode([
+
+            'service' => count($this->Function_model->fetchDataResult('tbl_service', '', '', '')),
 
             'service_created' => count($this->Function_model->fetchDataResult('tbl_service', ['service_status' => 'created'])),
 
@@ -3303,6 +3901,26 @@ class Service extends CI_Controller
             'service_uninstall' => count($this->Function_model->fetchDataResult('tbl_service', ['service_status' => 'uninstall'])),
 
             'service_done' => count($this->Function_model->fetchDataResult('tbl_service', ['service_status' => 'done'])),
+
+            'pms_cre' => count($this->Function_model->fetchDataResult('tbl_pms_job', ['pms_status' => 'created'])),
+
+            'pms_suc' => count($this->Function_model->fetchDataResult('tbl_pms_job', ['pms_status' => 'success'])),
+
+            'vsat' => count($this->Function_model->fetchDataResult('tbl_service', ['vsat' => '1'])),
+
+            'cctv' => count($this->Function_model->fetchDataResult('tbl_service', ['cctv' => '1'])),
+
+            'tvro' => count($this->Function_model->fetchDataResult('tbl_service', ['tvro' => '1'])),
+
+            'voip' => count($this->Function_model->fetchDataResult('tbl_service', ['voip' => '1'])),
+
+            'port' => count($this->Function_model->fetchDataResult('tbl_port', '')),
+
+            'package' => count($this->Function_model->fetchDataResult('tbl_package', '')),
+
+            'contact' => count($this->Function_model->fetchDataResult('tbl_contact', '')),
+
+            'user' => count($this->Function_model->fetchDataResult('tbl_admin', '')),
 
         ]);
         exit();

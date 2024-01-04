@@ -779,8 +779,7 @@ $count_engineer = count($engineer);
 
                         <div class="col-md-4 mt-2">
 
-                            <a id="paper_receipt" class="btn btn-default btn-block rounded-0" target="_blank" href="<?= base_url(); ?>service/print_job?invoice=<?= $service->service_invoice; ?>">Job
-                                Order</a>
+                            <a id="paper_receipt" class="btn btn-default btn-block rounded-0" target="_blank" href="<?= base_url(); ?>service/print_job?invoice=<?= $service->service_invoice; ?>">Job Order</a>
 
                         </div>
 
@@ -949,12 +948,19 @@ $count_engineer = count($engineer);
 
                         <div class="row">
 
-                            <div class="col-md-12 mt-2">
+                            <?php if ($service->ves_maintenance == 'Corrective Maintenance' && ($service->ves_maintenance == 'Preventive Maintenance' && $service->ves_installation == 'false')) : ?>
+                                <div class="col-md-12 mt-2">
 
-                                <button id="btnUninstall" class="btn btn-success btn-block rounded-0"><i class="fas fa-check"></i> Success Job Order</button>
+                                    <button id="btnConfirmPickCar" class="btn btn-success btn-block rounded-0"><i class="fas fa-check"></i> Success Job Order</button>
 
-                            </div>
+                                </div>
+                            <?php else : ?>
+                                <div class="col-md-12 mt-2">
 
+                                    <button id="btnUninstall" class="btn btn-success btn-block rounded-0"><i class="fas fa-check"></i> Success Job Order</button>
+
+                                </div>
+                            <?php endif; ?>
                             <div class="col-md-12 mt-2">
 
                                 <button type="button" class="btn btn-danger btn-block rounded-0" data-toggle="modal" data-target="#modalAddHistory">Back Order</button>

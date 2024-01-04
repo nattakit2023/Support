@@ -359,12 +359,15 @@ class Product extends CI_Controller
 
         echo '<option value="" disabled selected>--เลือกสินค้า & บริการ--</option>';
 
-        foreach ($product as $item) {
+        /*foreach ($product as $item) {
 
             if (($item->quantity - $item->track_quantity) <= 0) {
             } else {
-                echo '<option value="' . $item->name . '">' . $item->id . ". " . $item->name . '</option>';
+                echo '<option value="' . $item->code . '">' . $item->id . ". " . $item->name . '</option>';
             }
+        }*/
+        foreach ($product as $item) {
+            echo '<option value="' . $item->code . '">' . $item->id . ". " . $item->name . '</option>';
         }
     }
 
@@ -381,19 +384,17 @@ class Product extends CI_Controller
             exit();
         }
 
-        $product = $this->Function_model2->fetchDataResult('sma_products', '', 'id', 'ASC');
+        $product = $this->Function_model2->getDataRow('sma_products', ['code' => $product_name], 'id', 'ASC');
 
         echo '<option value="" selected>เลือกจำนวนสินค้า</option>';
 
-        foreach ($product as $item) {
-            if ($item->name == $product_name) {
-                $quantity = $item->quantity - $item->track_quantity;
-                while ($quantity > 0) {
-                    echo '<option value="' . $quantity . '">' . $quantity . '</option>';
-                    $quantity--;
-                }
-                exit();
-            }
+        //$quantity = $product->quantity - $product->track_quantity;
+        $quantity = 100;
+        $i = 1;
+        while ($i <= $quantity) {
+            echo '<option value="' . $i . '">' . $i . '</option>';
+            $i++;
         }
+        exit();
     }
 }

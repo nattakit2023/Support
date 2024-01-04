@@ -11,7 +11,6 @@ class Function_model extends CI_Model
         $this->db->where($where_array);
 
         return $this->db->get($table);
-
     }
 
 
@@ -23,7 +22,6 @@ class Function_model extends CI_Model
         $this->db->where($where_array);
 
         return $this->db->get($table)->row();
-
     }
 
 
@@ -35,17 +33,14 @@ class Function_model extends CI_Model
         if ($where_array != null) {
 
             $this->db->where($where_array);
-
         }
 
         if ($order_key != null && $order_by != null) {
 
             $this->db->order_by($order_key, $order_by);
-
         }
 
         return $this->db->get($table)->result();
-
     }
 
 
@@ -59,13 +54,10 @@ class Function_model extends CI_Model
         if ($this->db->affected_rows() == 1) {
 
             return TRUE;
-
         } else {
 
             return FALSE;
-
         }
-
     }
 
 
@@ -79,13 +71,10 @@ class Function_model extends CI_Model
         if ($this->db->affected_rows() >= 1) {
 
             return TRUE;
-
         } else {
 
             return FALSE;
-
         }
-
     }
 
 
@@ -101,13 +90,10 @@ class Function_model extends CI_Model
         if ($this->db->affected_rows()) {
 
             return TRUE;
-
         } else {
 
             return FALSE;
-
         }
-
     }
 
     function updateData($table, $where_array, $data_array)
@@ -119,7 +105,6 @@ class Function_model extends CI_Model
         $this->db->update($table, $data_array);
 
         return TRUE;
-
     }
 
     //GET SUM COLUMN
@@ -135,11 +120,9 @@ class Function_model extends CI_Model
         if ($where_array != null) {
 
             $this->db->where($where_array);
-
         }
 
         return $this->db->get()->row()->$sum_column;
-
     }
 
 
@@ -164,17 +147,15 @@ class Function_model extends CI_Model
 
         $service = $this->db->get('tbl_service')->result();
 
-        if(count($service)==0){
+        if (count($service) == 0) {
 
             $number_invoice = date('y') . sprintf('%04d', '1');
-
-        }else{
+        } else {
 
             $number_invoice = date('y') . sprintf('%04d', count($service));
-
         }
 
-       
+
 
         $this->db->where('service_invoice', $number_invoice);
 
@@ -182,19 +163,59 @@ class Function_model extends CI_Model
 
         //ตรวจสอบเลขซ้ำ
 
-        while($check_invoice != null){
+        while ($check_invoice != null) {
 
             $number_invoice++;
 
             $this->db->where('service_invoice', $number_invoice);
 
             $check_invoice = $this->db->get('tbl_service')->row();
-
         }
 
         return $number_invoice;
-
     }
 
-}
+    function genPMS()
 
+    {
+
+        $where_arr = [
+
+            'due_date >=' => date('Y-01-01'),
+
+            'due_date <=' => date('Y-12-31')
+
+        ];
+
+        //หาจำนวนข้อมูล
+
+        $this->db->where($where_arr);
+
+        $service = $this->db->get('tbl_pms_job')->result();
+
+        if (count($service) == 0) {
+
+            $number_invoice = date('y') . sprintf('%04d', '1');
+        } else {
+
+            $number_invoice = date('y') . sprintf('%04d', count($service));
+        }
+
+        $this->db->where('pms_invoice', 'PMS' . $number_invoice);
+
+        $check_invoice = $this->db->get('tbl_pms_job')->row();
+
+        //ตรวจสอบเลขซ้ำ
+
+        while ($check_invoice != null) {
+
+            $number_invoice++;
+
+            $this->db->where('pms_invoice', 'PMS' . $number_invoice);
+
+            $check_invoice = $this->db->get('tbl_pms_job')->row();
+        }
+
+        return $number_invoice;
+    }
+}

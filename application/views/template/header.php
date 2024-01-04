@@ -26,11 +26,14 @@
 
     <link href="<?= base_url(); ?>/assets/AdminLTE/plugins/select2/css/select2.min.css" rel="stylesheet" />
 
+    <!--Full Calendar -->
+
+    <link href="<?= base_url(); ?>/assets/AdminLTE/plugins/fullcalendar/main.min.css" rel="stylesheet" />
 
     <!-- Multiple Select-->
 
     <link href="<?= base_url(); ?>/assets/AdminLTE/plugins/select2-bootstrap-5-theme-1.3.0/select2-bootstrap-5-theme.css" rel="stylesheet" />
-    
+
     <!-- DataTables -->
 
     <link rel="stylesheet" href="<?= base_url(); ?>/assets/AdminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">

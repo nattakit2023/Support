@@ -139,23 +139,11 @@
 
     function tblService() {
 
-        let datestart = $('#datestart').val();
-
-        let dateend = $('#dateend').val();
-
         $.ajax({
 
             url: '<?= base_url(); ?>/service/tblService',
 
             method: 'POST',
-
-            data: {
-
-                datestart: datestart,
-
-                dateend: dateend
-
-            },
 
             success: function(res) {
 

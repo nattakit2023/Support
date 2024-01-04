@@ -775,7 +775,13 @@
                             <label class="col-md-3"><strong class="text-danger">*</strong>Port :</label>
 
                             <div class="col-md-9">
-                                <input type="text" id="port_names" class="form-control rounded-0" placeholder="Port Name">
+                                <input type="text" id="port_names" class="form-control rounded-0" placeholder="Port Name" list="port_list">
+
+                                <datalist id="port_list">
+                                    <?php foreach ($port as $index) : ?>
+                                        <option value="<?= $index->port_name ?>"><?= $index->port_name ?></option>
+                                    <?php endforeach; ?>
+                                </datalist>
                             </div>
 
                         </div>
@@ -784,7 +790,12 @@
 
                             <label class="col-md-3"><strong class="text-danger">*</strong>Province :</label>
                             <div class="col-md-9">
-                                <input type="text" id="port_provinces" class="form-control rounded-0" placeholder="Province of Port">
+                                <input type="text" id="port_provinces" class="form-control rounded-0" placeholder="Province of Port" list="province_list">
+                                <datalist id="province_list">
+                                    <?php foreach ($port as $index) : ?>
+                                        <option value="<?= $index->port_province ?>"><?= $index->port_province ?></option>
+                                    <?php endforeach; ?>
+                                </datalist>
                             </div>
 
                         </div>

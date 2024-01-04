@@ -4,6 +4,8 @@
 
         <tr class="text-center">
 
+            <th>ID</th>
+
             <th>ชื่อ-นามสกุล</th>
 
             <th>ชื่อผู้ใช้งาน (Username)</th>
@@ -21,6 +23,8 @@
         <?php foreach ($admin as $item) : ?>
 
             <tr id="row<?= $item->admin_id; ?>">
+
+                <td><?= $item->admin_id ?></td>
 
                 <td><?= $item->admin_name; ?></td>
 

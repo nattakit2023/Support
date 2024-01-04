@@ -8,7 +8,7 @@
 
                 <div class="col-sm-6">
 
-                    <h3><i class="fas fa-clipboard-list"></i><strong> รายงาน Job Order</strong></h3>
+                    <h3><i class="fas fa-clipboard-list"></i><strong> <?= $title ?></strong></h3>
 
                     <p class="text-muted">รายงานการเข้า Service เป็นรายการที่ไปเรียบร้อยแล้ว</p>
 
@@ -18,9 +18,9 @@
 
                     <ol class="breadcrumb float-sm-right">
 
-                        <li class="breadcrumb-item"><a href="<?=base_url();?>/pages">Index</a></li>
+                        <li class="breadcrumb-item"><a href="<?= base_url(); ?>/pages">Index</a></li>
 
-                        <li class="breadcrumb-item active"> Reports</li>
+                        <li class="breadcrumb-item active"> <?= $title ?></li>
 
                     </ol>
 
@@ -127,7 +127,6 @@
 
 
 <script>
-
     function tblService() {
 
         let datestart = $('#datestart').val();
@@ -136,7 +135,7 @@
 
         $.ajax({
 
-            url: '<?=base_url();?>/report/tblReportService',
+            url: '<?= base_url(); ?>/report/tblReportService',
 
             method: 'POST',
 
@@ -176,17 +175,17 @@
 
         let dateend = $('#dateend').val();
 
-        if(datestart == ''  || dateend == ''){
+        if (datestart == '' || dateend == '') {
 
             Swal.fire({
 
-                icon : 'warning',
+                icon: 'warning',
 
-                title : 'แจ้งเตือน',
+                title: 'แจ้งเตือน',
 
-                text : 'กรุณาเลือกช่วงวันที่ที่ต้องการค้นหา',
+                text: 'กรุณาเลือกช่วงวันที่ที่ต้องการค้นหา',
 
-                confirmButtonText : 'ตกลง'
+                confirmButtonText: 'ตกลง'
 
             })
 
@@ -199,7 +198,4 @@
         tblService();
 
     });
-
-
-
 </script>

@@ -110,7 +110,7 @@
 
         "responsive": true,
 
-        "pageLength": 25,
+        "pageLength": 10,
 
         language: {
 

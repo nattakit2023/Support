@@ -46,7 +46,7 @@
 
                         </div>
 
-                        <a href="<?=base_url();?>/pages/service" class="small-box-footer rounded-0">
+                        <a href="<?= base_url(); ?>/pages/service" class="small-box-footer rounded-0">
 
                             More <i class="fas fa-arrow-circle-right"></i>
 
@@ -74,7 +74,7 @@
 
                         </div>
 
-                        <a href="<?=base_url();?>/pages/service_status?status=wait" class="small-box-footer rounded-0">
+                        <a href="<?= base_url(); ?>/pages/service_status?status=wait" class="small-box-footer rounded-0">
 
                             More <i class="fas fa-arrow-circle-right"></i>
 
@@ -102,7 +102,7 @@
 
                         </div>
 
-                        <a href="<?=base_url();?>/pages/service_status?status=fixed" class="small-box-footer rounded-0">
+                        <a href="<?= base_url(); ?>/pages/service_status?status=fixed" class="small-box-footer rounded-0">
 
                             More <i class="fas fa-arrow-circle-right"></i>
 
@@ -154,7 +154,6 @@
         <div class="container-fluid">
 
             <style>
-
                 .dashboard-menu img {
 
                     transition: all 0.2s ease;
@@ -172,7 +171,6 @@
                     filter: none;
 
                 }
-
             </style>
 
             <div class="row">
@@ -195,19 +193,9 @@
 
                                 <div class="col-md-2 col-sm-6 col-6 mb-3">
 
-                                    <a href="<?=base_url();?>pages/service_create" class="dashboard-menu">
+                                    <a href="<?= base_url(); ?>pages/service_create" class="dashboard-menu">
 
-                                        <img src="<?=base_url();?>/assets/icon/service.jpg" style="width: 100%">
-
-                                    </a>
-
-                                </div>
-
-                                <div class="col-md-2 col-sm-6 col-6 mb-3">
-
-                                    <a href="<?=base_url();?>pages/service" class="dashboard-menu">
-
-                                        <img src="<?=base_url();?>/assets/icon/service_report.jpg" style="width: 100%">
+                                        <img src="<?= base_url(); ?>/assets/icon/service.jpg" style="width: 100%">
 
                                     </a>
 
@@ -215,19 +203,9 @@
 
                                 <div class="col-md-2 col-sm-6 col-6 mb-3">
 
-                                    <a href="<?=base_url();?>pages/customer" class="dashboard-menu">
+                                    <a href="<?= base_url(); ?>pages/service" class="dashboard-menu">
 
-                                        <img src="<?=base_url();?>/assets/icon/customer.jpg" style="width: 100%">
-
-                                    </a>
-
-                                </div>
-
-                                <div class="col-md-2 col-sm-6 col-6 mb-3">
-
-                                    <a href="<?=base_url();?>pages/report_service" class="dashboard-menu">
-
-                                        <img src="<?=base_url();?>/assets/icon/report.jpg" style="width: 100%">
+                                        <img src="<?= base_url(); ?>/assets/icon/service_report.jpg" style="width: 100%">
 
                                     </a>
 
@@ -235,9 +213,9 @@
 
                                 <div class="col-md-2 col-sm-6 col-6 mb-3">
 
-                                    <a href="<?=base_url();?>pages/product" class="dashboard-menu">
+                                    <a href="<?= base_url(); ?>pages/calendar" class="dashboard-menu">
 
-                                        <img src="<?=base_url();?>/assets/icon/product.jpg" style="width: 100%">
+                                        <img src="<?= base_url(); ?>/assets/icon/customer.jpg" style="width: 100%">
 
                                     </a>
 
@@ -245,9 +223,29 @@
 
                                 <div class="col-md-2 col-sm-6 col-6 mb-3">
 
-                                    <a href="<?=base_url();?>pages/user" class="dashboard-menu">
+                                    <a href="<?= base_url(); ?>pages/report_service" class="dashboard-menu">
 
-                                        <img src="<?=base_url();?>/assets/icon/user.jpg" style="width: 100%">
+                                        <img src="<?= base_url(); ?>/assets/icon/report.jpg" style="width: 100%">
+
+                                    </a>
+
+                                </div>
+
+                                <div class="col-md-2 col-sm-6 col-6 mb-3">
+
+                                    <a href="<?= base_url(); ?>pages/product" class="dashboard-menu">
+
+                                        <img src="<?= base_url(); ?>/assets/icon/product.jpg" style="width: 100%">
+
+                                    </a>
+
+                                </div>
+
+                                <div class="col-md-2 col-sm-6 col-6 mb-3">
+
+                                    <a href="<?= base_url(); ?>pages/user" class="dashboard-menu">
+
+                                        <img src="<?= base_url(); ?>/assets/icon/user.jpg" style="width: 100%">
 
                                     </a>
 
@@ -274,12 +272,11 @@
 
 
 <script>
-
     function getServiceAmount() {
 
         $.ajax({
 
-            url: '<?=base_url();?>/service/get_service_amount',
+            url: '<?= base_url(); ?>/service/get_service_amount',
 
             method: 'POST',
 
@@ -353,7 +350,7 @@
 
                 $.ajax({
 
-                    url: '<?=base_url();?>/service/search_service_invoice',
+                    url: '<?= base_url(); ?>/service/search_service_invoice',
 
                     method: 'POST',
 
@@ -371,7 +368,7 @@
 
                             $('#service_invoice').val('');
 
-                            window.location.assign('<?=base_url();?>/pages/service_detail/' + res.service_invoice);
+                            window.location.assign('<?= base_url(); ?>/pages/service_detail/' + res.service_invoice);
 
                         } else {
 
@@ -402,5 +399,4 @@
         })
 
     });
-
 </script>

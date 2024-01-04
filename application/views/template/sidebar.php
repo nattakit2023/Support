@@ -66,8 +66,6 @@
 
                 </li>
 
-
-
                 <li class="nav-item" id="sidebarService">
 
                     <a href="#" class="nav-link">
@@ -93,6 +91,8 @@
                                 <i class="fas fa-circle nav-icon"></i>
 
                                 <p>All</p>
+
+                                <span class="badge badge-info right" id="alertAll"></span>
 
                             </a>
 
@@ -201,6 +201,94 @@
 
                 </li>
 
+                <li class="nav-item" id="sidebarReport">
+
+                    <a href="#" class="nav-link">
+
+                        <i class="nav-icon fas fa-clipboard-check"></i>
+
+                        <p>
+
+                            Checklist
+
+                            <i class="right fas fa-angle-left"></i>
+
+                        </p>
+
+                    </a>
+
+                    <ul class="nav nav-treeview">
+
+                        <!---
+
+                <li class="nav-item">
+
+                    <a href="<?= base_url(); ?>/pages/product" class="nav-link <?= ($active == 'product') ? 'active' : ''; ?>">
+
+                        <i class="nav-icon fas fa-shopping-cart"></i>
+
+                        <p>Service</p>
+
+                    </a>
+
+                </li>
+                --->
+                        <li class="nav-item">
+
+                            <a href="<?= base_url(); ?>pages/report/vsat" class="nav-link <?= ($active == 'vsat') ? 'active' : ''; ?>">
+
+                                <i class="fas fa-satellite	 nav-icon text-info"></i>
+
+                                <p>VSAT</p>
+
+                                <span class="badge badge-info right" id="alertVsat"></span>
+
+                            </a>
+
+                        </li>
+                        <li class="nav-item">
+
+                            <a href="<?= base_url(); ?>pages/report/cctv" class="nav-link <?= ($active == 'cctv') ? 'active' : ''; ?>">
+
+                                <i class="fas fa-camera nav-icon text-warning"></i>
+
+                                <p>CCTV</p>
+
+                                <span class="badge badge-info right" id="alertCCTV"></span>
+
+                            </a>
+
+                        </li>
+                        <li class="nav-item">
+
+                            <a href="<?= base_url(); ?>pages/report/voip" class="nav-link <?= ($active == 'voip') ? 'active' : ''; ?>">
+
+                                <i class="fas fa-phone-square nav-icon text-success"></i>
+
+                                <p>VOIP</p>
+
+                                <span class="badge badge-info right" id="alertVoip"></span>
+
+                            </a>
+
+                        </li>
+                        <li class="nav-item">
+
+                            <a href="<?= base_url(); ?>pages/report/tvro" class="nav-link <?= ($active == 'tvro') ? 'active' : ''; ?>">
+
+                                <i class="fas fa-satellite-dish nav-icon text-danger"></i>
+
+                                <p>TVRO</p>
+
+                                <span class="badge badge-info right" id="alertTvro"></span>
+
+                            </a>
+
+                        </li>
+                    </ul>
+
+                </li>
+
 
                 <!---
                 <li class="nav-header text-info">Customer Information</li>
@@ -218,6 +306,67 @@
                 </li>
 
 --->
+                <li class="nav-header text-info">Planing</li>
+
+                <li class="nav-item">
+
+                    <a href="<?= base_url(); ?>pages/calendar" class="nav-link <?= ($active == 'calendar') ? 'active' : ''; ?>">
+
+                        <i class="nav-icon fas fa-calendar-day"></i>
+
+                        <p>Calendar</p>
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item" id="sidebarPMS">
+
+                    <a href="#" class="nav-link">
+
+                        <i class="nav-icon fas fa-clipboard-check"></i>
+
+                        <p>
+
+                            PMS Check
+
+                            <i class="right fas fa-angle-left"></i>
+
+                        </p>
+
+                    </a>
+
+                    <ul class="nav nav-treeview">
+
+                        <li class="nav-item">
+
+                            <a href="<?= base_url(); ?>pages/report/pms_cre" class="nav-link <?= ($active == 'pms_cre') ? 'active' : ''; ?>">
+
+                                <i class="fas fa-ship	 nav-icon text-info"></i>
+
+                                <p>PMS Created</p>
+
+                                <span class="badge badge-info right" id="alertPms_cre"></span>
+
+                            </a>
+
+                        </li>
+                        <li class="nav-item">
+
+                            <a href="<?= base_url(); ?>pages/report/pms_suc" class="nav-link <?= ($active == 'pms_suc') ? 'active' : ''; ?>">
+
+                                <i class="fas fa-ship nav-icon text-success"></i>
+
+                                <p>PMS Success</p>
+
+                                <span class="badge badge-info right" id="alertPms_suc"></span>
+
+                            </a>
+
+                        </li>
+                    </ul>
+
+                </li>
 
                 <!-- รายงานต่างๆ -->
 
@@ -239,7 +388,7 @@
 
                 <li class="nav-header text-info">Management</li>
 
-                <li class="nav-item" id="sidebarService">
+                <li class="nav-item" id="sidebarManagement">
 
                     <a href="#" class="nav-link">
 
@@ -279,6 +428,8 @@
 
                                 <p>Port Management</p>
 
+                                <span class="badge badge-info right" id="alertPort"></span>
+
                             </a>
 
                         </li>
@@ -289,6 +440,8 @@
                                 <i class="fas fa-satellite-dish	 nav-icon text-warning"></i>
 
                                 <p>Package Management</p>
+
+                                <span class="badge badge-info right" id="alertPackage"></span>
 
                             </a>
 
@@ -301,6 +454,8 @@
 
                                 <p>Contact Management</p>
 
+                                <span class="badge badge-info right" id="alertContact"></span>
+
                             </a>
 
                         </li>
@@ -311,6 +466,8 @@
                                 <i class="fas fa-user nav-icon text-info"></i>
 
                                 <p>User Management</p>
+
+                                <span class="badge badge-info right" id="alertUser"></span>
 
                             </a>
 
@@ -337,17 +494,6 @@
 
                 </li>
 
-                <li class="nav-item">
-
-                    <a href="<?= base_url(); ?>/logout" class="nav-link">
-
-                        <i class="nav-icon fas fa-power-off"></i>
-
-                        <p>Logout</p>
-
-                    </a>
-
-                </li>
 
                 <!-- ./ตั้งค่า -->
 
@@ -366,6 +512,8 @@
 
 
 <script>
+    var sidebar = '<?= $sidebar ?>';
+
     function sidebarService() {
 
         $.ajax({
@@ -378,11 +526,14 @@
 
             success: function(res) {
 
-                if (res.service_created != 0 || res.service_wait != 0 || res.service_fixed != 0) {
+                //all job
 
-                    $('#sidebarService').addClass('menu-open')
+                if (res.service > 0) {
+
+                    $('#alertAll').html(res.service);
 
                 }
+
 
                 //created
 
@@ -440,6 +591,88 @@
 
                 }
 
+                //PMS All
+
+                if (res.pms_cre > 0) {
+
+                    $('#alertPms_cre').html(res.pms_cre);
+
+                }
+
+                //PMS All
+
+                if (res.pms_suc > 0) {
+
+                    $('#alertPms_suc').html(res.pms_suc);
+
+                }
+
+
+                //Vsat All
+
+                if (res.vsat > 0) {
+
+                    $('#alertVsat').html(res.vsat);
+
+                }
+
+                //CCTV All
+
+                if (res.cctv > 0) {
+
+                    $('#alertCCTV').html(res.cctv);
+
+                }
+
+                //Tvro All
+
+                if (res.tvro > 0) {
+
+                    $('#alertTvro').html(res.tvro);
+
+                }
+
+                //Voip All
+
+                if (res.voip > 0) {
+
+                    $('#alertVoip').html(res.voip);
+
+                }
+
+                //Port All
+
+                if (res.port > 0) {
+
+                    $('#alertPort').html(res.port);
+
+                }
+
+
+                //Package All
+
+                if (res.package > 0) {
+
+                    $('#alertPackage').html(res.package);
+
+                }
+
+                //Contact All
+
+                if (res.contact > 0) {
+
+                    $('#alertContact').html(res.contact);
+
+                }
+
+                //User All
+
+                if (res.user > 0) {
+
+                    $('#alertUser').html(res.user);
+
+                }
+
             }
 
         })
@@ -449,8 +682,19 @@
 
 
     $(document).ready(function() {
-
         sidebarService();
+        if (sidebar == 'report') {
+            $('#sidebarReport').addClass('menu-open');
+
+        } else if (sidebar == 'management') {
+            $('#sidebarManagement').addClass('menu-open');
+
+        } else if (sidebar == 'job') {
+            $('#sidebarService').addClass('menu-open');
+
+        } else if (sidebar == 'pms') {
+            $('#sidebarPMS').addClass('menu-open');
+        }
 
     })
 </script>

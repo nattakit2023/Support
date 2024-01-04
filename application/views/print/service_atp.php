@@ -373,9 +373,11 @@
 
                             <th style="width: 5%; color:white;">No.</th>
 
-                            <th style="width: 45%; color:white;">Equipment</th>
+                            <th style="width: 15%; color:white;">Code</th>
 
-                            <th style="width: 40%; color:white;">Detail</th>
+                            <th style="width: 35%; color:white;">Equipment</th>
+
+                            <th style="width: 35%; color:white;">Detail</th>
 
                             <th style="width: 10%; color:white;">Quantity</th>
 
@@ -394,6 +396,8 @@
 
                                 <td style="text-align: center; padding:0px;"><?= ++$i; ?></td>
 
+                                <td style="text-align: center;"> <?= $item->code ?></td>
+
                                 <td>
 
                                     <?= $item->service_name; ?><br>
@@ -402,7 +406,7 @@
 
                                 </td>
 
-                                <td></td>
+                                <td> <?= $item->service_detail; ?></td>
 
                                 <td style="text-align: center;">
                                     <em><small style="color: #333;"><?= $item->amount; ?></small></em>
